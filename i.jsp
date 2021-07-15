@@ -87,9 +87,9 @@ color:black;
 			<img src="ekal-logo.png" width="50%">
 		</div>
 		<div class="col-md-8 col-sm-8" style="text-align:left">
-			<span><strong>इंटेलिल्थ हेल्पलाइन </strong></span>
+			<span><strong>एकल आरोग्य हेल्पलाइन </strong></span>
 			<br>
-			<span ><strong>Intelehealth Helpline</strong></span>
+			<span ><strong>Ekal Arogya Helpline</strong></span>
 		</div>
 		<div class="col-md-2 col-sm-2 pull-right" >
 			<img src="ih-logo.png" width="50%">
@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			Intelehealth Helpline Number - +911141236457
+			Ekal Arogya Helpline Number - +911141236457
 	
 		</div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://helpline.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://helpline.ekalarogya.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -488,7 +488,7 @@ width:60,
 height:60
         },
         {
-		text: 'इंटेलिल्थ हेल्पलाइन\n Intelehealth Helpline', fontSize:12
+		text: 'एकल आरोग्य हेल्पलाइन\n Ekal Arogya Helpline', fontSize:12
         },
  {
            image: 'nhm_logo',
@@ -606,7 +606,7 @@ defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'Intelehealth Helpline Number -  +911141236457', alignment:'center'}
+footer : {text : 'Ekal Arogya Helpline Number -  +911141236457', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
