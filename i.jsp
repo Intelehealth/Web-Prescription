@@ -84,12 +84,12 @@ color:black;
         <div id="prescription" style="display: none" class="container">
 	    <div class="row style="text-align:center">
 		<div class="col-md-2 col-sm-2">
-			<img src="ekal-logo.png" width="50%">
+			<!-- <img src="ekal-logo.png" width="50%"> -->
 		</div>
 		<div class="col-md-8 col-sm-8" style="text-align:left">
-			<span><strong>इंटेलिल्थ हेल्पलाइन </strong></span>
+			<span><strong>युनिसेफ-इंटेलहेल्थ हेल्पलाइन</strong></span>
 			<br>
-			<span ><strong>Intelehealth Helpline</strong></span>
+			<span ><strong>Unicef-Intelehealth Helpline</strong></span>
 		</div>
 		<div class="col-md-2 col-sm-2 pull-right" >
 			<img src="ih-logo.png" width="50%">
@@ -139,10 +139,10 @@ color:black;
                 </div>
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
-		<div style="text-align:center">
+		<!-- <div style="text-align:center">
 			Intelehealth Helpline Number - +911141236457
 	
-		</div>
+		</div> -->
 
                </div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://helpline.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://uniceftraining.intelehealth.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -202,7 +202,9 @@ var kkN=[];
 
 
                                     $('#visit_details').text('पेशेंट ID / Patient ID: '+data.openMRSID+ " | दिनांक / Date of visit: "+data.visitDate);
-                                    $('#vitals').html('<b><u><span style="font-size:15pt;">नब्ज / Vitals </span></u></b><br>Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+ ' | Respiratory Rate: '+ data.respRate+"<br>");
+                                    $('#vitals').html('<b>Vitals</b><br> Height(cm): '+ parseInt(data.height).toFixed(0) +' | Weight(kg): '+ parseInt(data.weight).toFixed(0) +' | BMI: '+ bmi.toFixed(2) +
+                                    ' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
+                                    ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -483,12 +485,7 @@ console.log(k2h2);
 		
 	{		columns: [
         {
-           image: 'ss_logo',
-width:60,
-height:60
-        },
-        {
-		text: 'इंटेलिल्थ हेल्पलाइन\n Intelehealth Helpline', fontSize:12
+		text: 'युनिसेफ-इंटेलहेल्थ हेल्पलाइन\n Unicef-Intelehealth Helpline', fontSize:12
         },
  {
            image: 'nhm_logo',
@@ -599,14 +596,14 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://helpline.ekalarogya.org/preApi/ih-logo.png',
-ss_logo: 'https://helpline.ekalarogya.org/preApi/ekal-logo.png'
+nhm_logo : 'https://uniceftraining.intelehealth.org/preApi/ih-logo.png',
+ss_logo: ''
 },
 defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'Intelehealth Helpline Number -  +911141236457', alignment:'center'}
+footer : {}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 

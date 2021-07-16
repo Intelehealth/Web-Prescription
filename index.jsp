@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Intelehealth Helpline Telemedicine Project</h3>
+                <h4>Unicef-Intelehealth Helpline Telemedicine Project</h3>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://helpline.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://uniceftraining.intelehealth.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -173,16 +173,18 @@ color:black;}
                                 {
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b>"+data.name+"</b>");
+                                    $('#patient_name').html("<b>"+data.name.replaceAll(",", " ")+"</b>");
                                     $('#patient_details').text('Age: '+data.age + " | Gender: "+data.gender);
                                     $('#address_and_contact').text('Address: ' + data.address);
-                                    wt = parseFloat(data.weight);
-                                    ht = parseInt(data.height)/100;
+                                    wt = data.weight;
+                                    ht = data.height/100;
                                     bmi = wt / (ht * ht);
 
 
                                     $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
-                                    $('#vitals').html('<b>Vitals</b><br> Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+ ' | Respiratory Rate: '+ data.respRate+"<br>");
+                                    $('#vitals').html('<b>Vitals</b><br> Height(cm): '+ parseInt(data.height).toFixed(0) +' | Weight(kg): '+ parseInt(data.weight).toFixed(0) +' | BMI: '+ bmi.toFixed(2) +
+                                    ' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
+                                    ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -303,7 +305,7 @@ color:black;}
 
 
 
-                                    var docName = data.doctorName;
+                                    var docName = data.doctorName.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
@@ -361,7 +363,7 @@ color:black;}
 
                                                 }
                                     }
-                                    fullDets+=qual+","+specialization+"<br>";
+                                    fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
                                     //fullDets+=phoneNumber+"<br>";
                                    // fullDets+=email+"<br>";
 
@@ -540,7 +542,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'Intelehealth Helpline Telemedicine Project',
+                'Unicef-Intelehealth Helpline Telemedicine Project',
                 {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
