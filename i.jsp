@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			SVHM Telechikitsa Helpline Number - +911141236457
+			SVHM Telechikitsa Helpline Number - +911206824491
 	
 		</div>
 
@@ -608,7 +608,7 @@ defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'SVHM Telechikitsa Helpline Number -  +911141236457', alignment:'center'}
+footer : {text : 'SVHM Telechikitsa Helpline Number -  +911206824491', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
