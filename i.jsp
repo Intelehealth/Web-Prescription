@@ -84,12 +84,12 @@ color:black;
         <div id="prescription" style="display: none" class="container">
 	    <div class="row style="text-align:center">
 		<div class="col-md-2 col-sm-2">
-			<img src="svhm.png" width="50%">
+			<img src="msf.png" width="50%">
 		</div>
             <div class="col-md-8 col-sm-8" style="text-align:center">
-                <span><strong>एसव्हीएचएम टेलीचिकित्सा</strong></span>
+                <span><strong>एमएसएफ आरोग्य भारत</strong></span>
                 <br>
-                <span ><strong>SVHM Telechikitsa</strong></span>
+                <span ><strong>MSF Arogya Bharat</strong></span>
             </div>
             <div class="col-md-2 col-sm-2 pull-right" >
                 <img src="ih-logo.png" width="50%">
@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			SVHM Telechikitsa Helpline Number - +911206824491
+			MSF Arogya Bharat Helpline Number - 
 	
 		</div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://svhmtraining.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://msftraining.intelehealth.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -490,7 +490,7 @@ width:60,
 height:60
         },
         {
-		text: 'एसव्हीएचएम टेलीचिकित्सा\n SVHM Telechikitsa', fontSize:12
+		text: 'एमएसएफ आरोग्य भारत\n MSF Arogya Bharat', fontSize:12
         },
 
  {
@@ -601,14 +601,14 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://svhmtraining.intelehealth.org/preApi/ih-logo.png',
-ss_logo: 'https://svhmtraining.intelehealth.org/preApi/svhm.png'
+nhm_logo : 'https://msftraining.intelehealth.org/preApi/ih-logo.png',
+ss_logo: 'https://msftraining.intelehealth.org/preApi/msf.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'SVHM Telechikitsa Helpline Number -  +911206824491', alignment:'center'}
+footer : {text : 'MSF Arogya Bharat Helpline Number -  ', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
