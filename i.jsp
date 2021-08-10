@@ -84,12 +84,12 @@ color:black;
         <div id="prescription" style="display: none" class="container">
 	    <div class="row style="text-align:center">
 		<div class="col-md-2 col-sm-2">
-			<img src="msf.png" width="50%">
+			<img src="uninhibited.png" width="50%">
 		</div>
             <div class="col-md-8 col-sm-8" style="text-align:center">
-                <span><strong>एमएसएफ आरोग्य भारत</strong></span>
+                <span><strong>हेलो साथी हेल्पलाइन</strong></span>
                 <br>
-                <span ><strong>MSF Arogya Bharat</strong></span>
+                <span ><strong>Hello Sathi Helpline</strong></span>
             </div>
             <div class="col-md-2 col-sm-2 pull-right" >
                 <img src="ih-logo.png" width="50%">
@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			MSF Arogya Bharat Helpline Number - +9118003094144
+			Hello Sathi Helpline Number -
 	
 		</div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://msftraining.intelehealth.org/prescription/prescription/visitData",
+                             url: "http://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -490,7 +490,7 @@ width:60,
 height:60
         },
         {
-		text: 'एमएसएफ आरोग्य भारत\n MSF Arogya Bharat', fontSize:12
+		text: 'हेलो साथी हेल्पलाइन\n Hello Sathi Helpline', fontSize:12
         },
 
  {
@@ -601,14 +601,14 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://msftraining.intelehealth.org/preApi/ih-logo.png',
-ss_logo: 'https://msftraining.intelehealth.org/preApi/msf.png'
+nhm_logo : 'http://hellosathi.uninhibited.org.in/preApi/ih-logo.png',
+ss_logo: 'http://hellosathi.uninhibited.org.in/preApi/uninhibited.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'MSF Arogya Bharat Helpline Number - +9118003094144', alignment:'center'}
+footer : {text : 'Hello Sathi Helpline Number - ', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
