@@ -66,7 +66,7 @@ color:black;}
             Введите идентификатор пациента <input type="text" style="line-height: 30px;border-radius:5px;" name="patientId" id="patientId">
         <br>
         <br>
-        <button type="button" class="btn btn-info" style="line-height: 30px;text-align:center;width:150px;" onclick="checkD();">Получить рецепт</button>
+        <button type="button" class="btn btn-info" style="line-height: 30px;text-align:center;width:160px;" onclick="checkD();">Получить рецепт</button>
         <br>
         <br>
         <div id="errDesc" style="color:red;font-size:x-large">
@@ -182,7 +182,7 @@ color:black;}
 
 
                                     $('#visit_details').text('Идентификатор пациента: '+data.openMRSID+ " | Дата посещения: "+data.visitDate);
-                                    $('#vitals').html('<b>Vitals</b><br> Высота (см): '+ parseInt(data.height).toFixed(0) +' | Вес (кг): '+ parseInt(data.weight).toFixed(0) +' | ИМТ: '+ bmi.toFixed(2) +
+                                    $('#vitals').html('<b>Жизненно важные показатели</b><br> Высота (см): '+ parseInt(data.height).toFixed(0) +' | Вес (кг): '+ parseInt(data.weight).toFixed(0) +' | ИМТ: '+ bmi.toFixed(2) +
                                     ' | Кровяное давление: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): '+ data.pulseRate+
                                     ' | Температура (F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): '+ data.spo2 + ' | Частота дыхания: '+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
@@ -566,7 +566,7 @@ k2h2 = tmpComplaints.join("\n");
         },
 
         {
-            stack: [{text:'Vitals', bold:true,fontSize:14},
+            stack: [{text:'Жизненно важные показатели', bold:true,fontSize:14},
             {text:$('#vitals').text().slice(6)+"\n\n"}
             ]
 
