@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "http://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -601,8 +601,8 @@ height:38
 	
     },
     images: {
-nhm_logo : 'http://hellosathi.uninhibited.org.in/preApi/ih-logo.png',
-ss_logo: 'http://hellosathi.uninhibited.org.in/preApi/uninhibited.png'
+nhm_logo : 'https://hellosathi.uninhibited.org.in/preApi/ih-logo.png',
+ss_logo: 'https://hellosathi.uninhibited.org.in/preApi/uninhibited.png'
 },
 defaultStyle: {
 font: 'Rajdhani',

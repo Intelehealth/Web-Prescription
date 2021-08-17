@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "http://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
