@@ -267,7 +267,9 @@ var staticAdvice=";दवा समय पर खाएं;हरी सब्�
                           console.log("ktemp.substr(2)....", ktemp.length)
 				 kk = ktemp.substr(2)+staticAdvice 
 				console.log("kk",kk)
-				kk = ktemp.length > 1 ?kk.replace("; ", ""): kk.replace(";","")
+                if(kk.substring(0,1)==";") {
+                    kk = ktemp.length > 1 ?kk.replace("; ", ""): kk.replace(";","")
+                }
 				kk2 = "<ul><li>"+kk.replaceAll(";","</li><li>")+"</li></ul>"
 
 				console.log("kk2",kk2)	
