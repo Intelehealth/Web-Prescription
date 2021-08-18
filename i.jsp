@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			Hello Sathi Helpline Number -
+			Hello Sathi Helpline Number - +918046114321
 	
 		</div>
 
@@ -608,7 +608,7 @@ defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'Hello Sathi Helpline Number - ', alignment:'center'}
+footer : {text : 'Hello Sathi Helpline Number - +918046114321', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
