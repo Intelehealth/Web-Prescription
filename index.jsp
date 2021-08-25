@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Hello Sathi Helpline Project</h4>
+                <h4>Hello Saathi Helpline Project</h4>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://hellosaathi.uninhibited.org.in/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),

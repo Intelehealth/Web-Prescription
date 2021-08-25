@@ -89,7 +89,7 @@ color:black;
             <div class="col-md-8 col-sm-8" style="text-align:center">
                 <span><strong>हेलो साथी हेल्पलाइन</strong></span>
                 <br>
-                <span ><strong>Hello Sathi Helpline</strong></span>
+                <span ><strong>Hello Saathi Helpline</strong></span>
             </div>
             <div class="col-md-2 col-sm-2 pull-right" >
                 <img src="ih-logo.png" width="50%">
@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			Hello Sathi Helpline Number - +918046114321
+			Hello Saathi Helpline Number - +918046114321
 	
 		</div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://hellosathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://hellosaathi.uninhibited.org.in/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -492,7 +492,7 @@ width:60,
 height:60
         },
         {
-		text: 'हेलो साथी हेल्पलाइन\n Hello Sathi Helpline', fontSize:12
+		text: 'हेलो साथी हेल्पलाइन\n Hello Saathi Helpline', fontSize:12
         },
 
  {
@@ -603,14 +603,14 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://hellosathi.uninhibited.org.in/preApi/ih-logo.png',
-ss_logo: 'https://hellosathi.uninhibited.org.in/preApi/uninhibited.png'
+nhm_logo : 'https://hellosaathi.uninhibited.org.in/preApi/ih-logo.png',
+ss_logo: 'https://hellosaathi.uninhibited.org.in/preApi/uninhibited.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'Hello Sathi Helpline Number - +918046114321', alignment:'center'}
+footer : {text : 'Hello Saathi Helpline Number - +918046114321', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
