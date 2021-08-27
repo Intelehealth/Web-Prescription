@@ -87,7 +87,7 @@ color:black;}
                                             &nbsp;
                                         </div>
                                         <div class="col-md-5 col-sm-3">
-                                            электронный рецепт
+                                            Эпикриз выписки
                                         </div>
                                         <div class="col-md-3 co-sm-3">
                                             <button class="btn btn-primary" onclick="createPDF();" >Скачать рецепт</button>
@@ -101,25 +101,26 @@ color:black;}
 
             <br>
             <div id="detailDiv" style="margin:0px">
-            <p id="patient_name" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
-                <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
-                <p id="address_and_contact" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
-                <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-                <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;; padding: 0px;"></p></b>
-                <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
-              <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
-                <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-                <p id="rx_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-                <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
-                <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
-                <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
-                <div style="text-align:right;margin-right:50px;margin-top:0px;" >
-                <span style="font-size:25px;padding: 0px;" id="docSign">
-
+                <p id="patient_name" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
+                    <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
+                    <p id="address_and_contact" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
+                    <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <p id="medical_history" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <p id="objective_data" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;; padding: 0px;"></p></b>
+                    <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
+                    <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <p id="rx_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+    
+                    <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+    
+                    <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+    
+                    <div style="text-align:right;margin-right:50px;margin-top:0px;" >
+                    <span style="font-size:25px;padding: 0px;" id="docSign">
+    
                 </span>
                 <br>
                 <div class="pull-right" id="docDetail">
@@ -174,15 +175,15 @@ color:black;}
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
                                     $('#patient_name').html("<b>"+data.name.replaceAll(",", " ")+"</b>");
-                                    $('#patient_details').text('Возраст: '+data.age + " | Пол: "+data.gender);
-                                    $('#address_and_contact').text('Адрес: ' + data.address);
+                                    $('#patient_details').html('Дата рождения: '+data.age + "&nbsp;&nbsp; Пол: "+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
+                                    $('#address_and_contact').html('Адрес проживания: <br>' + data.address);
                                     wt = data.weight;
                                     ht = data.height/100;
                                     bmi = wt / (ht * ht);
 
 
-                                    $('#visit_details').text('Идентификатор пациента: '+data.openMRSID+ " | Дата посещения: "+data.visitDate);
-                                    $('#vitals').html('<b>Жизненно важные показатели</b><br> Высота (см): '+ parseInt(data.height).toFixed(0) +' | Вес (кг): '+ parseInt(data.weight).toFixed(0) +' | ИМТ: '+ bmi.toFixed(2) +
+                                    $('#visit_details').html('Идентификатор пациента: '+data.openMRSID+ "&nbsp;&nbsp;&nbsp;&nbsp;Время и дата визита: "+data.visitDate);
+                                    $('#vitals').html('<b>Общее состояние</b><br> Высота (см): '+ parseInt(data.height).toFixed(0) +' | Вес (кг): '+ parseInt(data.weight).toFixed(0) +' | ИМТ: '+ bmi.toFixed(2) +
                                     ' | Кровяное давление: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): '+ data.pulseRate+
                                     ' | Температура (F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): '+ data.spo2 + ' | Частота дыхания: '+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
@@ -210,7 +211,13 @@ color:black;}
                  //                       }
                   //                  }
 
-                                    $('#complaints_heading').html('<b><u>Подача жалобы</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
+                                     $('#complaints_heading').html('<b><u>Жалобы</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
+                                    
+                                    let medicalHistory = data.medicalHistory.replaceAll(".","<br>");
+                                    $('#medical_history').html('<b><u>Медицинская история</u></b><br><div style="font-size:14px;">'+medicalHistory+"<br></div>")
+                                    
+                                    $('#objective_data').html('<b><u>Объективные данные</u></b><br><div style="font-size:14px;">'+data.complaint+"<br></div>")
+                                    
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
                                         $('#diagnosis_heading').html('<b><u>Диагностика</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim().substring(1)+"<br></div>");
@@ -219,27 +226,19 @@ color:black;}
                                     {
                                     $('#diagnosis_heading').html('<b><u>Диагностика</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim()+"<br></div>");
                                     }
-                                    if(data.medication.substring(0,1)==';')
+                                    if(data.medication.substring(0,1)==';' || data.testsAdvised.substring(0,1)==';')
                                     {
-                                         $('#rx_heading').html('<b><u>Лекарства</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+"<br></div>");
+                                         $('#rx_heading').html('<b><u>Лечение</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+ "<br>"+data.testsAdvised.trim().substring(1)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#rx_heading').html('<b><u>Лекарства</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br></div>");
+                                        $('#rx_heading').html('<b><u>Лечение</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br>"+data.testsAdvised.trim()+ "<br></div>");
 
                                     }
 
-                                    if(data.testsAdvised.substring(0,1)==';')
-                                    {
-                                        $('#tests_heading').html('<b><u>Рекомендуемое (ые) исследование (я)</u></b><br><div style="font-size:14px;">'+data.testsAdvised.trim().substring(1)+"<br></div>");
+                                    $('#tests_heading').html('<b><u>Физическое обследование</u></b><br><div style="font-size:14px;">'+data.status+"<br></div>");
 
-                                    }
-                                    else
-                                    {
-                                        $('#tests_heading').html('<b><u>Рекомендуемое (ые) исследование (я)</u></b><br><div style="font-size:14px;">'+data.testsAdvised.trim()+"<br></div>");
-
-                                    }
                                     if(data.medicalAdvice.substring(0,1)==';')
                                     {
 
@@ -262,7 +261,7 @@ color:black;}
 																				     
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
     
-                                        $('#advice_heading').html('<b><u>Общий совет</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>Рекомендации</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
 
 
                                     }
@@ -286,7 +285,7 @@ color:black;}
 					// console.log(killers)
 					
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                        $('#advice_heading').html('<b><u>Общий совет</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>Рекомендации</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
 
 
                                     }
@@ -294,11 +293,11 @@ color:black;}
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
 
-                                        $('#follow_up_heading').html('<b><u>Дата последующего наблюдения</u></b><br><div style="font-size:14px;">'+data.followupNeeded.trim().substring(1).replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>Дата следующего обследования</u></b><br><div style="font-size:14px;">'+data.followupNeeded.trim().substring(1).replace(",","<br>")+"<br></div>");
                                     }
                                     else
                                     {
-                                        $('#follow_up_heading').html('<b><u>Дата последующего наблюдения</u></b><br><div style="font-size:14px;">'+data.followupNeeded.trim().replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>Дата следующего обследования</u></b><br><div style="font-size:14px;">'+data.followupNeeded.trim().replace(",","<br>")+"<br></div>");
 
                                     }
 
@@ -417,7 +416,7 @@ function buildTableBody(data, columns) {
 var j = $('#follow_up_heading').text().slice(28).split(" ");
 j.shift();
 
-		    var tmpK = $('#advice_heading').html().replace('<b><u>Общий совет</u></b><br><div style="font-size:14px;">','')
+		    var tmpK = $('#advice_heading').html().replace('<b><u>Рекомендации</u></b><br><div style="font-size:14px;">','')
 		    nest = tmpK.split("<br>")
 		    console.log(nest);
 		    videoAddresses = [];
@@ -543,7 +542,7 @@ k2h2 = tmpComplaints.join("\n");
 
             stack: [
                 'Горячая линия по телемедицине',
-                {text: 'электронный рецепт', style: 'subheader'},
+                {text: 'Эпикриз выписки', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
             style: 'header'
@@ -559,19 +558,35 @@ k2h2 = tmpComplaints.join("\n");
             ]
         },
         {
-            stack: [{text:'Подача жалобы', bold:true,fontSize:14},
+            stack: [{text:'Жалобы', bold:true,fontSize:14},
 					  {text: k2h2, lineHeight:.75} ]
 //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
         },
-
         {
-            stack: [{text:'Жизненно важные показатели', bold:true,fontSize:14},
-            {text:$('#vitals').text().slice(6)+"\n\n"}
-            ]
+            stack: [{text:'Медицинская история', bold:true,fontSize:14, lineHeight:1},
+            {text:$('#medical_history').text().slice(19)+"\n\n"}]
+
+        },
+        {
+            stack: [{text:'Объективные данные', bold:true,fontSize:14, lineHeight:1},
+           {text:$('#objective_data').text().slice(18)+"\n\n"}]
 
         },
 
+        {
+            stack: [{text:'Общее состояние', bold:true,fontSize:14},
+            {text:$('#vitals').text().slice(15)+"\n\n"}
+            ]
+
+        },
+        {
+            stack: [
+
+            {text:'Физическое обследование', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#tests_heading').text().slice(23),lineHeight:2}]
+
+        },
         {
             stack: [
 
@@ -583,23 +598,14 @@ k2h2 = tmpComplaints.join("\n");
          {
             stack: [
 
-            {text:'Лекарства', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#rx_heading').text().slice(9),lineHeight:2}]
+            {text:'Лечение', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#rx_heading').text().slice(7)+"\n\n"}]
 
         },
-
         {
             stack: [
 
-            {text:'Рекомендуемое (ые) исследование (я)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#tests_heading').text().slice(35),lineHeight:2}]
-
-        },
-
-        {
-            stack: [
-
-            {text:'Общий совет', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:'Рекомендации', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
 		    k9,
 		    ]
 
@@ -608,7 +614,7 @@ k2h2 = tmpComplaints.join("\n");
          {
             stack: [
 
-            {text:'Дата последующего наблюдения', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:'Дата следующего обследования', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
             {text:$('#follow_up_heading').text().slice(28).split(" ")[0]},
             {text:j.join(" ") , lineHeight:2},
             ]
