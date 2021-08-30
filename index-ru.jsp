@@ -105,6 +105,7 @@ color:black;}
                     <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
                     <p id="address_and_contact" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
                     <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                    <p id="date_of_visit" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
                     <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                     <p id="medical_history" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                     <p id="objective_data" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
@@ -174,18 +175,20 @@ color:black;}
                                 {
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b>"+data.name.replaceAll(",", " ")+"</b>");
-                                    $('#patient_details').html('Дата рождения: '+data.age + "&nbsp;&nbsp; Пол: "+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
-                                    $('#address_and_contact').html('Адрес проживания: <br>' + data.address);
+                                    $('#patient_name').html("<b>Полное имя</b>("+data.name+")");
+                                    $('#patient_details').html('Дата рождения: &nbsp;'+data.age + "&nbsp;&nbsp;&nbsp;Пол: &nbsp;"+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
+                                    $('#address_and_contact').html('Адрес проживания: &nbsp<br>' + data.address);
+                                    $('#visit_details').html('Идентификатор пациента: &nbsp;'+data.citizenId+ "&nbsp;&nbsp; ID OpenMRS: &nbsp;"+data.openMRSID);
+                                    $('#date_of_visit').html("Время и дата визита: &nbsp;"+data.visitDate);
                                     wt = data.weight;
                                     ht = data.height/100;
-                                    bmi = wt / (ht * ht);
-
-
-                                    $('#visit_details').html('Идентификатор пациента: '+data.openMRSID+ "&nbsp;&nbsp;&nbsp;&nbsp;Время и дата визита: "+data.visitDate);
-                                    $('#vitals').html('<b>Общее состояние</b><br> Высота (см): '+ parseInt(data.height).toFixed(0) +' | Вес (кг): '+ parseInt(data.weight).toFixed(0) +' | ИМТ: '+ bmi.toFixed(2) +
-                                    ' | Кровяное давление: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): '+ data.pulseRate+
-                                    ' | Температура (F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): '+ data.spo2 + ' | Частота дыхания: '+ data.respRate+"<br>");
+                                    bmi = 0.0;
+                                    if(wt && ht) {
+                                        bmi = wt / (ht * ht);
+                                    }
+                                    $('#vitals').html('<b>Общее состояние</b><br> Высота (см): &nbsp;'+ parseInt(data.height).toFixed(0) +' | Вес (кг): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | ИМТ: &nbsp;'+ bmi.toFixed(2) +
+                                    ' | Кровяное давление: &nbsp;'+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): &nbsp;'+ data.pulseRate+
+                                    ' | Температура (F): &nbsp;'+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): &nbsp;'+ data.spo2 + ' | Частота дыхания: &nbsp;'+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -213,10 +216,10 @@ color:black;}
 
                                      $('#complaints_heading').html('<b><u>Жалобы</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
                                     
-                                    let medicalHistory = data.medicalHistory.replaceAll(".","<br>");
-                                    $('#medical_history').html('<b><u>Медицинская история</u></b><br><div style="font-size:14px;">'+medicalHistory+"<br></div>")
+                                    let medicalHistory = data.medicalHistory?.replaceAll(".","<br>");
+                                    $('#medical_history').html('<b><u>Медицинская история</u></b><br><div style="font-size:14px;">'+medicalHistory+"<br>")
                                     
-                                    $('#objective_data').html('<b><u>Объективные данные</u></b><br><div style="font-size:14px;">'+data.complaint+"<br></div>")
+                                    $('#objective_data').html('<b><u>Объективные данные</u></b><br><div style="font-size:14px;">'+data.complaint+"<br>")
                                     
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
@@ -228,16 +231,16 @@ color:black;}
                                     }
                                     if(data.medication.substring(0,1)==';' || data.testsAdvised.substring(0,1)==';')
                                     {
-                                         $('#rx_heading').html('<b><u>Лечение</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+ "<br>"+data.testsAdvised.trim().substring(1)+"<br></div>");
+                                         $('#rx_heading').html('<b><u>Лечение</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+ "<br>"+data.testsAdvised.trim().substring(1)+"<br>");
 
                                     }
                                     else
                                     {
-                                        $('#rx_heading').html('<b><u>Лечение</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br>"+data.testsAdvised.trim()+ "<br></div>");
+                                        $('#rx_heading').html('<b><u>Лечение</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br>"+data.testsAdvised.trim()+ "<br>");
 
                                     }
-
-                                    $('#tests_heading').html('<b><u>Физическое обследование</u></b><br><div style="font-size:14px;">'+data.status+"<br></div>");
+                                    let physicalExamination = data.physicalExamination?.replaceAll(".","<br>");
+                                    $('#tests_heading').html('<b><u>Физическое обследование</u></b><br><div style="font-size:14px;">'+physicalExamination+"<br>");
 
                                     if(data.medicalAdvice.substring(0,1)==';')
                                     {
@@ -463,6 +466,14 @@ var videoLinkPos = videoDescriptor.indexOf("video link")
 		    
 videoDescriptor = videoDescriptor.substr(0,videoLinkPos -1)
 var docDe = $('#docDetail').html().replaceAll("<br>","\n");
+var temp = $('#medical_history').html().replace('<b><u>Медицинская история</u></b><br><div style="font-size:14px;">','');
+var medical_history = temp.replaceAll("<br>","\n").replaceAll("</div>","");
+var temp1 = $('#objective_data').html().replace('<b><u>Объективные данные</u></b><br><div style="font-size:14px;">','');
+var objective_data = temp1.replaceAll('<b>','').replaceAll('</b>','').replace('<br>','\n').replaceAll(".<br>","\n").replaceAll("<br></div>","");
+var temp2 = $('#tests_heading').html().replace('<b><u>Физическое обследование</u></b><br><div style="font-size:14px;">','');
+var tests_heading = temp2.replaceAll("<br>","\n").replaceAll("</div>","\n");
+var temp3 = $('#rx_heading').html().replace('<b><u>Лечение</u></b><br><div style="font-size:14px;">','');
+var treatment = temp3.replaceAll("<br>","\n").replaceAll("</div>","");
 
                 var fonts = {
    Asem: {
@@ -552,7 +563,8 @@ k2h2 = tmpComplaints.join("\n");
                 {text:$('#patient_name').text(),bold:true,lineHeight: 1.25},
                 {text: $('#patient_details').text(), lineHeight:1.25},
                 {text:$('#address_and_contact').text(), lineHeight:1.25},
-                {text:$('#visit_details').text(), lineHeight:2}
+                {text:$('#visit_details').text(), lineHeight:1.25},
+                {text:$('#date_of_visit').text(), lineHeight:2},
 
 
             ]
@@ -565,12 +577,16 @@ k2h2 = tmpComplaints.join("\n");
         },
         {
             stack: [{text:'Медицинская история', bold:true,fontSize:14, lineHeight:1},
-            {text:$('#medical_history').text().slice(19)+"\n\n"}]
+            medical_history,
+          //  {text:$('#medical_history').text().slice(15)+"\n\n"}
+        ]
 
         },
         {
             stack: [{text:'Объективные данные', bold:true,fontSize:14, lineHeight:1},
-           {text:$('#objective_data').text().slice(18)+"\n\n"}]
+            objective_data,
+        //   {text:$('#objective_data').text().slice(14)+"\n\n"}
+        ]
 
         },
 
@@ -584,8 +600,8 @@ k2h2 = tmpComplaints.join("\n");
             stack: [
 
             {text:'Физическое обследование', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#tests_heading').text().slice(23),lineHeight:2}]
-
+            tests_heading,
+        ]
         },
         {
             stack: [
@@ -599,8 +615,9 @@ k2h2 = tmpComplaints.join("\n");
             stack: [
 
             {text:'Лечение', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#rx_heading').text().slice(7)+"\n\n"}]
-
+            treatment,
+            //    {text:$('#rx_heading').text().slice(9)+"\n\n"}
+        ]
         },
         {
             stack: [
