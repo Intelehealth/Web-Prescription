@@ -236,7 +236,7 @@ var kkN=[];
                                     }
                                     else
                                     {
-                                    $('#diagnosis_heading').html('<b><u>निदान/ Diagnosi</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim()+"<br></div>");
+                                    $('#diagnosis_heading').html('<b><u>निदान/ Diagnosis</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim()+"<br></div>");
                                     }
                                     if(data.medication.substring(0,1)==';')
                                     {
