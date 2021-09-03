@@ -176,7 +176,7 @@ color:black;}
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
                                     $('#patient_name').html("<b>Полное имя</b>("+data.name+")");
-                                    $('#patient_details').html('Дата рождения: &nbsp;'+data.age + "&nbsp;&nbsp;&nbsp;Пол: &nbsp;"+(data.gender === 'M' ? 'Мужчина': data.gender === 'F'? 'Женщина': data.gender));
+                                    $('#patient_details').html('Дата рождения: &nbsp;'+data.birthDate?.replaceAll("-","/") + "&nbsp;&nbsp;&nbsp;Пол: &nbsp;"+(data.gender === 'M' ? 'Мужчина': data.gender === 'F'? 'Женщина': data.gender));
                                     $('#address_and_contact').html('Адрес проживания: &nbsp<br>' + data.address);
                                     $('#visit_details').html('Идентификатор пациента: &nbsp;'+data.citizenId+ "&nbsp;&nbsp; ID OpenMRS: &nbsp;"+data.openMRSID);
                                     $('#date_of_visit').html("Время и дата визита: &nbsp;"+data.visitDate);
