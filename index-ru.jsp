@@ -342,7 +342,17 @@ color:black;}
                                                     }
                                                     if(docAttributes[i].indexOf("specialization") > -1)
                                                     {
-                                                        specialization=docAttributes[i].split(":")[1];
+                                                        if(docAttributes[i].split(":")[1]) {
+                                                            switch(docAttributes[i].split(":")[1]) {
+                                                                case "Pediatrician" : specialization= "педиатр"; break;
+                                                                case "Neonatologist" : specialization= "неонатолог"; break;
+                                                                case "Neuropathologist" : specialization= "невропатолог"; break;
+                                                                case "Family doctor" : specialization= "семейный врач"; break;
+                                                                case "Infectious disease specialist" : specialization= "инфекционист"; break;
+                                                                default: specialization=docAttributes[i].split(":")[1];
+                                                            }
+                                                        }
+                                                        
 
                                                     }
 
