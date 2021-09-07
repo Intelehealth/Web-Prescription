@@ -113,7 +113,7 @@ color:black;
 
         <br>
         <div id="detailDiv" style="margin:0px">
-            <p id="patient_name" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
+            <p id="patient_name" style="font-size:14pt; margin: 0px; padding: 0px;"></p></b>
             <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
             <p id="address_and_contact" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
             <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
@@ -131,9 +131,8 @@ color:black;
 
             <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
-            <div style="text-align:right;margin-right:50px;margin-top:0px;">
-                <span style="font-size:25px;padding: 0px;" id="docSign">
-
+            <div style="text-align:right;margin-right:50px;margin-top:0px;" >
+                <span style="font-size:3rem;padding: 0px;" id="docSign">
                 </span>
                 <br>
                 <div class="pull-right" id="docDetail">
@@ -184,7 +183,7 @@ color:black;
                     else {
                         $('#queryDiv').hide();
                         $('#prescription').show();
-                        $('#patient_name').html("<b>" + data.name + "</b>");
+                        $('#patient_name').html("<b>"+data.name.replaceAll(",", " ") + "</b>");
                         $('#patient_details').text('Age: ' + data.age + " | Gender: " + data.gender);
                         $('#address_and_contact').text('Address: ' + data.address);
                         wt = parseFloat(data.weight);
@@ -297,7 +296,7 @@ color:black;
 
 
 
-                        var docName = data.doctorName;
+                        var docName = data.doctorName.replace(","," ");;
                         var fullDets = "";
                         fullDets += docName;
                         fullDets += "<br>";
@@ -539,7 +538,7 @@ bold: 'Rajdhani-Bold.ttf'
                     },
                     {
                         stack: [
-                            { text: $('#patient_name').text(), bold: true, lineHeight: 1.25 },
+                            { text: $('#patient_name').text(), bold: true,  fontSize: 14,lineHeight: 1.25 },
                             { text: $('#patient_details').text(), lineHeight: 1.25 },
                             { text: $('#address_and_contact').text(), lineHeight: 1.25 },
                             { text: $('#visit_details').text(), lineHeight: 2 }
@@ -607,12 +606,10 @@ bold: 'Rajdhani-Bold.ttf'
 
                     {
                         stack: [
-
-
-                            { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 12, alignment: 'right' },
-                            { text: docDe, alignment: 'right', lineHeight: 1 },
-                            { text: $('#docReg').text(), bold: true, alignment: 'right' }
-                        ]
+                             {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:32,alignment:'right'},
+                            {text:docDe, alignment:'right',lineHeight:1},
+                            {text:$('#docReg').text(), bold:true,alignment:'right'}
+            ]
 
                     },
 
