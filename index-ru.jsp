@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Горячая линия по телемедицине</h3>
+                <h4 style="font-weight: bold;">Телемед</h3>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -86,7 +86,7 @@ color:black;}
                                         <div class="col-md-4 co-sm-4">
                                             &nbsp;
                                         </div>
-                                        <div class="col-md-5 col-sm-3">
+                                        <div class="col-md-5 col-sm-3" style="margin-left: -42px">
                                             Эпикриз выписки
                                         </div>
                                         <div class="col-md-3 co-sm-3">
@@ -562,7 +562,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'Горячая линия по телемедицине',
+                'Телемед',
                 {text: 'Эпикриз выписки', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
