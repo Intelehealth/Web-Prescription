@@ -119,7 +119,7 @@ color:black;
                 <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
               <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;font-size:15pt; padding: 0px;"></p></b>
-                <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
+                <!-- <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p> -->
               <!--<p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>-->
 
                 <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
@@ -524,12 +524,12 @@ height:38
 
         },
 
-        {
-            stack: [{text:'नब्ज / Vitals', bold:true,fontSize:12,decoration:'underline',lineHeight:1},
-            {text:$('#vitals').text().slice(13),lineHeight:2}
-            ]
+        // {
+        //     stack: [{text:'नब्ज / Vitals', bold:true,fontSize:12,decoration:'underline',lineHeight:1},
+        //     {text:$('#vitals').text().slice(13),lineHeight:2}
+        //     ]
 
-        },
+        // },
 
         {
             stack: [
