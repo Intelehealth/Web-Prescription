@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4 style="font-weight: bold;">Telemed</h3>
+                <h4 style="font-weight: bold;">Telemed KG</h3>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -552,7 +552,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'Telemed',
+                'Telemed KG',
                 {text: 'Discharge epicrisis', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
