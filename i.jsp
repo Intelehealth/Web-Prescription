@@ -84,12 +84,12 @@ color:black;
         <div id="prescription" style="display: none" class="container">
 	    <div class="row style="text-align:center">
 		<div class="col-md-2 col-sm-2">
-			<img src="uninhibited.png" width="50%">
+			<img src="ibis-vikalp.png" width="50%">
 		</div>
             <div class="col-md-8 col-sm-8" style="text-align:center">
-                <span><strong>हेलो साथी हेल्पलाइन</strong></span>
+                <span><strong>आईबिस विकल्प हेल्पलाइन</strong></span>
                 <br>
-                <span ><strong>Hello Saathi Helpline</strong></span>
+                <span ><strong>Ibis Vikalp Helpline</strong></span>
             </div>
             <div class="col-md-2 col-sm-2 pull-right" >
                 <img src="ih-logo.png" width="50%">
@@ -131,16 +131,16 @@ color:black;
 
                 <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
-                <div style="text-align:right;margin-right:50px;margin-top:0px;" >
+                 <!-- <div style="text-align:right;margin-right:50px;margin-top:0px;" >
                 <span style="font-size:3rem;padding: 0px;" id="docSign">
                 </span>
                 <br>
-                <div class="pull-right" id="docDetail">
+               <div class="pull-right" id="docDetail">
                 </div>
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
-                </div>
+                </div> -->
 		<div style="text-align:center">
-			Hello Saathi Helpline Number - +918068533343
+			Ibis Vikalp Helpline Number - +918068533343
 	
 		</div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://hellosaathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://training.vikalpindia.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -311,12 +311,12 @@ $('#advice_heading2').html('<b><u>सामान्य सलाह / General A
 
 
 
-                                    var docName = data.doctorName.replace(","," ");
+                                    var docName = data?.doctorName?.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
 
-                                    var docAttributes = data.doctorAttributes.split("|");
+                                    var docAttributes = data?.doctorAttributes?.split("|");
                                     var tmpAttributes = new Array();
 
                                     var qual="";
@@ -324,6 +324,7 @@ $('#advice_heading2').html('<b><u>सामान्य सलाह / General A
                                     var phoneNumber="";
                                     var email="";
                                     var regNumber="";
+                                    if(docAttributes) {
                                     for (i = 0  ; i < docAttributes.length; i++) {
                                                 if(docAttributes[i].indexOf("fontOfSign") > -1)
                                                 {
@@ -369,6 +370,7 @@ $('#advice_heading2').html('<b><u>सामान्य सलाह / General A
 
                                                 }
                                     }
+                                }
                                     fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
                                     //fullDets+=phoneNumber+"<br>";
                                     fullDets+=email+"<br>";
@@ -379,8 +381,8 @@ $('#advice_heading2').html('<b><u>सामान्य सलाह / General A
 
 $('#docSImage').attr('src',  data.imageOfSignature);
 
-console.log('Doc sign',$('#docSign').text(), )
-console.log('font', $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()))
+//console.log('Doc sign',$('#docSign').text(), )
+//console.log('font', $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()))
 
 
 
@@ -397,7 +399,7 @@ console.log('font', $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (mat
 var j = $('#follow_up_heading').text().slice(37).split(" ");
 j.shift();
 
-var docDe = $('#docDetail').html().replaceAll("<br>","\n");
+//var docDe = $('#docDetail').html().replaceAll("<br>","\n");
 
 
 var ll = $('#advice_heading').find("div:first").text();
@@ -492,7 +494,7 @@ width:60,
 height:60
         },
         {
-		text: 'हेलो साथी हेल्पलाइन\n Hello Saathi Helpline', fontSize:12
+		text: 'आईबिस विकल्प हेल्पलाइन\n Ibis Vikalp Helpline', fontSize:12
         },
 
  {
@@ -578,14 +580,14 @@ height:38
         },
 
 
-         {
-            stack: [
-            {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:32,alignment:'right'},
-            {text:docDe, alignment:'right',lineHeight:1},
-            {text:$('#docReg').text(), bold:true,alignment:'right'}
-            ]
+        //  {
+        //     stack: [
+        //     {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:32,alignment:'right'},
+        //     {text:docDe, alignment:'right',lineHeight:1},
+        //     {text:$('#docReg').text(), bold:true,alignment:'right'}
+        //     ]
 
-        },
+        // },
 
 
     ],
@@ -603,14 +605,14 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://hellosaathi.uninhibited.org.in/preApi/ih-logo.png',
-ss_logo: 'https://hellosaathi.uninhibited.org.in/preApi/uninhibited.png'
+nhm_logo : 'http://localhost:8080/Web-Prescription/ih-logo.png',
+ss_logo: 'http://localhost:8080/Web-Prescription/ibis-vikalp.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'Hello Saathi Helpline Number - +918068533343', alignment:'center'}
+footer : {text : 'Ibis Vikalp Helpline Number - +918068533343', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 

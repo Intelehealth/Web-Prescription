@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Hello Saathi Helpline Project</h4>
+                <h4>Ibis Vikalp Helpline Project</h4>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://hellosaathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://training.vikalpindia.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -304,7 +304,7 @@ color:black;}
 
 
 
-                                    var docName = data.doctorName.replace(","," ");
+                                    var docName = data?.doctorName?.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
@@ -541,7 +541,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'SVHM Telechikitsa Project',
+                'Ibis Vikalp Helpline Project',
                 {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
