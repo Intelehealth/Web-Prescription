@@ -605,8 +605,8 @@ height:38
 	
     },
     images: {
-nhm_logo : 'http://localhost:8080/Web-Prescription/ih-logo.png',
-ss_logo: 'http://localhost:8080/Web-Prescription/ibis-vikalp.png'
+nhm_logo : 'https://training.vikalpindia.org/preApi/ih-logo.png',
+ss_logo: 'https://training.vikalpindia.org/preApi/ibis-vikalp.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
