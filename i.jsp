@@ -265,12 +265,12 @@ var kkN=[];
 var staticAdvice=";दवा समय पर खाएं;हरी सब्जियां और फल अधिक मात्रामें खाएं;कोविड -19 उपयुक्त व्यव्हार का पालन करें;दिक्कत  ज्यादा होने पर तुरंत नजदीकी अस्पताल में दिखिए या हेल्पलाइन नंबर पर कॉल करें"
 		                  ktemp = data.medicalAdvice.trim()
                           console.log("ktemp.substr(2)....", ktemp.length)
-				 kk = ktemp.substr(2)+staticAdvice 
-				console.log("kk",kk)
+				 kk = ktemp.substr(2);
+				console.log("kk",kk.length)
                 if(kk.substring(0,1)==";") {
                     kk = ktemp.length > 1 ?kk.replace("; ", ""): kk.replace(";","")
                 }
-				kk2 = "<ul><li>"+kk.replaceAll(";","</li><li>")+"</li></ul>"
+				kk2 = kk.length > 0 ? "<ul><li>"+kk.replaceAll(";","</li><li>")+"</li></ul>" : "";
 
 				console.log("kk2",kk2)	
 					//kk = kk.replaceAll(";","\r\n")
