@@ -84,12 +84,12 @@ color:black;
         <div id="prescription" style="display: none" class="container">
 	    <div class="row style="text-align:center">
 		<div class="col-md-2 col-sm-2">
-			<img src="uninhibited.png" width="50%">
+			<img src="hih-logo.png" width="50%">
 		</div>
             <div class="col-md-8 col-sm-8" style="text-align:center">
-                <span><strong>हेलो साथी हेल्पलाइन</strong></span>
+                <span><strong>हाथों मे हाथ</strong></span>
                 <br>
-                <span ><strong>Hello Saathi Helpline</strong></span>
+                <span ><strong>Hand In Hand</strong></span>
             </div>
             <div class="col-md-2 col-sm-2 pull-right" >
                 <img src="ih-logo.png" width="50%">
@@ -140,7 +140,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			Hello Saathi Helpline Number - +918068533343
+			Hand In Hand Helpline Number -
 	
 		</div>
 
@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://hellosaathi.uninhibited.org.in/prescription/prescription/visitData",
+                             url: "https://training.hihindia.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -492,7 +492,7 @@ width:60,
 height:60
         },
         {
-		text: 'हेलो साथी हेल्पलाइन\n Hello Saathi Helpline', fontSize:12
+		text: 'हाथों मे हाथ\n Hand In Hand', fontSize:12
         },
 
  {
@@ -603,14 +603,14 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://hellosaathi.uninhibited.org.in/preApi/ih-logo.png',
-ss_logo: 'https://hellosaathi.uninhibited.org.in/preApi/uninhibited.png'
+nhm_logo : 'https://training.hihindia.org/preApi/ih-logo.png',
+ss_logo: 'https://training.hihindia.org/preApi/hih-logo.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'Hello Saathi Helpline Number - +918068533343', alignment:'center'}
+footer : {text : 'Hand In Hand Helpline Number - ', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
