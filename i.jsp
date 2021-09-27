@@ -166,7 +166,7 @@ var kkN=[];
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://training.hihindia.org/prescription/prescription/visitData",
+                             url: "https://trn.digitalhih.net/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -603,8 +603,8 @@ height:38
 	
     },
     images: {
-nhm_logo : 'https://training.hihindia.org/preApi/ih-logo.png',
-ss_logo: 'https://training.hihindia.org/preApi/hih-logo.png'
+nhm_logo : 'https://trn.digitalhih.net/preApi/ih-logo.png',
+ss_logo: 'https://trn.digitalhih.net/preApi/hih-logo.png'
 },
 defaultStyle: {
 font: 'Rajdhani',
