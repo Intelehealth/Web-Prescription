@@ -63,10 +63,10 @@ color:black;}
     </head>
     <body>
         <div class="content" id="queryDiv">
-            Введите идентификатор пациента <input type="text" style="line-height: 30px;border-radius:5px;" name="patientId" id="patientId">
+            Введите идентификатор (ID) пациента <input type="text" style="line-height: 30px;border-radius:5px;" name="patientId" id="patientId">
         <br>
         <br>
-        <button type="button" class="btn btn-info" style="line-height: 30px;text-align:center;width:160px;" onclick="checkD();">Получить рецепт</button>
+        <button type="button" class="btn btn-info" style="line-height: 30px;text-align:center;width:252px;" onclick="checkD();">Получить рецепт / назначение</button>
         <br>
         <br>
         <div id="errDesc" style="color:red;font-size:x-large">
@@ -90,7 +90,7 @@ color:black;}
                                             Эпикриз выписки
                                         </div>
                                         <div class="col-md-3 co-sm-3">
-                                            <button class="btn btn-primary" onclick="createPDF();" >Скачать рецепт</button>
+                                            <button class="btn btn-primary" onclick="createPDF();" >Скачать рецепт/назначение</button>
                                         </div>
 
                                 </div>
@@ -168,7 +168,7 @@ color:black;}
                                 {
                                     console.log('Hello World');
 
-                                    $('#errDesc').text('Рецепт не найден');
+                                    $('#errDesc').text('Рецепт / Назначение не найден(о)');
 
                                 }
                                 else
@@ -186,9 +186,9 @@ color:black;}
                                     if(wt && ht) {
                                         bmi = wt / (ht * ht);
                                     }
-                                    $('#vitals').html('<b>Общее состояние</b><br> Высота (см): &nbsp;'+ parseInt(data.height).toFixed(0) +' | Вес (кг): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | ИМТ: &nbsp;'+ bmi.toFixed(2) +
-                                    ' | Кровяное давление: &nbsp;'+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): &nbsp;'+ data.pulseRate+
-                                    ' | Температура (F): &nbsp;'+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): &nbsp;'+ data.spo2 + ' | Частота дыхания: &nbsp;'+ data.respRate+"<br>");
+                                    $('#vitals').html('<b>Общее состояние</b><br> Высота (см): &nbsp;'+ parseInt(data.height).toFixed(0) +' | Вес (кг): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | ИМТ: &nbsp;'+ (bmi.toFixed(2))?.replace('.',',') +
+                                    ' | Кровяное давление: &nbsp;'+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): &nbsp;'+ (data.pulseRate)?.replace('.',',')+
+                                    ' | Температура (F): &nbsp;'+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): &nbsp;'+ (data.spo2)?.replace('.',',') + ' | Частота дыхания: &nbsp;'+ data.respRate?.replace('.',',')+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
