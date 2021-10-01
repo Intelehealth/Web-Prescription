@@ -349,6 +349,10 @@ color:black;}
                                                                 case "Neuropathologist" : specialization= "невропатолог"; break;
                                                                 case "Family doctor" : specialization= "семейный врач"; break;
                                                                 case "Infectious disease specialist" : specialization= "инфекционист"; break;
+                                                                case "Neurologist" : specialization= "Невролог"; break;
+                                                                case "Aids Specialist" : specialization= "Специалист по СПИДу"; break;
+                                                                case "General Physician" : specialization= "Врач общей практики"; break;
+                                                                case "Infectionist" : specialization= "Инфекционист"; break;
                                                                 default: specialization=docAttributes[i].split(":")[1];
                                                             }
                                                         }
