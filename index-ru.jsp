@@ -188,7 +188,7 @@ color:black;}
                                     }
                                     $('#vitals').html('<b>Общее состояние</b><br> Высота (см): &nbsp;'+ parseInt(data.height).toFixed(0) +' | Вес (кг): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | ИМТ: &nbsp;'+ (bmi.toFixed(2))?.replace('.',',') +
                                     ' | Кровяное давление: &nbsp;'+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Пульс (уд / мин): &nbsp;'+ (data.pulseRate)?.replace('.',',')+
-                                    ' | Температура (F): &nbsp;'+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2 (%): &nbsp;'+ (data.spo2)?.replace('.',',') + ' | Частота дыхания: &nbsp;'+ data.respRate?.replace('.',',')+"<br>");
+                                    ' | Температура (C): &nbsp;'+ (Number(data.temperature) > 0 ? Number(data.temperature).toFixed(2)?.replace('.',',') : 0) + ' | SpO2 (%): &nbsp;'+ (data.spo2)?.replace('.',',') + ' | Частота дыхания: &nbsp;'+ data.respRate?.replace('.',',')+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//

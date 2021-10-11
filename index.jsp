@@ -188,7 +188,7 @@ color:black;}
                                     }
                                     $('#vitals').html('<b>General state </b><br> Height(cm): &nbsp;'+ parseInt(data.height).toFixed(0) +' | Weight(kg): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | BMI: &nbsp;'+ bmi.toFixed(2) +
                                     ' | Blood Pressure: &nbsp;'+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): &nbsp;'+ data.pulseRate+
-                                    ' | Body Temperature(F): &nbsp;'+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): &nbsp;'+ data.spo2 + ' | Respiratory Rate: &nbsp;'+ data.respRate+"<br>");
+                                    ' | Body Temperature(C): &nbsp;'+ (Number(data.temperature) > 0 ? Number(data.temperature).toFixed(2) : 0) + ' | SpO2(%): &nbsp;'+ data.spo2 + ' | Respiratory Rate: &nbsp;'+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
