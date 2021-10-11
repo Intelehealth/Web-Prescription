@@ -344,14 +344,12 @@ color:black;}
                                                     {
                                                         if(docAttributes[i].split(":")[1]) {
                                                             switch(docAttributes[i].split(":")[1]) {
-                                                                case "Pediatrician" : specialization= "педиатр"; break;
-                                                                case "Neonatologist" : specialization= "неонатолог"; break;
-                                                                case "Neuropathologist" : specialization= "невропатолог"; break;
-                                                                case "Family doctor" : specialization= "семейный врач"; break;
-                                                                case "Infectious disease specialist" : specialization= "инфекционист"; break;
+                                                                case "Pediatrician" : specialization= "Педиатр"; break;
+                                                                case "Neonatologist" : specialization= "Неонатолог"; break;
+                                                                case "Family doctor" : specialization= "Семейный врач"; break;
+                                                                case "Infectious disease specialist" : specialization= "Специалист по инфекционным заболеваниям"; break;
                                                                 case "Neurologist" : specialization= "Невролог"; break;
                                                                 case "Aids Specialist" : specialization= "Специалист по СПИДу"; break;
-                                                                case "General Physician" : specialization= "Врач общей практики"; break;
                                                                 case "Infectionist" : specialization= "Инфекционист"; break;
                                                                 default: specialization=docAttributes[i].split(":")[1];
                                                             }
