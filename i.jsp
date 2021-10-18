@@ -190,7 +190,7 @@ var kkN=[];
                                 else
                                 {
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b>"+data.name.replaceAll(",", " ")+"</b>");
+                                    $('#patient_name').html("<b>"+data.name.replace(/,/gi, " ")+"</b>");
                                     $('#patient_details').text('उम्र / Age: '+data.age + " | लिंग / Gender: "+data.gender);
 					$('#address_and_contact').text('पता / Address: ' + data.address);
 //                                    $('#address_and_contact').text('राज्य / AState: ' + data.address);
@@ -270,7 +270,7 @@ var staticAdvice=";दवा समय पर खाएं;हरी सब्�
                 if(kk.substring(0,1)==";") {
                     kk = ktemp.length > 1 ?kk.replace("; ", ""): kk.replace(";","")
                 }
-				kk2 = kk.length > 0 ? "<ul><li>"+kk.replaceAll(";","</li><li>")+"</li></ul>" : "";
+				kk2 = kk.length > 0 ? "<ul><li>"+kk.replace(/;/gi,"</li><li>")+"</li></ul>" : "";
 
 				console.log("kk2",kk2)	
 					//kk = kk.replaceAll(";","\r\n")
@@ -397,7 +397,7 @@ console.log('font', $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (mat
 var j = $('#follow_up_heading').text().slice(37).split(" ");
 j.shift();
 
-var docDe = $('#docDetail').html().replaceAll("<br>","\n");
+var docDe = $('#docDetail').html().replace(/<br>/gi,"\n");
 
 
 var ll = $('#advice_heading').find("div:first").text();
@@ -462,7 +462,7 @@ bold: 'Rajdhani-Bold.ttf'
 
 var tmpComplaints = $('#complaints_heading').html().split("<br>");
 for (index =1; index < tmpComplaints.length; index++) {
-n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
+n = tmpComplaints[index].replace(/<div style="font-size:14px;">/gi, "");
         n1 = n.replace("<b>","");
         n2 = n1.replace("</b>","");
         n3 = n2.replace("<u>","");
@@ -545,7 +545,7 @@ height:38
             stack: [
  {text:'दवाएं / Medication(s)', bold:true,decoration: 'underline', fontSize:12,lineHeight:1},
 //            {text:'Medication(s)/दवाएं', bold:true,decoration: 'underline', fontSize:142},
-            {text:$('#rx_heading').text().slice(22).replaceAll(";","\n")+"\n\n",lineHeight:1}]
+            {text:$('#rx_heading').text().slice(22).replace(/;/gi,"\n")+"\n\n",lineHeight:1}]
 
         },
 

@@ -173,7 +173,7 @@ color:black;}
                                 {
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b>"+data.name.replaceAll(",", " ")+"</b>");
+                                    $('#patient_name').html("<b>"+data.name.replace(/,/gi, " ")+"</b>");
                                     $('#patient_details').text('Age: '+data.age + " | Gender: "+data.gender);
                                     $('#address_and_contact').text('Address: ' + data.address);
                                     wt = parseFloat(data.weight);
@@ -462,7 +462,7 @@ var videoDescriptor = $('#advice_heading a:first').parent().text()
 var videoLinkPos = videoDescriptor.indexOf("video link")
 		    
 videoDescriptor = videoDescriptor.substr(0,videoLinkPos -1)
-var docDe = $('#docDetail').html().replaceAll("<br>","\n");
+var docDe = $('#docDetail').html().replace(/<br>/gi,"\n");
 
                 var fonts = {
    Asem: {
@@ -520,7 +520,7 @@ bolditalics:'Terecia.ttf'
 
 var tmpComplaints = $('#complaints_heading').html().split("<br>");
 for (index =1; index < tmpComplaints.length; index++) {
-n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
+n = tmpComplaints[index].replace(/<div style="font-size:14px;">/gi, "");
         n1 = n.replace("<b>","");
         n2 = n1.replace("</b>","");
         n3 = n2.replace("<u>","");
@@ -541,7 +541,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'SVHM Telechikitsa Project',
+                'Hello Saathi Helpline Project',
                 {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
