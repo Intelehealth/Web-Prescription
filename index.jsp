@@ -52,6 +52,25 @@
     src: url('fonts/signature.ttf') ;
 }
 
+@font-face {
+  font-family: 'RobotoItalic';
+  src: url('fonts/Roboto-ThinItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Caveat';
+  src: url('fonts/Caveat-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'Cormorant';
+  src: url('fonts/CormorantInfant-MediumItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: url('fonts/Pacifico-Regular.ttf');
+}
 
 body {
 color:black;
@@ -150,7 +169,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://uniceftraining.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://tele.med.kg/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -176,7 +195,7 @@ color:black;}
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
                                     $('#patient_name').html("<b> Full Name </b>("+data.name+")");
-                                    $('#patient_details').html('Date of birth: &nbsp;'+data.birthDate?.replaceAll("-","/") +  "&nbsp;&nbsp;&nbsp;Gender: &nbsp;"+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
+                                    $('#patient_details').html('Date of birth: &nbsp;'+data.birthDate?.replace(/\-/gi,"/") +  "&nbsp;&nbsp;&nbsp;Gender: &nbsp;"+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
                                     $('#address_and_contact').html('Home address:  &nbsp<br>' + data.address);
                                     $('#visit_details').html('Patient ID: &nbsp;'+data.citizenId+ "&nbsp;&nbsp;&nbsp; OpenMRS ID: &nbsp;"+data.openMRSID);
                                     $('#date_of_visit').html("Date and time of visit: &nbsp;"+data.visitDate);
@@ -216,7 +235,7 @@ color:black;}
 
                                     $('#complaints_heading').html('<b><u>Complaints</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
                                     
-                                    let medicalHistory = data.medicalHistory?.replaceAll(".","<br>");
+                                    let medicalHistory = data.medicalHistory?.replace(/\./g,"<br>");
                                     $('#medical_history').html('<b><u>Medical history</u></b><br><div style="font-size:14px;">'+medicalHistory+"<br>")
                                     
                                     $('#objective_data').html('<b><u>Objective data</u></b><br><div style="font-size:14px;">'+data.complaint+"<br>")
@@ -239,7 +258,7 @@ color:black;}
                                         $('#rx_heading').html('<b><u>Treatment</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br>"+data.testsAdvised.trim()+ "<br>");
 
                                     }
-                                    let physicalExamination = data.physicalExamination?.replaceAll(".","<br>");
+                                    let physicalExamination = data.physicalExamination?.replace(/\./g,"<br>");
                                     $('#tests_heading').html('<b><u>Physical Examination</u></b><br><div style="font-size:14px;">'+physicalExamination+"<br>");
 
                                     if(data.medicalAdvice.substring(0,1)==';')
@@ -465,15 +484,15 @@ var videoDescriptor = $('#advice_heading a:first').parent().text()
 var videoLinkPos = videoDescriptor.indexOf("video link")
 		    
 videoDescriptor = videoDescriptor.substr(0,videoLinkPos -1)
-var docDe = $('#docDetail').html().replaceAll("<br>","\n");
+var docDe = $('#docDetail').html().replace(/<br>/gi,"\n");
 var temp = $('#medical_history').html().replace('<b><u>Medical history</u></b><br><div style="font-size:14px;">','');
-var medical_history = temp.replaceAll("<br>","\n").replaceAll("</div>","");
+var medical_history = temp.replace(/<br>/gi,"\n").replace(/[</div>]/gi,"");
 var temp1 = $('#objective_data').html().replace('<b><u>Objective data</u></b><br><div style="font-size:14px;">','');
-var objective_data = temp1.replaceAll('<b>','').replaceAll('</b>','').replace('<br>','\n').replaceAll(".<br>","\n").replaceAll("<br></div>","");
+var objective_data = temp1.replace(/<b>/gi,'').replace('</b>','').replace('<br>','\n').replace(/\.<br>/gi,"\n").replace(/[<br></div>]/gi,"");
 var temp2 = $('#tests_heading').html().replace('<b><u>Physical Examination</u></b><br><div style="font-size:14px;">','');
-var tests_heading = temp2.replaceAll("<br>","\n").replaceAll("</div>","\n");
+var tests_heading = temp2.replace(/<br>/gi,"\n").replace("</div>","\n");
 var temp3 = $('#rx_heading').html().replace('<b><u>Treatment</u></b><br><div style="font-size:14px;">','');
-var treatment = temp3.replaceAll("<br>","\n").replaceAll("</div>","");
+var treatment = temp3.replace(/<br>/gi,"\n").replace(/[</div>]/gi,"");
 
                 var fonts = {
    Asem: {
@@ -515,6 +534,18 @@ bold:'Terecia.ttf',
 italics:'Terecia.ttf',
 bolditalics:'Terecia.ttf'
 },
+RobotoItalic: {
+    normal: 'Roboto-ThinItalic.ttf'
+},
+Caveat: {
+    normal: 'Caveat-VariableFont_wght.ttf'
+},
+Cormorant: {
+    normal: 'CormorantInfant-MediumItalic.ttf'
+},
+Pacifico: {
+    normal: 'Pacifico-Regular.ttf'
+},
 
 
 
@@ -531,7 +562,7 @@ bolditalics:'Terecia.ttf'
 
 var tmpComplaints = $('#complaints_heading').html().split("<br>");
 for (index =1; index < tmpComplaints.length; index++) {
-n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
+n = tmpComplaints[index].replace(/<div style="font-size:14px;">/gi, "");
         n1 = n.replace("<b>","");
         n2 = n1.replace("</b>","");
         n3 = n2.replace("<u>","");
