@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Intelehealth Helpline Telemedicine Project</h3>
+                <h4>Ekal Telemedicine Project</h3>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://helpline.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://afitraining.ekalarogya.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -182,7 +182,7 @@ color:black;}
 
 
                                     $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
-                                    $('#vitals').html('<b>Vitals</b><br> Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+ ' | Respiratory Rate: '+ data.respRate+"<br>");
+                                    $('#vitals').html('<b>Vitals</b><br>Height(cm): '+data.height+' | Weight(kg): '+data.weight+' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+ ' | Respiratory Rate: '+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -540,7 +540,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'Intelehealth Helpline Telemedicine Project',
+                'Ekal Telemedicine Project',
                 {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
