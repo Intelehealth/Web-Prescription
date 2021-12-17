@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://helpline.ekalarogya.org/prescription/prescription/visitData",
+                             url: "https://afitraining.ekalarogya.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -208,7 +208,7 @@ color:black;}
                  //                       }
                   //                  }
 
-                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
+                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+finalComplaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
                                         $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim().substring(1)+"<br></div>");
@@ -253,7 +253,7 @@ color:black;}
 						}
 						else
 						{
-		                                                killers+= jks[counter] +"<br>";
+		                                                killers+= jks[counter];
 						}
                                          }
                                          console.log(killers)
