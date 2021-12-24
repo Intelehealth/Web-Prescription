@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://afitraining.ekalarogya.org/prescription/prescription/visitData",
+                             url: "https://afi.ekalarogya.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -260,7 +260,7 @@ color:black;}
 																				     
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
     
-                                        $('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+killers+"<br></div>");
 
 
                                     }
@@ -284,7 +284,7 @@ color:black;}
 					 console.log(killers)
 					
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                        $('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+killers+"<br></div>");
 
 
                                     }
@@ -303,7 +303,7 @@ color:black;}
 
 
 
-                                    var docName = data.doctorName;
+                                    var docName = data.doctorName.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
@@ -361,9 +361,9 @@ color:black;}
 
                                                 }
                                     }
-                                    fullDets+=qual+","+specialization+"<br>";
-                                    //fullDets+=phoneNumber+"<br>";
-                                   // fullDets+=email+"<br>";
+                                    fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+                                    fullDets+=phoneNumber+"<br>";
+                                    fullDets+=email+"<br>";
 
                                     //fullDets+=regNumber+"<br>";
 
@@ -415,7 +415,7 @@ function buildTableBody(data, columns) {
 var j = $('#follow_up_heading').text().slice(14).split(" ");
 j.shift();
 
-		    var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><br><div style="font-size:14px;">','')
+		    var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">','')
 		    nest = tmpK.split("<br>")
 		    console.log(nest);
 		    videoAddresses = [];
@@ -558,7 +558,7 @@ k2h2 = tmpComplaints.join("\n");
         },
         {
             stack: [{text:'Presenting complaint', bold:true,fontSize:14},
-					  {text: k2h2, lineHeight:.75} ]
+					  {text: k2h2, lineHeight:2} ]
 //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
         },
@@ -598,7 +598,7 @@ k2h2 = tmpComplaints.join("\n");
             stack: [
 
             {text:'General Advice', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-		    k9,
+            {text:k9,  lineHeight:2}
 		    ]
 
         },
