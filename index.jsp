@@ -558,7 +558,7 @@ k2h2 = tmpComplaints.join("\n");
         },
         {
             stack: [{text:'Presenting complaint', bold:true,fontSize:14},
-					  {text: k2h2, lineHeight:2} ]
+					  {text: k2h2} ]
 //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
         },
@@ -597,8 +597,8 @@ k2h2 = tmpComplaints.join("\n");
         {
             stack: [
 
-            {text:'General Advice', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:k9,  lineHeight:2}
+            {text:'General Advice', bold:true,decoration: 'underline', fontSize:14, lineHeight:1},
+            k9
 		    ]
 
         },
