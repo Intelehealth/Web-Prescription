@@ -178,9 +178,10 @@ color:black;}
                                     $('#address_and_contact').text('Address: ' + data.address);
                                     wt = parseFloat(data.weight);
                                     ht = parseInt(data.height)/100;
-                                    bmi = wt / (ht * ht);
-
-
+                                    bmi = 0.0;
+                                    if(wt && ht) {
+                                         bmi = wt / (ht * ht);
+                                    }
                                     $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
                                     $('#vitals').html('<b>Vitals</b><br>Height(cm): '+data.height+' | Weight(kg): '+data.weight+' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+ ' | Respiratory Rate: '+ data.respRate+"<br>");
                                     complaintString= data.complaint.trim().split("<br/>");
@@ -208,7 +209,7 @@ color:black;}
                  //                       }
                   //                  }
 
-                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
+                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+finalComplaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
                                         $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim().substring(1)+"<br></div>");
@@ -251,16 +252,15 @@ color:black;}
 						if(jks[counter].indexOf("Audio") > -1)
 						{
 						}
-						else
-						{
-		                                                killers+= jks[counter] +"<br>";
+						else if(jks[counter].trim().includes(" "))
+						{                      
+                            killers+= jks[counter] +"<br>";
 						}
                                          }
-                                         console.log(killers)
 																				     
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
     
-                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+killers+"</div>");
 
 
                                     }
@@ -274,7 +274,7 @@ color:black;}
 						if(jks[counter].indexOf("Audio") > -1)
                                                 {
                                                 }
-                                                else
+                                                else if(jks[counter].trim().includes(" "))
                                                 {
 							
 
@@ -284,7 +284,7 @@ color:black;}
 					 console.log(killers)
 					
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+killers+"</div>");
 
 
                                     }
@@ -417,10 +417,9 @@ j.shift();
 
 		    var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">','')
 		    nest = tmpK.split("<br>")
-		    console.log(nest);
 		    videoAddresses = [];
 		    nest.pop();
-		    nest.pop();
+		   // nest.pop();
 		    for(i=0;i < nest.length ; i++) {
 				if(nest[i].indexOf("<") == -1)
 				{
@@ -440,7 +439,7 @@ $('#advice_heading').find('a').each(function() {
 
 k9 = [];
 console.log(videoAddresses);
-
+k9.push("\n");
 for(nn = 0; nn  < nest.length;nn++)
 {
 		   if(videoAddresses[nn] == "#")
@@ -452,8 +451,8 @@ for(nn = 0; nn  < nest.length;nn++)
 		   k9.push({text: nest[nn] + "Video Link ", link:videoAddresses[nn]}) 
 		 }
 											   
-}										   
-											   											   
+}						
+k9.push("\n");										   											   
 
 
 videoAddress =  $('#advice_heading a:first').attr('href')
@@ -530,7 +529,8 @@ n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
 
 }
  tmpComplaints.shift();
-k2h2 = tmpComplaints.join("\n");
+k2h2 = tmpComplaints;
+k2h2.push("\n");
 
 //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -558,7 +558,7 @@ k2h2 = tmpComplaints.join("\n");
         },
         {
             stack: [{text:'Presenting complaint', bold:true,fontSize:14},
-					  {text: k2h2} ]
+            k2h2 ]
 //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
         },
