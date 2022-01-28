@@ -137,16 +137,24 @@ color:black;}
                     <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
     
                     <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-    
-                    <div style="text-align:right;margin-right:50px;margin-top:0px;" >
-                    <span style="font-size:25px;padding: 0px;" id="docSign">
-    
-                </span>
-                <br>
-                <div class="pull-right" id="docDetail">
+                    <div style="text-align: right;margin-top: 0px;width: 100%;">
+                        <div style="float: left;width: 80%;">
+                             <span style="font-size:25px;padding: 0px;" id="docSign"></span>
+                             <br>
+                             <div class="pull-right" id="docDetail">
+                             </div>
+                             <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
+                        </div> 
                 </div>
-                <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
-                </div>
+                        </div> 
+                         <div style="float: right;width: 15%;">
+                             <span style="font-size:25px;padding: 0px;" id="docSign1"></span>
+                             <br>
+                             <div class="pull-right" id="docDetail1">
+                             </div>
+                             <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg1"></p>
+                         </div>
+                     </div>
 
                </div>
 
@@ -326,12 +334,12 @@ color:black;}
 
 
 
-                                    var docName = data.doctorName.replace(","," ");
+                                    var docName = data.remoteDoctorName.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
 
-                                    var docAttributes = data.doctorAttributes.split("|");
+                                    var docAttributes = data.remoteDoctorAttributes.split("|");
                                     var tmpAttributes = new Array();
 
                                     var qual="";
@@ -396,7 +404,7 @@ color:black;}
 
                                                 }
                                     }
-                                    fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+                                    fullDets+= qual?.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
                                     //fullDets+=phoneNumber+"<br>";
                                    // fullDets+=email+"<br>";
 
@@ -406,10 +414,83 @@ color:black;}
                                     $('#docReg').html(regNumber);
 
 $('#docSImage').attr('src',  data.imageOfSignature);
+var docName = data.doctorName.replace(","," ");
+                                    var fullDets ="";
+                                    fullDets+=docName;
+                                    fullDets+="<br>";
+
+                                    var docAttributes = data.doctorAttributes.split("|");
+                                    var tmpAttributes = new Array();
+
+                                    var qual="";
+                                    var specialization="";
+                                    var phoneNumber="";
+                                    var email="";
+                                    var regNumber="";
+                                        for (i = 0  ; i < docAttributes.length; i++) {
+                                                if(docAttributes[i].indexOf("fontOfSign") > -1)
+                                                {
+                                                    $('#docSign1').css('font-family',docAttributes[i].split(":")[1]);
 
 
+                                                }
+                                                if(docAttributes[i].indexOf("textOfSign") > -1)
+                                                {
+                                                    $('#docSign1').text(docAttributes[i].split(":")[1]);
 
 
+                                                }
+
+                                                if((docAttributes[i].indexOf("textOfSign") == -1) && (docAttributes[i].indexOf("fontOfSign") == -1))    {
+                                                    if(docAttributes[i].indexOf("qualification") > -1)
+                                                    {
+                                                        qual=docAttributes[i].split(":")[1];
+
+                                                    }
+                                                    if(docAttributes[i].indexOf("specialization") > -1)
+                                                    {
+                                                        if(docAttributes[i].split(":")[1]) {
+                                                            switch(docAttributes[i].split(":")[1]) {
+                                                                case "Pediatrician" : specialization= "Педиатр"; break;
+                                                                case "Neonatologist" : specialization= "Неонатолог"; break;
+                                                                case "Family doctor" : specialization= "Семейный врач"; break;
+                                                                case "Infectious disease specialist" : specialization= "Специалист по инфекционным заболеваниям"; break;
+                                                                case "Neurologist" : specialization= "Невролог"; break;
+                                                                case "Aids Specialist" : specialization= "Специалист по СПИДу"; break;
+                                                                case "Infectionist" : specialization= "Инфекционист"; break;
+                                                                default: specialization=docAttributes[i].split(":")[1];
+                                                            }
+                                                        }
+                                                        
+                                                    }
+
+                                                    if(docAttributes[i].indexOf("phoneNumber") > -1)
+                                                    {
+                                                        phoneNumber="Phone Number: "+docAttributes[i].split(":")[1];
+
+                                                    }
+
+                                                    if(docAttributes[i].indexOf("emailId") > -1)
+                                                    {
+                                                        email="E-Mail: "+docAttributes[i].split(":")[1];
+
+                                                    }
+                                                    if(docAttributes[i].indexOf("registrationNumber") > -1)
+                                                    {
+                                                        regNumber="<b>Registration No: "+docAttributes[i].split(":")[1]+"</b>";
+
+                                                    }
+
+                                                }
+                                    }
+                                    fullDets+= qual.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+                                    //fullDets+=phoneNumber+"<br>";
+                                   // fullDets+=email+"<br>";
+
+                                    //fullDets+=regNumber+"<br>";
+
+                                    $('#docDetail1').html(fullDets);
+                                    $('#docReg1').html(regNumber);
 
                                 }
                              }
@@ -455,7 +536,7 @@ j.shift();
 		    console.log(nest);
 		    videoAddresses = [];
 		    nest.pop();
-		    nest.pop();
+		    //nest.pop();
 		    for(i=0;i < nest.length ; i++) {
 				if(nest[i].indexOf("<") == -1)
 				{
@@ -488,7 +569,7 @@ for(nn = 0; nn  < nest.length;nn++)
 		 }
 											   
 }										   
-											   											   
+k9.push("\n");									   											   
 
 
 videoAddress =  $('#advice_heading a:first').attr('href')
@@ -497,6 +578,7 @@ var videoLinkPos = videoDescriptor.indexOf("video link")
 		    
 videoDescriptor = videoDescriptor.substr(0,videoLinkPos -1)
 var docDe = $('#docDetail').html().replace(/<br>/gi,"\n");
+var docDe1 = $('#docDetail1').html().replace(/<br>/gi,"\n");
 var temp = $('#medical_history').html().replace('<b><u>Медицинская история</u></b><br><div style="font-size:14px;">','');
 var medical_history = temp.replace(/<br>/gi,"\n").replace(/[</div>]/gi,"");
 var temp1 = $('#objective_data').html().replace('<b><u>Объективные данные</u></b><br><div style="font-size:14px;">','');
@@ -657,7 +739,7 @@ k2h2 = tmpComplaints.join("\n");
             stack: [
 
             {text:'Лечение', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            treatment,
+            treatment+"\n\n",
             //    {text:$('#rx_heading').text().slice(9)+"\n\n"}
         ]
         },
@@ -687,11 +769,20 @@ k2h2 = tmpComplaints.join("\n");
 
           {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
             {text:docDe, alignment:'right',lineHeight:1},
-            {text:$('#docReg').text(), bold:true,alignment:'right'}
+            {text:$('#docReg').text()+"\n\n", bold:true,alignment:'right'}
             ]
 
         },
+        {
+            stack: [
 
+
+          {text: $('#docSign1').text(), font:$('#docSign1').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
+            {text:docDe1, alignment:'right',lineHeight:1},
+            {text:$('#docReg1').text(), bold:true,alignment:'right'}
+            ]
+
+        },
 
 
 
