@@ -335,12 +335,12 @@ color:black;}
 
 
 
-                                    var docName = data.remoteDoctorName.replace(","," ");
+                                    var docName = data?.remoteDoctorName?.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
 
-                                    var docAttributes = data.remoteDoctorAttributes.split("|");
+                                    var docAttributes = data?.remoteDoctorAttributes?.split("|");
                                     var tmpAttributes = new Array();
 
                                     var qual="";
@@ -348,7 +348,7 @@ color:black;}
                                     var phoneNumber="";
                                     var email="";
                                     var regNumber="";
-                                    for (i = 0  ; i < docAttributes.length; i++) {
+                                    for (i = 0  ; i < docAttributes?.length; i++) {
                                                 if(docAttributes[i].indexOf("fontOfSign") > -1)
                                                 {
                                                     $('#docSign').css('font-family',docAttributes[i].split(":")[1]);
@@ -398,9 +398,10 @@ color:black;}
                                    // fullDets+=email+"<br>";
 
                                     //fullDets+=regNumber+"<br>";
-
-                                    $('#docDetail').html(fullDets);
-                                    $('#docReg').html(regNumber);
+                                    if(data?.remoteDoctorName && data?.remoteDoctorAttributes) {  
+                                        $('#docDetail').html(fullDets);
+                                        $('#docReg').html(regNumber);
+                                    }
 
 $('#docSImage').attr('src',  data.imageOfSignature);
                                     var docName = data.doctorName.replace(","," ");
