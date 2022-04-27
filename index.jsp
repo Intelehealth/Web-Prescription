@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Ekal Arogya Helpline Telemedicine Project</h3>
+                <h4>eZAZI Telemedicine Project</h3>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -148,7 +148,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://afitraining.ekalarogya.org/prescription/prescription/visitData",
+                             url: "https://ezazi.intelehealth.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -540,7 +540,7 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'Ekal Arogya Helpline Telemedicine Project',
+                'eZAZI Telemedicine Project',
                 {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
