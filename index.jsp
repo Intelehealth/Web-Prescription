@@ -78,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>MSF Arogya Bharat Project</h4>
+                <h4>MSF Diabetes Care Helpline</h4>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -108,11 +108,12 @@ color:black;}
                 <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;; padding: 0px;"></p></b>
                 <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
               <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
+               <p id="dietType_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+               <p id="weightHistory_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="rx_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
+                <p id="foodAllergy_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;">
                 <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
@@ -184,6 +185,9 @@ color:black;}
                                     $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
                                     $('#vitals').html('<b>Vitals</b><br> Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
                                     ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
+                                    $('#dietType_heading').html('<b><u>Diet Type</u></b><br>');
+                                    $('#weightHistory_heading').html('<b><u>Weight History</u></b><br>')
+                                    $('#foodAllergy_heading').html('<b><u>Food Allergy</u></b><br>')
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -220,23 +224,23 @@ color:black;}
                                     }
                                     if(data.medication.substring(0,1)==';')
                                     {
-                                         $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+"<br></div>");
+                                         $('#rx_heading').html('<b><u>Nutritionist Prescription</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br></div>");
+                                        $('#rx_heading').html('<b><u>Nutritionist Prescription</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br></div>");
 
                                     }
 
                                     if(data.testsAdvised.substring(0,1)==';')
                                     {
-                                        $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">'+data.testsAdvised.trim().substring(1)+"<br></div>");
+                                        $('#tests_heading').html('<b><u>Prescribed Tests</u></b><br><div style="font-size:14px;">'+data.testsAdvised.trim().substring(1)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">'+data.testsAdvised.trim()+"<br></div>");
+                                        $('#tests_heading').html('<b><u>Prescribed Tests</u></b><br><div style="font-size:14px;">'+data.testsAdvised.trim()+"<br></div>");
 
                                     }
                                     if(data.medicalAdvice.substring(0,1)==';')
@@ -579,19 +583,38 @@ k2h2 = tmpComplaints.join("\n");
 
         },
 
+        {
+            stack: [{text:'Diet Type', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#dietType_heading').text().slice(9),lineHeight:2}
+            ]
+
+        },
+        {
+            stack: [{text:'Weight History', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#weightHistory_heading').text().slice(14)}
+            ]
+
+        },
          {
             stack: [
 
-            {text:'Medication(s)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#rx_heading').text().slice(13),lineHeight:2}]
+            {text:'Nutritionist Prescription', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#rx_heading').text().slice(26),lineHeight:2}]
 
         },
 
         {
             stack: [
 
-            {text:'Recommended Investigation(s)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#tests_heading').text().slice(28),lineHeight:2}]
+            {text:'Prescribed Tests', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#tests_heading').text().slice(16),lineHeight:2}]
+
+        },
+        {
+            stack: [
+
+            {text:'Food Allergy', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#foodAllergy_heading').text().slice(12),lineHeight:2}]
 
         },
 

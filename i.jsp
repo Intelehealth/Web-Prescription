@@ -87,9 +87,9 @@ color:black;
 			<img src="msf.png" width="50%">
 		</div>
             <div class="col-md-8 col-sm-8" style="text-align:center">
-                <span><strong>एमएसएफ आरोग्य भारत</strong></span>
+                <span><strong>एमएसएफ डायबिटीज केअर हेल्पलाइन</strong></span>
                 <br>
-                <span ><strong>MSF Arogya Bharat</strong></span>
+                <span ><strong>MSF Diabetes Care Helpline</strong></span>
             </div>
             <div class="col-md-2 col-sm-2 pull-right" >
                 <img src="ih-logo.png" width="50%">
@@ -121,11 +121,12 @@ color:black;
                 <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;font-size:15pt; padding: 0px;"></p></b>
                 <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
               <!--<p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>-->
-
+              <p id="dietType_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+              <p id="weightHistory_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="rx_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-
+                <p id="foodAllergy_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;">
                 <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="advice_heading2" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;display:none"></p>
 
@@ -140,7 +141,7 @@ color:black;
                 <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
                 </div>
 		<div style="text-align:center">
-			MSF Arogya Bharat Helpline Number - +9118003094144
+			MSF Diabetes Care Helpline Number - +9118003094144
 	
 		</div>
 
@@ -204,6 +205,9 @@ var kkN=[];
                                     $('#visit_details').text('पेशेंट ID / Patient ID: '+data.openMRSID+ " | दिनांक / Date of visit: "+data.visitDate);
                                     $('#vitals').html('<b><u><span style="font-size:15pt;">नब्ज / Vitals </span></u></b><br>Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
                                     ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 +' | Respiratory Rate: '+ data.respRate+"<br>");
+                                    $('#dietType_heading').html('<b><u>Diet Type</u></b><br>');
+                                    $('#weightHistory_heading').html('<b><u>Weight History</u></b><br>')
+                                    $('#foodAllergy_heading').html('<b><u>Food Allergy</u></b><br>')
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -490,7 +494,7 @@ width:60,
 height:60
         },
         {
-		text: 'एमएसएफ आरोग्य भारत\n MSF Arogya Bharat', fontSize:12
+		text: 'एमएसएफ डायबिटीज केअर हेल्पलाइन\n MSF Diabetes Care Helpline', fontSize:12
         },
 
  {
@@ -608,7 +612,7 @@ defaultStyle: {
 font: 'Rajdhani',
 fontSize:10
 },
-footer : {text : 'MSF Arogya Bharat Helpline Number - +9118003094144', alignment:'center'}
+footer : {text : 'MSF Diabetes Care Helpline Number - +9118003094144', alignment:'center'}
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
 
