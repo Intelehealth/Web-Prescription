@@ -85,29 +85,36 @@
         </div>
         <br>
         <div id="prescription" style="display: none" class="container">
-            <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4>Arogya Sampada Telemedicine</h3>
+            <div class="row" style="text-align:center">
+                <div class="col-md-2 col-sm-2">
+                    <img src="ih-logo.png" width="50%">
+                </div>
+                <div class="col-md-7 col-sm-8" style="text-align:center">
+                    <span> <strong>Arogya Sampada Telemedicine</strong></span>
+                    <br>
+                    <span>
+                        <strong>आरोग्य संपदा टेलिमेडिसिन</strong>
+                    </span>
+                </div>
+                <div class="col-md-2 col-sm-2 pull-right">
+                    <img src="nas-logo.png" width="40%">
+                </div>
             </div>
             <br>
             <div class="row" style="text-align:center">
 
-                <div class="col-md-4 co-sm-4">
+                <div class="col-md-4 col-sm-4">
                     &nbsp;
                 </div>
-                <div class="col-md-5 col-sm-3">
-                    e-prescription
+                <div class="col-md-3 col-sm-3" style="font-size:14">
+                    <u> <b>ePrescription</b></u>
                 </div>
-                <div class="col-md-3 co-sm-3">
+                <div class="col-md-5 co-sm-3">
                     <button class="btn btn-primary" onclick="createPDF();">Download Prescription</button>
                 </div>
 
             </div>
-
-
             <hr style="height:  18px;">
-
-
-            <br>
             <div id="detailDiv" style="margin:0px">
                 <p id="patient_name" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
                 <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
@@ -246,7 +253,7 @@
                             if (data.testsAdvised.trim().length > 0) {
                                 if (data.testsAdvised.substring(0, 1) == ';') {
                                     let tests = data.testsAdvised.trim().substring(1).replaceAll(";", "<br>")
-                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + tests.trim()+ "<br></div>");
+                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + tests.trim() + "<br></div>");
 
                                 }
                                 else {
@@ -255,7 +262,7 @@
 
                                 }
                             }
-                            if (data.medicalAdvice.trim().length > 0) {
+                            if (data.medicalAdvice.trim().length > 0 && data.medicalAdvice.trim().length !== 1) {
                                 if (data.medicalAdvice.substring(0, 1) == ';') {
 
                                     kk = data.medicalAdvice.trim().substr(1)
@@ -438,7 +445,7 @@
 
                 k9 = [];
                 if (nest.length > 0) {
-                console.log(videoAddresses);
+                    console.log(videoAddresses);
                     k9.push("\n");
                     for (nn = 0; nn < nest.length; nn++) {
                         if (videoAddresses[nn] == "#") {
@@ -453,10 +460,10 @@
                 }
 
                 var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
-                var medications = medication.replaceAll("<br>","\n").replace("</div>","\n");
+                var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n");
 
                 var tmpK = $('#tests_heading').html().replace('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">', '')
-                var tests = tmpK.replaceAll("<br>","\n").replace("</div>","\n");
+                var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n");
 
                 videoAddress = $('#advice_heading a:first').attr('href')
                 var videoDescriptor = $('#advice_heading a:first').parent().text()
@@ -547,9 +554,29 @@
                         {
 
                             stack: [
-                                'Arogya Sampada Telemedicine',
-                                { text: 'e-prescription', style: 'subheader' },
-                                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1, color: 'green' }] }
+
+                                {
+                                    columns: [
+                                        {
+                                            image: 'ih_logo',
+                                            width: 100,
+                                            height: 38
+                                      
+                                        },
+                                        {
+                                            text: 'Arogya Sampada Telemedicine \n आरोग्य संपदा टेलिमेडिसिन', fontSize: 12
+                                        },
+
+                                        {
+                                            image: 'nas_logo',
+                                            width: 60,
+                                            height: 60
+                                        },
+
+                                    ]
+                                },
+                                { text: 'ePrescription', style: 'subheader' },
+                                {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
                             ],
                             style: 'header'
                         },
@@ -646,6 +673,10 @@
                         subheader: {
                             fontSize: 14
                         }
+                    },
+                    images: {
+                        ih_logo: 'https://as.intelehealth.org/preApi/ih-logo.png',
+                        nas_logo: 'https://as.intelehealth.org/preApi/nas-logo.png'
                     },
                     defaultStyle: {
                         font: 'Rajdhani',
