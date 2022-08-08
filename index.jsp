@@ -87,17 +87,17 @@
         <div id="prescription" style="display: none" class="container">
             <div class="row" style="text-align:center">
                 <div class="col-md-2 col-sm-2">
-                    <img src="ih-logo.png" width="50%">
+                    <img src="nas-logo.png" width="50%">
                 </div>
                 <div class="col-md-7 col-sm-8" style="text-align:center">
-                    <span> <strong>Arogya Sampada Telemedicine</strong></span>
+                    <span> <strong>Arogya Sampada</strong></span>
                     <br>
                     <span>
-                        <strong>आरोग्य संपदा टेलिमेडिसिन</strong>
+                        <strong>आरोग्य संपदा</strong>
                     </span>
                 </div>
-                <div class="col-md-2 col-sm-2 pull-right">
-                    <img src="nas-logo.png" width="40%">
+                <div class="col-md-2 col-sm-2">
+                    <img src="ih-logo.png" style="margin-top: 5px;" width="60%">
                 </div>
             </div>
             <br>
@@ -106,11 +106,11 @@
                 <div class="col-md-4 col-sm-4">
                     &nbsp;
                 </div>
-                <div class="col-md-3 col-sm-3" style="font-size:14">
+                <div class="col-md-3 col-sm-3" style="font-size:14;text-align:center">
                     <u> <b>ePrescription</b></u>
                 </div>
                 <div class="col-md-5 co-sm-3">
-                    <button class="btn btn-primary" onclick="createPDF();">Download Prescription</button>
+                    <button class="btn btn-primary" style="margin-left: 30px;" onclick="createPDF();">Download Prescription</button>
                 </div>
 
             </div>
@@ -558,19 +558,19 @@
                                 {
                                     columns: [
                                         {
-                                            image: 'ih_logo',
-                                            width: 100,
-                                            height: 38
+                                            image: 'nas_logo',
+                                            width:60,
+                                            height:60
                                       
                                         },
                                         {
-                                            text: 'Arogya Sampada Telemedicine \n आरोग्य संपदा टेलिमेडिसिन', fontSize: 12
+                                            text: 'Arogya Sampada \n आरोग्य संपदा', fontSize: 12
                                         },
 
                                         {
-                                            image: 'nas_logo',
-                                            width: 60,
-                                            height: 60
+                                            image: 'ih_logo',
+                                            width:100,
+                                            height:38
                                         },
 
                                     ]
@@ -671,7 +671,9 @@
                             margin: [0, 10, 0, 10]
                         },
                         subheader: {
-                            fontSize: 14
+                            fontSize: 14,
+                            alignment: 'center',
+                            margin: [0, 0, 40, 0]
                         }
                     },
                     images: {
