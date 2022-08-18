@@ -1,4 +1,4 @@
-<%@page pageEncoding="UTF-8"%>
+<!-- <%@page pageEncoding="UTF-8"%> -->
 
 <!DOCTYPE html>
 <html>
@@ -223,7 +223,7 @@
         ></p>
       </div>
       <div style="text-align: center">
-        Intelehealth Helpline Number - +911141236457
+        MSF Diabetes Care Helpline Number - +9118003094144
       </div>
     </div>
   </body>
@@ -323,18 +323,18 @@
             .map(({ sortId, ...rest }) => rest);
 
           parsedDataArr.forEach((presData, idx) => {
-            hiData += `${presData.hi.meal_type}:\n`;
+            hiData += `${idx + 1}. ${presData.hi.meal_type}:\n`;
             presData.hi.data.forEach((hiVal) => {
-              hiData += `${idx + 1}. ${hiVal.value} - ${hiVal.qty || ""} ${
+              hiData += `- ${hiVal.value} - ${hiVal.qty || ""} ${
                 hiVal.unit || ""
               }\n`;
             });
           });
 
           parsedDataArr.forEach((presData, idx) => {
-            enData += `${presData.en.meal_type}:\n`;
+            enData += `${idx + 1}. ${presData.en.meal_type}:\n`;
             presData.en.data.forEach((enVal) => {
-              enData += `${idx + 1}. ${enVal.value} - ${enVal.qty || ""} ${
+              enData += `- ${enVal.value} - ${enVal.qty || ""} ${
                 enVal.unit || ""
               }\n`;
             });
@@ -458,13 +458,13 @@
 
             if (data.foodAllergy.substring(0, 1) == ";") {
               $("#food_allergy").html(
-                '<b><u>आहार-विशेष से एलर्जी / Food Allery</u></b><br><div style="font-size:14px;white-space: pre-line;">' +
+                '<b><u>आहार-विशेष से एलर्जी / Food Allergy</u></b><br><div style="font-size:14px;white-space: pre-line;">' +
                   data.foodAllergy.trim().substring(1) +
                   "<br></div>"
               );
             } else {
               $("#food_allergy").html(
-                '<b><u>आहार-विशेष से एलर्जी / Food Allery</u></b><br><div style="font-size:14px;">' +
+                '<b><u>आहार-विशेष से एलर्जी / Food Allergy</u></b><br><div style="font-size:14px;">' +
                   data.foodAllergy.trim() +
                   "<br></div>"
               );
@@ -486,7 +486,14 @@
 
             if (data.medicalAdvice.substring(0, 2) == "; ") {
               var staticAdvice =
-                ";दवा समय पर खाएं;हरी सब्जियां और फल अधिक मात्रामें खाएं;कोविड -19 उपयुक्त व्यव्हार का पालन करें;दिक्कत  ज्यादा होने पर तुरंत नजदीकी अस्पताल में दिखिए या हेल्पलाइन नंबर पर कॉल करें";
+                `;Limit oil intake to 3 teaspoon per day that is 500ml per person per month./तेल का सेवन प्रतिदिनी ३ चम्मच, अर्थात* ५०० मिलि प्रति व्यक्ति प्रति माह तक सीमित करें
+;Do not consume simple sugar in the diet. Avoid honey/ jiggery. Instead can use artificial sweeteners like stevia./आहार में साधारण चीनी का सेवन न करें। शहद/गुड़ से परहेज करें। इसके बजाय स्टीविया जैसे कृत्रिम मिठास का उपयोग कर सकते हैं।
+;Avoid hydrogenated oil, Dalda, and animal fat. Consume sunflower oil/ Corn oil/ ground nut oil./हाइड्रोजनीकृत तेल, डालडा और पशु वसा से बचें। सूरजमुखी तेल/मकई का तेल/मूंगफली के तेल का सेवन करें।
+;Avoid large gaps between the meals. Eat small and frequent meals./छोटे-छोटे अंतरालों में थोडी-थोडी मात्रा में आहार लें
+;Limit salt intake to 4gram per day./नमक का सेवन प्रतिदिन 4 ग्राम तक सीमित करें।
+;Avoid processed and refined food products like maida and maida products, toast, khaari, biscuits, white breads. Avoid Namkeens, bakery items./मैदा और मैदा उत्पाद, टोस्ट, खारी, बिस्कुट, सफेद ब्रेड जैसे प्रसंस्कृत और परिष्कृत खाद्य उत्पादों से बचें। नमकीन, बेकरी आइटम से बचें।
+;Hypoglycaemia most often occurs due to reasons such as inadequate meal intake, too much exercise without proper carbohydrate intake. This can lead to blurred vision, confused thinking, giddiness,sweating, restlnessness, drowsiness, slurred speech./हाइपोग्लाइसीमिया अक्सर अपर्याप्त भोजन सेवन, उचित कार्बोहाइड्रेट सेवन के बिना बहुत अधिक व्यायाम जैसे कारणों से होता है। इससे धुंधली दृष्टि, भ्रमित सोच, चक्कर आना, पसीना आना, बेचैनी, उनींदापन, गंदी बोली हो सकती है |
+;Treatment- Have 15 grams of carbohydrate and check it after 15 minutes. If it’s still below 70 mg/dL, have another dose of 15g carbohydrate. Carbohydrate sources to include- Sugar or glucon-  1Tbsp (15g), 150-200ml of fruit juice./उपचार- 15 ग्राम कार्बोहाइड्रेट लें और 15 मिनट बाद चेक करें। यदि यह अभी भी 70 मिलीग्राम / डीएल से नीचे है, तो 15 ग्राम कार्बोहाइड्रेट की एक और खुराक लें। शामिल करने के लिए कार्बोहाइड्रेट स्रोत- चीनी या ग्लूकॉन- 1 बड़ा चम्मच (15 ग्राम), 150-200 मिलीलीटर फलों का रस|`;
               ktemp = data.medicalAdvice.trim();
 
               kk = ktemp.substr(2) + staticAdvice;
@@ -684,7 +691,7 @@
       k2h2 = tmpComplaints.join("\n");
       console.log(k2h2);
 
-      //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
+      //pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
       var dd = {
         pageSize: "A4",
@@ -699,7 +706,7 @@
                     height: 60,
                   },
                   {
-                    text: "इंटेलिल्थ हेल्पलाइन\n Intelehealth Helpline",
+                    text: "एमएसएफ डायबिटीज केअर हेल्पलाइन\nMSF Diabetes Care Helpline",
                     fontSize: 12,
                   },
                   {
@@ -766,7 +773,7 @@
           {
             stack: [
               {
-                text: "दवाएं / Medication(s)",
+                text: "आहार-सम्बन्धी  अतिरिक्त जानकारी / Diet Prescription",
                 bold: true,
                 decoration: "underline",
                 fontSize: 12,
@@ -775,7 +782,7 @@
               //            {text:'Medication(s)/दवाएं', bold:true,decoration: 'underline', fontSize:142},
               {
                 text:
-                  $("#rx_heading").text().slice(22).replaceAll(";", "\n") +
+                  $("#rx_heading").text().slice(51).replaceAll(";", "\n") +
                   "\n\n",
                 lineHeight: 1,
               },
@@ -857,15 +864,15 @@
           },
         },
         images: {
-          nhm_logo: "https://helpline.ekalarogya.org/preApi/ih-logo.png",
-          ss_logo: "https://helpline.ekalarogya.org/preApi/ekal-logo.png",
+          nhm_logo: "https://msftraining.intelehealth.org/preApi/ih-logo.png",
+          ss_logo: "https://msftraining.intelehealth.org/preApi/msf.png",
         },
         defaultStyle: {
           font: "Rajdhani",
           fontSize: 10,
         },
         footer: {
-          text: "Intelehealth Helpline Number -  +911141236457",
+          text: "MSF Diabetes Care Helpline Number - +9118003094144",
           alignment: "center",
         },
       };
