@@ -147,7 +147,7 @@
       <p id="vitals" style="font-size: 12pt; margin: 0px; padding: 0px"></p>
 
       <p
-        id="diagnosis_heading"
+        id="food_allergy"
         style="
           font-size: 15pt;
           margin-top: 5px;
@@ -155,17 +155,17 @@
           padding: 0px;
         "
       ></p>
+      <p
+      id="diagnosis_heading"
+      style="
+        font-size: 15pt;
+        margin-top: 5px;
+        margin-bottom: 0px;
+        padding: 0px;
+      "
+     ></p>
       <p
         id="rx_heading"
-        style="
-          font-size: 15pt;
-          margin-top: 5px;
-          margin-bottom: 0px;
-          padding: 0px;
-        "
-      ></p>
-      <p
-        id="food_allergy"
         style="
           font-size: 15pt;
           margin-top: 5px;
@@ -427,22 +427,22 @@
                 finalComplaint +
                 "</div>"
             );
-            if (data.diagnosis.substring(0, 1) == ";") {
+            if (data.dietPrescription.substring(0, 1) == ";") {
               $("#diagnosis_heading").html(
-                '<b><u>निदान/ Diagnosis</u></b><br><div style="font-size:14px;">' +
-                  data.diagnosis.trim().substring(1) +
+                '<b><u>आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription </u></b><br><div style="font-size:14px;">' +
+                  data.dietPrescription.trim().substring(1)+
                   "<br></div>"
               );
             } else {
               $("#diagnosis_heading").html(
-                '<b><u>निदान/ Diagnosi</u></b><br><div style="font-size:14px;">' +
-                  data.diagnosis.trim() +
+                '<b><u>आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription</u></b><br><div style="font-size:14px;">' +
+                  data.dietPrescription.trim() +
                   "<br></div>"
               );
             }
             if (data.medication.substring(0, 1) == ";") {
               $("#rx_heading").html(
-                '<b><u>आहार-सम्बन्धी  अतिरिक्त जानकारी / Diet Prescription</u></b><br><div style="font-size:14px;white-space: pre-line;">' +
+                '<b><u>पोषण विशेषज्ञ प्रिस्क्रिप्शन / Nutritionist Prescription</u></b><br><div style="font-size:14px;white-space: pre-line;">' +
                   parseAndShowDeitPrescription(
                     data.medication.trim().substring(1)
                   ) +
@@ -450,7 +450,7 @@
               );
             } else {
               $("#rx_heading").html(
-                '<b><u>दवाएं / Medication(s)</u></b><br><div style="font-size:14px;">' +
+                '<b><u>पोषण विशेषज्ञ प्रिस्क्रिप्शन / Nutritionist Prescription</u></b><br><div style="font-size:14px;">' +
                   data.medication.trim() +
                   "<br></div>"
               );
@@ -754,11 +754,10 @@
               { text: $("#vitals").text().slice(13), lineHeight: 2 },
             ],
           },
-
           {
             stack: [
               {
-                text: "निदान/ Diagnosis",
+                text: "आहार-विशेष से एलर्जी / Food Allergy",
                 bold: true,
                 decoration: "underline",
                 fontSize: 12,
@@ -766,14 +765,28 @@
               },
 
               //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
-              { text: $("#diagnosis_heading").text().slice(17), lineHeight: 2 },
+              { text: $("#food_allergy").text().slice(35), lineHeight: 2 },
+            ],
+          },
+          {
+            stack: [
+              {
+                text: "आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription",
+                bold: true,
+                decoration: "underline",
+                fontSize: 12,
+                lineHeight: 1,
+              },
+
+              //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
+              { text: $("#diagnosis_heading").text().slice(50), lineHeight: 2 },
             ],
           },
 
           {
             stack: [
               {
-                text: "आहार-सम्बन्धी  अतिरिक्त जानकारी / Diet Prescription",
+                text: "पोषण विशेषज्ञ प्रिस्क्रिप्शन / Nutritionist Prescription",
                 bold: true,
                 decoration: "underline",
                 fontSize: 12,
@@ -782,7 +795,7 @@
               //            {text:'Medication(s)/दवाएं', bold:true,decoration: 'underline', fontSize:142},
               {
                 text:
-                  $("#rx_heading").text().slice(51).replaceAll(";", "\n") +
+                  $("#rx_heading").text().slice(56).replaceAll(";", "\n") +
                   "\n\n",
                 lineHeight: 1,
               },
