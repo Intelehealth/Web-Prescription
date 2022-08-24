@@ -351,11 +351,67 @@
       }
     }
 
+    function parseAndShowDeitPrescription1(englishDiet, hindiDiet) {
+      try {
+        let hiData = "";
+        let enData = ""; 
+        let array2 = [];  
+        englishDiet.forEach((diet) => {
+          const sortId = this.prescTypes.find(pt => pt.label === diet.mealType)?.sortId;
+          let data = array2.find(pt => pt.mealType === diet.mealType);
+            if(data) {
+              data.dish.push({mealPrescribed: diet.mealPrescribed, quantity: diet.quantity, unit: diet.unit});
+            } else {
+              array2.push({'mealType': diet.mealType, 'dish': [{mealPrescribed: diet.mealPrescribed, quantity: diet.quantity, unit: diet.unit}],'sortId' : sortId});
+            }
+        });
+        let englishDietData = array2
+            .sort((a, b) => a.sortId - b.sortId)
+            .map(({ sortId, ...rest }) => rest);
+        
+        englishDietData.forEach((presData, idx) => {
+            enData += `${idx + 1}. ${presData.mealType}:\n`;
+            presData.dish.forEach(d => {
+              enData += `- ${d.mealPrescribed} - ${d.quantity || ""} ${
+                d.unit || ""
+              }\n`;
+            });
+          });
+
+        let array1 = [];  
+        hindiDiet.forEach((diet) => {
+          const sortId = this.prescTypes.find(pt => pt.hiLabel === diet.mealType)?.sortId;
+          let data = array1.find(pt => pt.mealType === diet.mealType);
+            if(data) {
+              data.dish.push({mealPrescribed: diet.mealPrescribed, quantity: diet.quantity, unit: diet.unit});
+            } else {
+              array1.push({'mealType': diet.mealType, 'dish': [{mealPrescribed: diet.mealPrescribed, quantity: diet.quantity, unit: diet.unit}],'sortId' : sortId});
+            }
+          });
+        let hindiDietData = array1
+            .sort((a, b) => a.sortId - b.sortId)
+            .map(({ sortId, ...rest }) => rest);
+    
+        hindiDietData.forEach((presData, idx) => {
+            hiData += `${idx + 1}. ${presData.mealType}:\n`;
+            presData.dish.forEach(d => {
+              hiData += `- ${d.mealPrescribed} - ${d.quantity || ""} ${
+                d.unit || ""
+              }\n`;
+            });
+          });
+        return `${enData}\n${hiData}`;
+      } catch (error) {
+        console.log("error: ", error);
+        return data;
+      }
+    }
+
     function init() {
       $("#errDesc").text("");
 
       jQuery.ajax({
-        url: "https://msftraining.intelehealth.org/prescription/prescription/visitData",
+        url: "https://msf-arogyabharat.intelehealth.org/prescription/prescription/visitData",
         type: "POST",
         data: JSON.stringify({
           visitId: getParameterByName("v"),
@@ -388,14 +444,11 @@
                 data.visitDate
             );
             $("#vitals").html(
-              '<b><u><span style="font-size:15pt;">नब्ज / Vitals </span></u></b><br>Blood Pressure: ' +
+              '<b><u><span style="font-size:15pt;">नब्ज / Vitals </span></u></b><br>Height(cm): &nbsp;'+ parseInt(data.height).toFixed(0) +
+              ' | Weight(kg): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | BMI: &nbsp;'+ bmi.toFixed(2) + ' | Blood Pressure: ' +
                 parseInt(data.sbp).toFixed(0) +
                 "/" +
                 parseInt(data.dbp).toFixed(0) +
-                " | Pulse(bpm): " +
-                data.pulseRate +
-                " | Respiratory Rate: " +
-                data.respRate +
                 "<br>"
             );
             complaintString = data.complaint.trim().split("<br/>");
@@ -443,8 +496,8 @@
             if (data.medication.substring(0, 1) == ";") {
               $("#rx_heading").html(
                 '<b><u>पोषण विशेषज्ञ प्रिस्क्रिप्शन / Nutritionist Prescription</u></b><br><div style="font-size:14px;white-space: pre-line;">' +
-                  parseAndShowDeitPrescription(
-                    data.medication.trim().substring(1)
+                  parseAndShowDeitPrescription1(
+                    data.englishDiet, data.hindiDiet
                   ) +
                   "<br></div>"
               );
@@ -877,8 +930,8 @@
           },
         },
         images: {
-          nhm_logo: "https://msftraining.intelehealth.org/preApi/ih-logo.png",
-          ss_logo: "https://msftraining.intelehealth.org/preApi/msf.png",
+          nhm_logo: "https://msf-arogyabharat.intelehealth.org/preApi/ih-logo.png",
+          ss_logo: "https://msf-arogyabharat.intelehealth.org/preApi/msf.png",
         },
         defaultStyle: {
           font: "Rajdhani",
