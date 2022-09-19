@@ -52,25 +52,6 @@
     src: url('fonts/signature.ttf') ;
 }
 
-@font-face {
-  font-family: 'RobotoItalic';
-  src: url('fonts/Roboto-ThinItalic.ttf');
-}
-
-@font-face {
-  font-family: 'Caveat';
-  src: url('fonts/Caveat-VariableFont_wght.ttf');
-}
-
-@font-face {
-  font-family: 'Cormorant';
-  src: url('fonts/CormorantInfant-MediumItalic.ttf');
-}
-
-@font-face {
-  font-family: 'Pacifico';
-  src: url('fonts/Pacifico-Regular.ttf');
-}
 
 body {
 color:black;
@@ -97,7 +78,7 @@ color:black;}
         <br>
         <div id="prescription" style="display: none" class="container">
             <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4 style="font-weight: bold;">Telemed KG</h3>
+                <h4> Syriana</h4>
             </div>
             <br>
                  <div class="row" style="text-align:center">
@@ -105,8 +86,8 @@ color:black;}
                                         <div class="col-md-4 co-sm-4">
                                             &nbsp;
                                         </div>
-                                        <div class="col-md-5 col-sm-3" style="margin-left: -42px">
-                                            Discharge epicrisis
+                                        <div class="col-md-5 col-sm-3" style="margin-left: -42px;">
+                                            e-prescription
                                         </div>
                                         <div class="col-md-3 co-sm-3">
                                             <button class="btn btn-primary" onclick="createPDF();" >Download Prescription</button>
@@ -124,37 +105,34 @@ color:black;}
                 <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
                 <p id="address_and_contact" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
                 <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-                <p id="date_of_visit" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
-                <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-                <p id="medical_history" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-                <p id="objective_data" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;; padding: 0px;"></p></b>
                 <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
-                <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+              <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+
                 <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="rx_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+                <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
-                <div style="text-align: right;margin-top: 0px;width: 100%;">
-                   <div style="float: left;width: 80%;">
-                        <span style="font-size:25px;padding: 0px;" id="docSign"></span>
-                        <br>
-                        <div class="pull-right" id="docDetail">
-                        </div>
-                        <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
+                <div style="text-align:right;margin-right:50px;margin-top:0px;" >
+                <span style="font-size:25px;padding: 0px;" id="docSign">
+
+                </span>
+                <br>
+                <div class="pull-right" id="docDetail">
+                </div>
+                <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg"></p>
+                </div>
                    </div> 
                 </div>
                    </div> 
-                    <div style="float: right;width: 15%;">
-                        <span style="font-size:25px;padding: 0px;" id="docSign1"></span>
-                        <br>
-                        <div class="pull-right" id="docDetail1">
-                        </div>
-                        <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg1"></p>
-                    </div>
+                </div>
+                   </div> 
+                </div>
+                   </div> 
                 </div>
 
                </div>
@@ -178,7 +156,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://tele.med.kg/prescription/prescription/visitData",
+                             url: "https://syrianatest.intelehealth.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -203,20 +181,20 @@ color:black;}
                                 {
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b> Full Name </b>("+data.name+")");
-                                    $('#patient_details').html('Date of birth: &nbsp;'+data.birthDate?.replace(/\-/gi,"/") +  "&nbsp;&nbsp;&nbsp;Gender: &nbsp;"+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
-                                    $('#address_and_contact').html('Home address:  &nbsp<br>' + data.address);
-                                    $('#visit_details').html('Patient ID: &nbsp;'+data.citizenId+ "&nbsp;&nbsp;&nbsp; OpenMRS ID: &nbsp;"+data.openMRSID);
-                                    $('#date_of_visit').html("Date and time of visit: &nbsp;"+data.visitDate);
-                                    wt = data.weight;
-                                    ht = data.height/100;
+                                    $('#patient_name').html("<b>"+data.name.replaceAll(",", " ") + "</b>");
+                                    $('#patient_details').text('Age: '+data.age + " | Gender: "+data.gender);
+                                    $('#address_and_contact').text('Address: ' + data.address);
+                                    wt = parseFloat(data.weight);
+                                    ht = parseInt(data.height)/100;
                                     bmi = 0.0;
                                     if(wt && ht) {
-                                        bmi = wt / (ht * ht);
+                                         bmi = wt / (ht * ht);
                                     }
-                                    $('#vitals').html('<b>General state </b><br> Height(cm): &nbsp;'+ parseInt(data.height).toFixed(0) +' | Weight(kg): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | BMI: &nbsp;'+ bmi.toFixed(2) +
-                                    ' | Blood Pressure: &nbsp;'+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): &nbsp;'+ data.pulseRate+
-                                    ' | Body Temperature(C): &nbsp;'+ (Number(data.temperature) > 0 ? Number(data.temperature).toFixed(2) : 0) + ' | SpO2(%): &nbsp;'+ data.spo2 + ' | Respiratory Rate: &nbsp;'+ data.respRate+"<br>");
+                                    $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
+                                    $('#vitals').html('<b>Vitals</b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
+                                    ' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
+                                    ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
+                            
                                     complaintString= data.complaint.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
@@ -234,6 +212,7 @@ color:black;}
                                         }
                                     }
                                    
+                                    let complaint = data.complaint?.trim()?.split(":")[0]?.substring(2);
 		//			finalComplaint="";
                 //                    for(counter=0;counter < complaintString.length ; counter++) {
                 //                        if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
@@ -242,34 +221,36 @@ color:black;}
                  //                       }
                   //                  }
 
-                                    $('#complaints_heading').html('<b><u>Complaints</u></b><br><div style="font-size:14px;">'+finalComplaint +"<br></div>");
-                                    
-                                    let medicalHistory = data.medicalHistory?.replace(/\./g,"<br>");
-                                    $('#medical_history').html('<b><u>Medical history</u></b><br><div style="font-size:14px;">'+medicalHistory+"<br>")
-                                    
-                                    $('#objective_data').html('<b><u>Objective data</u></b><br><div style="font-size:14px;">'+data.complaint+"<br>")
-                                    
+                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+complaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
-                                        $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim().substring(1)+"<br></div>");
+                                        $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><div style="font-size:14px;">'+getData(data.enDiagnosis)+"<br></div>");
                                     }
                                     else
                                     {
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">'+data.diagnosis.trim()+"<br></div>");
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><div style="font-size:14px;">'+getData(data.enDiagnosis)+"<br></div>");
                                     }
-                                    if(data.medication.substring(0,1)==';' || data.testsAdvised.substring(0,1)==';')
+                                    if(data.medication.substring(0,1)==';')
                                     {
-                                         $('#rx_heading').html('<b><u>Treatment</u></b><br><div style="font-size:14px;">'+data.medication.trim().substring(1)+ "<br>"+data.testsAdvised.trim().substring(1)+"<br>");
+                                         $('#rx_heading').html('<b><u>Medication(s)</u></b><div style="font-size:14px;">'+getData(data.enMedication)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#rx_heading').html('<b><u>Treatment</u></b><br><div style="font-size:14px;">'+data.medication.trim()+"<br>"+data.testsAdvised.trim()+ "<br>");
+                                        $('#rx_heading').html('<b><u>Medication(s)</u></b><div style="font-size:14px;">'+getData(data.enMedication)+"<br></div>");
 
                                     }
-                                    let physicalExamination = data.physicalExamination?.replace(/\./g,"<br>");
-                                    $('#tests_heading').html('<b><u>Physical Examination</u></b><br><div style="font-size:14px;">'+physicalExamination+"<br>");
 
+                                    if(data.testsAdvised.substring(0,1)==';')
+                                    {
+                                        $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><div style="font-size:14px;">'+getData(data.enMedicalTests)+"<br></div>");
+
+                                    }
+                                    else
+                                    {
+                                        $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><div style="font-size:14px;">'+getData(data.enMedicalTests)+"<br></div>");
+
+                                    }
                                     if(data.medicalAdvice.substring(0,1)==';')
                                     {
 
@@ -283,16 +264,15 @@ color:black;}
 						if(jks[counter].indexOf("Audio") > -1)
 						{
 						}
-						else
-						{
-		                                                killers+= jks[counter] +"<br>";
+						else if(jks[counter].trim().includes(" "))
+						{                      
+                            killers+= jks[counter] +"<br>";
 						}
                                          }
-                                         console.log(killers)
 																				     
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
     
-                                        $('#advice_heading').html('<b><u>Recommendations</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+getData(data.enMedicalAdvice)+"</div>");
 
 
                                     }
@@ -306,7 +286,7 @@ color:black;}
 						if(jks[counter].indexOf("Audio") > -1)
                                                 {
                                                 }
-                                                else
+                                                else if(jks[counter].trim().includes(" "))
                                                 {
 							
 
@@ -316,31 +296,32 @@ color:black;}
 					 console.log(killers)
 					
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                        $('#advice_heading').html('<b><u>Recommendations</u></b><br><div style="font-size:14px;">'+killers+"<br></div>");
+                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">'+getData(data.enMedicalAdvice)+"</div>");
 
 
                                     }
 
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
-
-                                        $('#follow_up_heading').html('<b><u>Date of subsequent observation</u></b><br><div style="font-size:14px;">'+data.followupNeeded.trim().substring(1).replace(",","<br>")+"<br></div>");
+                                        let followup = JSON.parse(data.followupNeeded?.trim().substring(1).toString())
+                                        $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">'+followup['en']?.replace(",","<br>")+"<br></div>");
                                     }
                                     else
                                     {
-                                        $('#follow_up_heading').html('<b><u>Date of subsequent observation</u></b><br><div style="font-size:14px;">'+data.followupNeeded.trim().replace(",","<br>")+"<br></div>");
+                                        let followup = JSON.parse(data.followupNeeded?.trim().toString())
+                                        $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">'+followup['en']?.trim().replace(",","<br>")+"<br></div>");
 
                                     }
 
 
 
 
-                                    var docName = data?.remoteDoctorName?.replace(","," ");
+                                    var docName = data.doctorName.replace(","," ");
                                     var fullDets ="";
                                     fullDets+=docName;
                                     fullDets+="<br>";
 
-                                    var docAttributes = data?.remoteDoctorAttributes?.split("|");
+                                    var docAttributes = data.doctorAttributes.split("|");
                                     var tmpAttributes = new Array();
 
                                     var qual="";
@@ -348,7 +329,7 @@ color:black;}
                                     var phoneNumber="";
                                     var email="";
                                     var regNumber="";
-                                    for (i = 0  ; i < docAttributes?.length; i++) {
+                                    for (i = 0  ; i < docAttributes.length; i++) {
                                                 if(docAttributes[i].indexOf("fontOfSign") > -1)
                                                 {
                                                     $('#docSign').css('font-family',docAttributes[i].split(":")[1]);
@@ -393,83 +374,20 @@ color:black;}
 
                                                 }
                                     }
-                                    fullDets+= qual.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
-                                    //fullDets+=phoneNumber+"<br>";
-                                   // fullDets+=email+"<br>";
+                                    fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+                                    fullDets+=phoneNumber+"<br>";
+                                    fullDets+=email+"<br>";
 
                                     //fullDets+=regNumber+"<br>";
-                                    if(data?.remoteDoctorName && data?.remoteDoctorAttributes) {  
-                                        $('#docDetail').html(fullDets);
-                                        $('#docReg').html(regNumber);
-                                    }
+
+                                    $('#docDetail').html(fullDets);
+                                    $('#docReg').html(regNumber);
 
 $('#docSImage').attr('src',  data.imageOfSignature);
-                                    var docName = data.doctorName.replace(","," ");
-                                    var fullDets ="";
-                                    fullDets+=docName;
-                                    fullDets+="<br>";
-
-                                    var docAttributes = data.doctorAttributes.split("|");
-                                    var tmpAttributes = new Array();
-
-                                    var qual="";
-                                    var specialization="";
-                                    var phoneNumber="";
-                                    var email="";
-                                    var regNumber="";
-                                        for (i = 0  ; i < docAttributes.length; i++) {
-                                                if(docAttributes[i].indexOf("fontOfSign") > -1)
-                                                {
-                                                    $('#docSign1').css('font-family',docAttributes[i].split(":")[1]);
 
 
-                                                }
-                                                if(docAttributes[i].indexOf("textOfSign") > -1)
-                                                {
-                                                    $('#docSign1').text(docAttributes[i].split(":")[1]);
 
 
-                                                }
-
-                                                if((docAttributes[i].indexOf("textOfSign") == -1) && (docAttributes[i].indexOf("fontOfSign") == -1))    {
-                                                    if(docAttributes[i].indexOf("qualification") > -1)
-                                                    {
-                                                        qual=docAttributes[i].split(":")[1];
-
-                                                    }
-                                                    if(docAttributes[i].indexOf("specialization") > -1)
-                                                    {
-                                                        specialization=docAttributes[i].split(":")[1];
-
-                                                    }
-
-                                                    if(docAttributes[i].indexOf("phoneNumber") > -1)
-                                                    {
-                                                        phoneNumber="Phone Number: "+docAttributes[i].split(":")[1];
-
-                                                    }
-
-                                                    if(docAttributes[i].indexOf("emailId") > -1)
-                                                    {
-                                                        email="E-Mail: "+docAttributes[i].split(":")[1];
-
-                                                    }
-                                                    if(docAttributes[i].indexOf("registrationNumber") > -1)
-                                                    {
-                                                        regNumber="<b>Registration No: "+docAttributes[i].split(":")[1]+"</b>";
-
-                                                    }
-
-                                                }
-                                    }
-                                    fullDets+= qual.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
-                                    //fullDets+=phoneNumber+"<br>";
-                                   // fullDets+=email+"<br>";
-
-                                    //fullDets+=regNumber+"<br>";
-
-                                    $('#docDetail1').html(fullDets);
-                                    $('#docReg1').html(regNumber);
 
                                 }
                              }
@@ -502,17 +420,22 @@ function buildTableBody(data, columns) {
     return body;
 }
 
+function getData(element) {
+    if(element) {
+        return element?.replaceAll("#",'<br>');
+    } else {
+        return ''
+    }
+}
 	
-
             function createPDF() {
 
 
-var j = $('#follow_up_heading').text().slice(30).split(" ");
+var j = $('#follow_up_heading').text().slice(14).split(" ");
 j.shift();
 
-		    var tmpK = $('#advice_heading').html().replace('<b><u>Recommendations</u></b><br><div style="font-size:14px;">','')
+		    var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">','')
 		    nest = tmpK.split("<br>")
-		    console.log(nest);
 		    videoAddresses = [];
 		    nest.pop();
 		   // nest.pop();
@@ -535,7 +458,7 @@ $('#advice_heading').find('a').each(function() {
 
 k9 = [];
 console.log(videoAddresses);
-
+k9.push("\n");
 for(nn = 0; nn  < nest.length;nn++)
 {
 		   if(videoAddresses[nn] == "#")
@@ -547,8 +470,8 @@ for(nn = 0; nn  < nest.length;nn++)
 		   k9.push({text: nest[nn] + "Video Link ", link:videoAddresses[nn]}) 
 		 }
 											   
-}										   
-k9.push("\n")										   											   
+}						
+k9.push("\n");										   											   
 
 
 videoAddress =  $('#advice_heading a:first').attr('href')
@@ -556,16 +479,7 @@ var videoDescriptor = $('#advice_heading a:first').parent().text()
 var videoLinkPos = videoDescriptor.indexOf("video link")
 		    
 videoDescriptor = videoDescriptor.substr(0,videoLinkPos -1)
-var docDe = $('#docDetail').html().replace(/<br>/gi,"\n");
-var docDe1 = $('#docDetail1').html().replace(/<br>/gi,"\n");
-var temp = $('#medical_history').html().replace('<b><u>Medical history</u></b><br><div style="font-size:14px;">','');
-var medical_history = temp.replace(/<br>/gi,"\n").replace(/[</div>]/gi,"");
-var temp1 = $('#objective_data').html().replace('<b><u>Objective data</u></b><br><div style="font-size:14px;">','');
-var objective_data = temp1.replace(/<b>/gi,'').replace('</b>','').replace('<br>','\n').replace(/\.<br>/gi,"\n").replace(/[<br></div>]/gi,"");
-var temp2 = $('#tests_heading').html().replace('<b><u>Physical Examination</u></b><br><div style="font-size:14px;">','');
-var tests_heading = temp2.replace(/<br>/gi,"\n").replace("</div>","\n");
-var temp3 = $('#rx_heading').html().replace('<b><u>Treatment</u></b><br><div style="font-size:14px;">','');
-var treatment = temp3.replace(/<br>/gi,"\n").replace(/[</div>]/gi,"");
+var docDe = $('#docDetail').html().replaceAll("<br>","\n");
 
                 var fonts = {
    Asem: {
@@ -607,18 +521,6 @@ bold:'Terecia.ttf',
 italics:'Terecia.ttf',
 bolditalics:'Terecia.ttf'
 },
-RobotoItalic: {
-    normal: 'Roboto-ThinItalic.ttf'
-},
-Caveat: {
-    normal: 'Caveat-VariableFont_wght.ttf'
-},
-Cormorant: {
-    normal: 'CormorantInfant-MediumItalic.ttf'
-},
-Pacifico: {
-    normal: 'Pacifico-Regular.ttf'
-},
 
 
 
@@ -635,7 +537,7 @@ Pacifico: {
 
 var tmpComplaints = $('#complaints_heading').html().split("<br>");
 for (index =1; index < tmpComplaints.length; index++) {
-n = tmpComplaints[index].replace(/<div style="font-size:14px;">/gi, "");
+n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
         n1 = n.replace("<b>","");
         n2 = n1.replace("</b>","");
         n3 = n2.replace("<u>","");
@@ -646,7 +548,14 @@ n = tmpComplaints[index].replace(/<div style="font-size:14px;">/gi, "");
 
 }
  tmpComplaints.shift();
-k2h2 = tmpComplaints.join("\n");
+k2h2 = tmpComplaints;
+k2h2.push("\n");
+
+$("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<br>", "\n"));
+$("#rx_heading").html($("#rx_heading").html().replaceAll("<br>", "\n"));
+$("#tests_heading").html($("#tests_heading").html().replaceAll("<br>", "\n"));
+$("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
+
 
 //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -656,8 +565,8 @@ k2h2 = tmpComplaints.join("\n");
         {
 
             stack: [
-                'Telemed KG',
-                {text: 'Discharge epicrisis', style: 'subheader'},
+                'Syriana',
+                {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
             style: 'header'
@@ -667,46 +576,25 @@ k2h2 = tmpComplaints.join("\n");
                 {text:$('#patient_name').text(),bold:true,lineHeight: 1.25},
                 {text: $('#patient_details').text(), lineHeight:1.25},
                 {text:$('#address_and_contact').text(), lineHeight:1.25},
-                {text:$('#visit_details').text(), lineHeight:1.25},
-                {text:$('#date_of_visit').text(), lineHeight:2},
+                {text:$('#visit_details').text(), lineHeight:2}
+
 
             ]
         },
         {
-            stack: [{text:'Complaints', bold:true,fontSize:14},
-					  {text: k2h2, lineHeight:.75} ]
+            stack: [{text:'Presenting complaint', bold:true,fontSize:14},
+            k2h2 ]
 //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
         },
-        {
-            stack: [{text:'Medical history', bold:true,fontSize:14, lineHeight:1},
-            medical_history,
-          //  {text:$('#medical_history').text().slice(15)+"\n\n"}
-        ]
 
-        },
         {
-            stack: [{text:'Objective data', bold:true,fontSize:14, lineHeight:1},
-            objective_data,
-        //   {text:$('#objective_data').text().slice(14)+"\n\n"}
-        ]
-
-        },
-        {
-            stack: [{text:'General state', bold:true,fontSize:14, lineHeight:1},
-            {text:$('#vitals').text().slice(13)+"\n\n"}
+            stack: [{text:'Vitals', bold:true,fontSize:14},
+            {text:$('#vitals').text().slice(6)+"\n\n"}
             ]
 
         },
 
-        {
-            stack: [
-
-            {text:'Physical Examination', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            tests_heading,
-        ]
-
-        },
         {
             stack: [
 
@@ -718,18 +606,24 @@ k2h2 = tmpComplaints.join("\n");
          {
             stack: [
 
-            {text:'Treatment', bold:true,decoration: 'underline', fontSize:14, lineHeight:1},
-            treatment+"\n\n",
-            //    {text:$('#rx_heading').text().slice(9)+"\n\n"}
-        ]
+            {text:'Medication(s)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#rx_heading').text().slice(13),lineHeight:2}]
 
         },
 
         {
             stack: [
 
-            {text:'Recommendations', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-		    k9,
+            {text:'Recommended Investigation(s)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#tests_heading').text().slice(28),lineHeight:2}]
+
+        },
+
+        {
+            stack: [
+
+            {text:'General Advice \n\n', bold:true,decoration: 'underline', fontSize:14, lineHeight:1},
+              {text:$('#advice_heading').text().slice(14),lineHeight:2}
 		    ]
 
         },
@@ -737,8 +631,8 @@ k2h2 = tmpComplaints.join("\n");
          {
             stack: [
 
-            {text:'Date of subsequent observation', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#follow_up_heading').text().slice(30).split(" ")[0]},
+            {text:'Follow Up Date', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#follow_up_heading').text().slice(14).split(" ")[0]},
             {text:j.join(" ") , lineHeight:2},
             ]
 
@@ -751,18 +645,7 @@ k2h2 = tmpComplaints.join("\n");
 
           {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
             {text:docDe, alignment:'right',lineHeight:1},
-            {text:$('#docReg').text()+"\n\n", bold:true,alignment:'right'}
-            ]
-
-        },
-        
-        {
-            stack: [
-
-
-          {text: $('#docSign1').text(), font:$('#docSign1').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
-            {text:docDe1, alignment:'right',lineHeight:1},
-            {text:$('#docReg1').text(), bold:true,alignment:'right'}
+            {text:$('#docReg').text(), bold:true,alignment:'right'}
             ]
 
         },
@@ -800,10 +683,3 @@ alert('Prescription will be downloaded shortly');
 <script src="js/vfs_fonts.js"></script>
 
 </html>
-
-
-
-
-
-
-
