@@ -215,7 +215,7 @@ font-family: 'Arial Unicode MS',sans-serif;
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
                                       $('#patient_name').html("<b>"+data.name.replaceAll(",", " ") + "</b>");
-                                    $('#patient_details').text(' العمر : '+data.age + " | الجنس : "+data.gender);
+                                    $('#patient_details').text(' العمر : '+data.age + " | الجنس : "+ (data.gender === 'M' ? 'ذكر': 'أنثى'));
                                     $('#address_and_contact').text('العنوان :  ' + data.address);
                                     wt = parseFloat(data.weight);
                                     ht = parseInt(data.height)/100;
@@ -228,12 +228,17 @@ font-family: 'Arial Unicode MS',sans-serif;
                                     ' | مؤشر كتلة الجسم :  '+bmi.toFixed(2)+' | ضغط الدم : '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | النبض ( نبضة بالدقيقة) :  '+ data.pulseRate+
                                     ' | درجة الحرارة (فهرنهايت)  :  '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | نسبة الأكسجة : '+ data.spo2 + '  معدل التنفس : '+ data.respRate+"<br>");
                             
-                                    complaintString= data.complaint.trim().split("<br/>");
+                                    let complaint1;
+                                    if (data.complaint.toString().startsWith("{")) {
+                                         let value = JSON.parse(data.complaint.toString());
+                                         complaint1 = value["ar"];
+                                        }
+                                    complaintString= complaint1.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
 			 finalComplaint="";
                                     for(counter=0;counter < complaintString.length ; counter++) {
-                                        if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
+                                        if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("الأعراض المرافقة") == -1){
 						if(counter > 0){
 						finalComplaint+=complaintString[counter].slice(5, -2)+"<br>";
 						}
@@ -245,15 +250,14 @@ font-family: 'Arial Unicode MS',sans-serif;
                                         }
                                     }
                                    
-		//			finalComplaint="";
-                //                    for(counter=0;counter < complaintString.length ; counter++) {
-                //                        if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
-                //                            finalComplaint+=complaintString[counter].slice(1, -2);
+					finalComplaint="";
+                                   for(counter=0;counter < complaintString.length ; counter++) {
+                                       if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("الأعراض المرافقة") == -1){
+                                           finalComplaint+=complaintString[counter].slice(1, -2);
 
-                 //                       }
-                  //                  }
-                                 let complaint = data.complaint?.trim()?.split(":")[0]?.substring(2);
-                                    $('#complaints_heading').html('<b><u>الشكوى الرئيسية</u></b><br><div style="font-size:14px;">'+complaint +"</div>");
+                                       }
+                                   }
+                                    $('#complaints_heading').html('<b><u>الشكوى الرئيسية</u></b><br><div style="font-size:14px;">'+finalComplaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
                                         $('#diagnosis_heading').html('<b><u>تشخبص</u></b><div style="font-size:14px;">'+getData(data.arDiagnosis)+"<br></div>");
@@ -365,8 +369,7 @@ font-family: 'Arial Unicode MS',sans-serif;
                                                 if(docAttributes[i].indexOf("fontOfSign") > -1)
                                                 {
                                                     $('#docSign').css('font-family',docAttributes[i].split(":")[1]);
-
-
+                                                    $('#docSign').css('font-size' , '50px');
                                                 }
                                                 if(docAttributes[i].indexOf("textOfSign") > -1)
                                                 {
@@ -627,8 +630,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
         },
         {
             stack: [{text:'الشكوى الرئيسية', decoration: 'underline',bold:true,fontSize:14,alignment:'right',font:'Arial Unicode MS'},
-//            k2h2 ]
-            {text:$('#complaints_heading').text().slice(20), lineHeight:2,alignment:'right', font: 'Arial Unicode MS'}]
+            {text:k2h2, alignment:'right',lineHeight:1}]
 
         },
 
@@ -687,7 +689,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             stack: [
 
 
-          {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'left'},
+          {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:50,alignment:'left'},
             {text:docDe, alignment:'left',lineHeight:1},
             {text:$('#docReg').text(), bold:true,alignment:'left'}
             ]

@@ -194,8 +194,12 @@ color:black;}
                                     $('#vitals').html('<b>Vitals</b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
                                     ' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
                                     ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
-                            
-                                    complaintString= data.complaint.trim().split("<br/>");
+                                    let complaint1;
+                                    if (data.complaint.toString().startsWith("{")) {
+                                         let value = JSON.parse(data.complaint.toString());
+                                         complaint1 = value["en"];
+                                        }
+                                    complaintString= complaint1.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
 			 finalComplaint="";
@@ -212,16 +216,16 @@ color:black;}
                                         }
                                     }
                                    
-                                    let complaint = data.complaint?.trim()?.split(":")[0]?.substring(2);
-		//			finalComplaint="";
-                //                    for(counter=0;counter < complaintString.length ; counter++) {
-                //                        if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
-                //                            finalComplaint+=complaintString[counter].slice(1, -2);
+                                 //   let complaint = data.complaint?.trim()?.split(":")[0]?.substring(2);
+					finalComplaint="";
+                                   for(counter=0;counter < complaintString.length ; counter++) {
+                                       if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
+                                           finalComplaint+=complaintString[counter].slice(1, -2);
 
-                 //                       }
-                  //                  }
+                                       }
+                                   }
 
-                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+complaint +"</div>");
+                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">'+finalComplaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
                                         $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><div style="font-size:14px;">'+getData(data.enDiagnosis)+"<br></div>");
@@ -333,7 +337,7 @@ color:black;}
                                                 if(docAttributes[i].indexOf("fontOfSign") > -1)
                                                 {
                                                     $('#docSign').css('font-family',docAttributes[i].split(":")[1]);
-
+                                                    $('#docSign').css('font-size' , '50px');
 
                                                 }
                                                 if(docAttributes[i].indexOf("textOfSign") > -1)
@@ -643,7 +647,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             stack: [
 
 
-          {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
+          {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:50,alignment:'right'},
             {text:docDe, alignment:'right',lineHeight:1},
             {text:$('#docReg').text(), bold:true,alignment:'right'}
             ]
