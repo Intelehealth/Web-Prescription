@@ -307,12 +307,12 @@ color:black;}
 
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
-                                        let followup = JSON.parse(data.followupNeeded?.trim().substring(1).toString())
+                                        let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {en:""};
                                         $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">'+followup['en']?.replace(",","<br>")+"<br></div>");
                                     }
                                     else
                                     {
-                                        let followup = JSON.parse(data.followupNeeded?.trim().toString())
+                                        let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {en:""};
                                         $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">'+followup['en']?.trim().replace(",","<br>")+"<br></div>");
 
                                     }

@@ -339,12 +339,12 @@ font-family: 'Arial Unicode MS',sans-serif;
 
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
-                                        let followup = JSON.parse(data.followupNeeded?.trim().substring(1).toString())
+                                        let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {ar:""};
                                         $('#follow_up_heading').html('<b><u>تاريخ المتابعة</u></b><br><div style="font-size:14px;">'+followup['ar']?.replace(",","<br>")+"<br></div>");
                                     }
                                     else
                                     {                                    
-                                        let followup = JSON.parse(data.followupNeeded?.trim().toString())
+                                        let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().toString()):{ar:""};
                                         $('#follow_up_heading').html('<b><u>تاريخ المتابعة</u></b><br><div style="font-size:14px;">'+followup['ar']?.replace(",","<br>")+"<br></div>");
 
                                     }
