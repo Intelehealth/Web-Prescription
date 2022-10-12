@@ -77,19 +77,27 @@ color:black;}
         </div>
         <br>
         <div id="prescription" style="display: none" class="container">
-            <div class="col-sm-12 col-md-12" style="text-align: center">
-                <h4> Syriana</h4>
-            </div>
-            <br>
+            <div class="row" style="text-align:center">
+                <div class="col-md-2 col-sm-2">
+                  <img src="sila.png" width="50%" />
+                </div>
+                <div class="col-md-8 col-sm-8" style="text-align: center;padding-top: 10px;">
+                  <span><strong>Sila</strong></span>
+                </div>
+                <div class="col-md-2 col-sm-2" style="text-align: center;padding-top: 10px;">
+                  <img src="ih-logo.png" width="50%" />
+                </div>
+              </div>
+              <br />
                  <div class="row" style="text-align:center">
 
-                                        <div class="col-md-4 co-sm-4">
+                                        <div class="col-md-2 col-sm-2">
                                             &nbsp;
                                         </div>
-                                        <div class="col-md-5 col-sm-3" style="margin-left: -42px;">
-                                            e-prescription
+                                        <div class="col-md-8 col-sm-8">
+                                            <u><b>e-prescription</b></u>
                                         </div>
-                                        <div class="col-md-3 co-sm-3">
+                                        <div class="col-md-2 col-sm-2">
                                             <button class="btn btn-primary" onclick="createPDF();" >Download Prescription</button>
                                         </div>
 
@@ -156,7 +164,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://syrianatest.intelehealth.org/prescription/prescription/visitData",
+                             url: "https://sila.swaida.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -199,11 +207,11 @@ color:black;}
                                          let value = JSON.parse(data.complaint.toString());
                                          complaint1 = value["en"];
                                         }
-                                    complaintString= complaint1.trim().split("<br/>");
+                                    complaintString= complaint1?.trim().split("<br/>");
                                   //  console.log(complaintString);
 					//
 			 finalComplaint="";
-                                    for(counter=0;counter < complaintString.length ; counter++) {
+                                    for(counter=0;counter < complaintString?.length ; counter++) {
                                         if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
 						if(counter > 0){
 						finalComplaint+=complaintString[counter].slice(5, -2)+"<br>";
@@ -218,7 +226,7 @@ color:black;}
                                    
                                  //   let complaint = data.complaint?.trim()?.split(":")[0]?.substring(2);
 					finalComplaint="";
-                                   for(counter=0;counter < complaintString.length ; counter++) {
+                                   for(counter=0;counter < complaintString?.length ; counter++) {
                                        if(complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1){
                                            finalComplaint+=complaintString[counter].slice(1, -2);
 
@@ -569,7 +577,24 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
         {
 
             stack: [
-                'Syriana',
+            {
+                columns: [
+                  {
+                    image: "ss_logo",
+                    width: 60,
+                    height: 60,
+                  },
+                  {
+                    text: "Sila",
+                    fontSize: 12,
+                  },
+                  {
+                    image: "nhm_logo",
+                    width: 100,
+                    height: 38,
+                  },
+                ],
+              },
                 {text: 'e-prescription', style: 'subheader'},
                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
             ],
@@ -667,9 +692,14 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             margin: [0, 10, 0, 10]
         },
         subheader: {
-            fontSize: 14
+            fontSize: 14,
+            decoration: "underline"
         }
-    }
+    },
+    images: {
+          nhm_logo: "https://sila.swaida.org/preApi/ih-logo.png",
+          ss_logo: "https://sila.swaida.org/preApi/sila.png"
+           },
 
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
