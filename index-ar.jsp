@@ -108,27 +108,27 @@ font-family: 'Arial Unicode MS',sans-serif;
         </div>
         <br>
         <div id="prescription" style="display: none" class="container">
-            <div class="row" style="text-align:center">
-                <div class="col-md-2 col-sm-2">
+            <div class="row" style="text-align:center;margin-right: 0px; margin-left: 0px;">
+                <div class="col-md-3">
                   <img src="sila.png" width="50%" />
                 </div>
-                <div class="col-md-8 col-sm-8" style="text-align: center;padding-top: 10px;">
+                <div class="col-md-6" style="text-align: center;padding-top: 10px;font-size: 25px;">
                   <span><strong>صلة</strong></span>
                 </div>
-                <div class="col-md-2 col-sm-2" style="text-align: center;padding-top: 10px;">
+                <div class="col-md-3" style="text-align: center;padding-top: 10px;">
                   <img src="ih-logo.png" width="50%" />
                 </div>
               </div>
               <br />
-              <div class="row" style="text-align:center">
+              <div class="row" style="text-align:center;margin-right: 0px; margin-left: 0px;">
 
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-3">
                                             &nbsp;
                                         </div>
-                                        <div class="col-md-8 col-sm-8">
+                                        <div class="col-md-6">
                                             <u><b>وصفة طبية إلكتروني</b></u>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-3">
                                             <button class="btn btn-primary" onclick="createPDF();" >تحميل وصفة طبية</button>
                                         </div>
 
@@ -232,7 +232,7 @@ font-family: 'Arial Unicode MS',sans-serif;
                                          bmi = wt / (ht * ht);
                                     }
                                     $('#visit_details').text('رقم البطاقة التعريفية للمريض :  '+data.openMRSID+ " | موعد زيارة : "+data.visitDate);
-                                    $('#vitals').html('<b>العلامات الحيوية</b><br> الطول (سم) : '+data.height+' | الوزن (كغ) : '+data.weight+
+                                    $('#vitals').html('<b><u>العلامات الحيوية</u></b><br> الطول (سم) : '+data.height+' | الوزن (كغ) : '+data.weight+
                                     ' | مؤشر كتلة الجسم :  '+bmi.toFixed(2)+' | ضغط الدم : '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | النبض ( نبضة بالدقيقة) :  '+ data.pulseRate+
                                     ' | درجة الحرارة (فهرنهايت)  :  '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | نسبة الأكسجة : '+ data.spo2 + '  معدل التنفس : '+ data.respRate+"<br>");
                             
@@ -265,34 +265,34 @@ font-family: 'Arial Unicode MS',sans-serif;
 
                                        }
                                    }
-                                    $('#complaints_heading').html('<b><u>الشكوى الرئيسية</u></b><br><div style="font-size:14px;">'+finalComplaint +"</div>");
+                                    $('#complaints_heading').html('<b><u>الشكوى الرئيسية</u></b><br><div style="font-size:12pt;">'+finalComplaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
-                                        $('#diagnosis_heading').html('<b><u>تشخبص</u></b><div style="font-size:14px;">'+getData(data.arDiagnosis)+"<br></div>");
+                                        $('#diagnosis_heading').html('<b><u>تشخبص</u></b><div style="font-size:12pt;">'+getData(data.arDiagnosis)+"<br></div>");
                                     }
                                     else
                                     {
-                                    $('#diagnosis_heading').html('<b><u>تشخبص</u></b><div style="font-size:14px;">'+getData(data.arDiagnosis)+"<br></div>");
+                                    $('#diagnosis_heading').html('<b><u>تشخبص</u></b><div style="font-size:12pt;">'+getData(data.arDiagnosis)+"<br></div>");
                                     }
                                     if(data.medication.substring(0,1)==';')
                                     {
-                                         $('#rx_heading').html('<b><u>الأدوية</u></b><div style="font-size:14px;">'+getData(data.arMedication)+"<br></div>");
+                                         $('#rx_heading').html('<b><u>الأدوية</u></b><div style="font-size:12pt;">'+getData(data.arMedication)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#rx_heading').html('<b><u>الأدوية</u></b><div style="font-size:14px;">'+getData(data.arMedication)+"<br></div>");
+                                        $('#rx_heading').html('<b><u>الأدوية</u></b><div style="font-size:12pt;">'+getData(data.arMedication)+"<br></div>");
 
                                     }
 
                                     if(data.testsAdvised.substring(0,1)==';')
                                     {
-                                        $('#tests_heading').html('<b><u>الاستقصاءات الموصى بها</u></b><div style="font-size:14px;">'+getData(data.arMedicalTests)+"<br></div>");
+                                        $('#tests_heading').html('<b><u>الاستقصاءات الموصى بها</u></b><div style="font-size:12pt;">'+getData(data.arMedicalTests)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#tests_heading').html('<b><u>الاستقصاءات الموصى بها</u></b><div style="font-size:14px;">'+getData(data.arMedicalTests)+"<br></div>");
+                                        $('#tests_heading').html('<b><u>الاستقصاءات الموصى بها</u></b><div style="font-size:12pt;">'+getData(data.arMedicalTests)+"<br></div>");
 
                                     }
                                     if(data.medicalAdvice.substring(0,1)==';')
@@ -316,7 +316,7 @@ font-family: 'Arial Unicode MS',sans-serif;
 																				     
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
     
-                                        $('#advice_heading').html('<b><u>نصائح عامة</u></b><div style="font-size:14px;">'+getData(data.arMedicalAdvice)+"</div>");
+                                        $('#advice_heading').html('<b><u>نصائح عامة</u></b><div style="font-size:12pt;">'+getData(data.arMedicalAdvice)+"</div>");
 
 
                                     }
@@ -340,7 +340,7 @@ font-family: 'Arial Unicode MS',sans-serif;
 					 console.log(killers)
 					
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                        $('#advice_heading').html('<b><u>نصائح عامة</u></b><div style="font-size:14px;">'+getData(data.arMedicalAdvice)+"</div>");
+                                        $('#advice_heading').html('<b><u>نصائح عامة</u></b><div style="font-size:12pt;">'+getData(data.arMedicalAdvice)+"</div>");
 
 
                                     }
@@ -348,12 +348,12 @@ font-family: 'Arial Unicode MS',sans-serif;
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
                                         let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {ar:""};
-                                        $('#follow_up_heading').html('<b><u>تاريخ المتابعة</u></b><br><div style="font-size:14px;">'+followup['ar']?.replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>تاريخ المتابعة</u></b><br><div style="font-size:12pt;">'+followup['ar']?.replace(",","<br>")+"<br></div>");
                                     }
                                     else
                                     {                                    
                                         let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().toString()):{ar:""};
-                                        $('#follow_up_heading').html('<b><u>تاريخ المتابعة</u></b><br><div style="font-size:14px;">'+followup['ar']?.replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>تاريخ المتابعة</u></b><br><div style="font-size:12pt;">'+followup['ar']?.replace(",","<br>")+"<br></div>");
 
                                     }
 
@@ -485,7 +485,7 @@ function getData(element) {
 var j = $('#follow_up_heading').text().slice(14).split(" ");
 j.shift();
 
-		    var tmpK = $('#advice_heading').html().replace('<b><u>نصائح عامة</u></b><div style="font-size:14px;">','')
+		    var tmpK = $('#advice_heading').html().replace('<b><u>نصائح عامة</u></b><div style="font-size:12pt;">','')
                 nest = tmpK.replace('</div>', '').split("<br>")
 		    videoAddresses = [];
 		//     nest.pop();
@@ -593,7 +593,7 @@ bolditalics:'Terecia.ttf'
 
 var tmpComplaints = $('#complaints_heading').html().split("<br>");
 for (index =1; index < tmpComplaints.length; index++) {
-n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
+n = tmpComplaints[index].replaceAll('<div style="font-size:12pt;">', "");
         n1 = n.replace("<b>","");
         n2 = n1.replace("</b>","");
         n3 = n2.replace("<u>","");
@@ -605,7 +605,7 @@ n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
 }
  tmpComplaints.shift();
 k2h2 = tmpComplaints;
-k2h2.push("\n");
+k2h2.push("\n\n");
 
 
 $("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<br>", "\n"));
@@ -629,12 +629,13 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
                   },
                   {
                     text: "صلة",
-                    fontSize: 12,
+                    fontSize: 20,
+                    bold:true
                   },
                   {
                     image: "ss_logo",
-                    width: 60,
-                    height: 60,
+                    width: 80,
+                    height: 80,
                   }
                 ],
               },
@@ -661,7 +662,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
 
         {
             stack: [{text:'العلامات الحيوية',decoration: 'underline', bold:true,alignment:'right',fontSize:14,font:'Arial Unicode MS'},
-            {text:$('#vitals').text().slice(16)+"\n\n", alignment:'right',font: 'Arial Unicode MS'}
+            {text:$('#vitals').text().slice(16)+"\n\n", lineHeight:1, alignment:'right',font: 'Arial Unicode MS'}
             ]
 
         },
@@ -670,7 +671,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             stack: [
 
             {text:'تشخبص', bold:true,decoration: 'underline', fontSize:14,alignment:'right', lineHeight:2,font:'Arial Unicode MS'},
-            {text:$('#diagnosis_heading').text().slice(5),lineHeight:2,alignment:'right',  font: 'Arial Unicode MS'}]
+            {text:$('#diagnosis_heading').text().slice(5)+"\n",lineHeight:1,alignment:'right',  font: 'Arial Unicode MS'}]
 
         },
 
@@ -686,7 +687,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             stack: [
 
             {text:'الاستقصاءات الموصى بها', bold:true,decoration: 'underline', alignment:'right',fontSize:14, lineHeight:2,font:'Arial Unicode MS'},
-            {text:$('#tests_heading').text().slice(22),lineHeight:2,alignment:'right',font:'Arial Unicode MS' }]
+            {text:$('#tests_heading').text().slice(22)+"\n",lineHeight:1, alignment:'right',font:'Arial Unicode MS' }]
 
         },
 
