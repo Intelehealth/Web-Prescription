@@ -82,7 +82,7 @@ color:black;}
                   <img src="sila.png" width="50%" />
                 </div>
                 <div class="col-md-6" style="text-align: center;padding-top: 10px;font-size: 25px;">
-                  <span><strong>Sila</strong></span>
+                  <span><strong>Smart Care Doc</strong></span>
                 </div>
                 <div class="col-md-3" style="text-align: center;padding-top: 10px;">
                   <img src="ih-logo.png" width="50%" />
@@ -164,7 +164,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://sila.swaida.org/prescription/prescription/visitData",
+                             url: "https://demo.intelehealth.org/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -585,7 +585,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
                     height: 80,
                   },
                   {
-                    text: "Sila",
+                    text: "Smart Care Doc",
                     fontSize: 20,
                     bold:true
                   },
