@@ -145,9 +145,8 @@
         ></p
       ></b>
       <p id="vitals" style="font-size: 12pt; margin: 0px; padding: 0px"></p>
-
       <p
-        id="food_allergy"
+        id="diagnosis_heading"
         style="
           font-size: 15pt;
           margin-top: 5px;
@@ -156,7 +155,7 @@
         "
       ></p>
       <p
-        id="diagnosis_heading"
+        id="food_allergy"
         style="
           font-size: 15pt;
           margin-top: 5px;
@@ -810,20 +809,6 @@
           {
             stack: [
               {
-                text: "आहार-विशेष से एलर्जी / Food Allergy",
-                bold: true,
-                decoration: "underline",
-                fontSize: 12,
-                lineHeight: 1,
-              },
-
-              //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
-              { text: $("#food_allergy").text().slice(35), lineHeight: 2 },
-            ],
-          },
-          {
-            stack: [
-              {
                 text: "आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription",
                 bold: true,
                 decoration: "underline",
@@ -835,7 +820,20 @@
               { text: $("#diagnosis_heading").text().slice(50), lineHeight: 2 },
             ],
           },
+          {
+            stack: [
+              {
+                text: "आहार-विशेष से एलर्जी / Food Allergy",
+                bold: true,
+                decoration: "underline",
+                fontSize: 12,
+                lineHeight: 1,
+              },
 
+              //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
+              { text: $("#food_allergy").text().slice(35), lineHeight: 2 },
+            ],
+          },
           {
             stack: [
               {
