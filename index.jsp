@@ -448,6 +448,7 @@
                 parseInt(data.sbp).toFixed(0) +
                 "/" +
                 parseInt(data.dbp).toFixed(0) +
+                " |  Blood Glucose: "+ parseInt(data.bloodGlucose).toFixed(0)+
                 "<br>"
             );
             complaintString = data.complaint.trim().split("<br/>");
@@ -817,7 +818,7 @@
               },
 
               //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
-              { text: $("#diagnosis_heading").text().slice(50), lineHeight: 2 },
+              { text: $("#diagnosis_heading").text().slice(50)+ "\n", lineHeight: 2 },
             ],
           },
           {
