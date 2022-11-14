@@ -124,6 +124,7 @@
                     <p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;; padding: 0px;"></p>
                 </b>
                 <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
+                <p id="diagnostics" style="font-size:12pt;margin:0px; padding: 0px;"></p>
                 <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
@@ -153,7 +154,7 @@
         <script type="text/javascript">
             function getParameterByName(name, url) {
                 if (!url) url = window.location.href;
-                name = name.replace(/[\[\]]/g, "\\$&");
+                name = name.replace(/[\[\]]/g, "\$&");
                 var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                     results = regex.exec(url);
                 if (!results) return null;
@@ -198,12 +199,16 @@
                             }
                             $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
                             if (data.height.length > 0 || data.weight.length > 0 || data.sbp.length > 0 || data.dbp.length > 0 || data.pulseRate.length > 0 ||
-                                data.respRate.length > 0 || data.haemoGlobin.length > 0 || data.bloodGroup.length > 0 || data.sugarRandom.length > 0 || data.sugarFasting.length > 0) {
-                                $('#vitals').html('<b>Vitals</b><br>Height(cm): ' + data.height + ' | Weight(kg): ' + data.weight +
+                                data.respRate.length > 0) {
+                            $('#vitals').html('<b>Vitals</b><br>Height(cm): ' + data.height + ' | Weight(kg): ' + data.weight +
                                     ' | BMI: ' + bmi.toFixed(2) + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
-                                    ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + ' | Hemoglobin: ' + (data.haemoGlobin ? data.haemoGlobin : "-") +
-                                    ' | Blood Group: ' + (data.bloodGroup ? data.bloodGroup : "-") + ' | Sugar Level(Fasting/After Meal): ' + ((data.sugarFasting && data.sugarAfterMeal) ? (data.sugarFasting + "/" + data.sugarAfterMeal) : "-") +
-                                    ' | Sugar Level - Random: ' + (data.sugarRandom ? data.sugarRandom : "-") + "<br>");
+                                    ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
+                            }
+                            if (data.blood_glucose_random_id.length > 0 || data.blood_glucose_after_food.length > 0 || data.blood_glucose_post_prandial_id.length > 0
+                             || data.haemoGlobin.length > 0 || data.uricAcid.length > 0 ||   data.totalCholesterol.length > 0) {
+                            $('#diagnostics').html('<b>Diagnostics</b><br>Glucose (Random): ' + data.blood_glucose_random_id + ' | Glucose (Fasting): ' + data.blood_glucose_after_food +
+                                    ' | Glucose (Post-prandial): ' + data.blood_glucose_post_prandial_id + ' | HGB: ' + data.haemoGlobin +
+                                    ' | Uric Acid: ' + data.uricAcid + ' | Total Chlolestrol: ' + data.totalCholesterol + "<br>");
                             }
                             complaintString = data.complaint.trim().split("<br/>");
                             //  console.log(complaintString);
@@ -603,7 +608,12 @@
                             ]
 
                         },
+                        {
+                            stack: [{ text: 'Diagnostics', bold: true, fontSize: 14 },
+                            { text: $('#diagnostics').text().slice(11) + "\n\n" }
+                            ]
 
+                        },
                         {
                             stack: [
 
