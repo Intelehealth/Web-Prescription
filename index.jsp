@@ -76,10 +76,10 @@
                     <img src="scd.png" width="65%" height="110%">
                 </div>
                 <div class="col-md-7 col-sm-8" style="text-align:center;padding-top: 25px">
-                    <span> <strong>Smart Care Doc</strong></span>
+                    <span> <strong>Smart Care Doc Telemedicine Project</strong></span>
                     <br>
                     <span>
-                        <strong>स्मार्ट केअर डॉक</strong>
+                        <strong>स्मार्ट केयर डॉक टेलीमेडिसिन प्रोजेक्ट</strong>
                     </span>
                 </div>
                 <div class="col-md-2 col-sm-2">
@@ -459,7 +459,7 @@
                                       
                                         },
                                         {
-                                            text: 'Smart Care Doc \n स्मार्ट केअर डॉक', fontSize: 12
+                                            text: 'Smart Care Doc \n स्मार्ट केयर डॉक टेलीमेडिसिन प्रोजेक्ट', fontSize: 12
                                         },
                                         {
                                             image: 'ih_logo',
