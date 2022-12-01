@@ -88,23 +88,25 @@ color:black;
     </div>
     <br>
     <div id="prescription" style="display: none" class="container">
-        <div class="col-sm-12 col-md-12" style="text-align: center">
-            <h4>Demo-Intelehealth Project</h3>
-        </div>
-        <div class="col-md-2 col-sm-2 pull-right">
-            <img src="ih-logo.png" width="50%">
-        </div>
+          <div class="row" style="text-align:center">
+            <div class="col-md-10 col-sm-10" style="text-align:center">
+                <span ><h4><strong>Intelehealth Telemedicine Project</strong></h4></span>
+            </div>
+            <div class="col-md-2 col-sm-2 pull-right" >
+                <img src="ih-logo.png" width="50%">
+            </div>
+	    </div>
         <br>
         <div class="row" style="text-align:center">
 
-            <div class="col-md-4 co-sm-4">
+            <div class="col-md-3 co-sm-3">
                 &nbsp;
             </div>
-            <div class="col-md-5 col-sm-3">
+            <div class="col-md-4 col-sm-4">
                 e-prescription
             </div>
-            <div class="col-md-3 co-sm-3">
-                <button class="btn btn-primary" onclick="createPDF();">Download Prescription</button>
+            <div class="col-md-5 co-sm-5">
+                <button class="btn btn-primary" style="margin-left: 215px;" onclick="createPDF();">Download Prescription</button>
             </div>
 
         </div>
@@ -192,7 +194,7 @@ color:black;
 
 
                         $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                        $('#vitals').html('<b>Vitals</b><br> Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) + ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
+                        $('#vitals').html('<b><u>Vitals</u></b><br> Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) + ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
                         complaintString = data.complaint.trim().split("<br/>");
                         //  console.log(complaintString);
                         //
@@ -217,7 +219,7 @@ color:black;
                         //                       }
                         //                  }
 
-                        $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">' + finalComplaint + "<br></div>");
+                        $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">' + finalComplaint + "</div>");
                         if (data.diagnosis.substring(0, 1) == ';') {
                             $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + data.diagnosis.trim().substring(1) + "<br></div>");
                         }
@@ -241,6 +243,7 @@ color:black;
                             $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + data.testsAdvised.trim() + "<br></div>");
 
                         }
+                        if (data.medicalAdvice.trim().length > 0 && data.medicalAdvice.trim().length !== 1) {
                         if (data.medicalAdvice.substring(0, 1) == ';') {
 
                             kk = data.medicalAdvice.trim().substr(1)
@@ -251,7 +254,7 @@ color:black;
                             for (counter = 0; counter < jks.length; counter++) {
                                 if (jks[counter].indexOf("Audio") > -1) {
                                 }
-                                else {
+                                else if (jks[counter].trim().includes(" ")) {
                                     killers += jks[counter] + "<br>";
                                 }
                             }
@@ -259,7 +262,7 @@ color:black;
 
                             //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
 
-                            $('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">' + killers + "<br></div>");
+                            $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
 
 
                         }
@@ -283,6 +286,7 @@ color:black;
 
 
                         }
+                    }
 
                         if (data.followupNeeded.substr(0, 1) == ';') {
 
@@ -400,42 +404,38 @@ color:black;
             var j = $('#follow_up_heading').text().slice(14).split(" ");
             j.shift();
 
-            var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><br><div style="font-size:14px;">', '')
-            nest = tmpK.split("<br>")
-            console.log(nest);
-            videoAddresses = [];
-            nest.pop();
-            nest.pop();
-            for (i = 0; i < nest.length; i++) {
-                if (nest[i].indexOf("<") == -1) {
-                    videoAddresses.push("#");
+            var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">', '')
+                nest = tmpK.split("<br>")
+                videoAddresses = [];
+                nest.pop();
+                // nest.pop();
+                for (i = 0; i < nest.length; i++) {
+                    if (nest[i].indexOf("<") == -1) {
+                        videoAddresses.push("#");
+                    }
+                    else {
+                        console.log(nest[i].indexOf("<"))
+                        nest[i] = nest[i].substr(0, nest[i].indexOf("<") - 1);
+                    }
                 }
-                else {
-                    console.log(nest[i].indexOf("<"))
-                    nest[i] = nest[i].substr(0, nest[i].indexOf("<") - 1);
+                console.log(nest);
+                $('#advice_heading').find('a').each(function () {
+                    videoAddresses.push($(this).attr('href'))
+                });
+                k9 = [];
+                if (nest.length > 0) {
+                    console.log(videoAddresses);
+                    k9.push("\n");
+                    for (nn = 0; nn < nest.length; nn++) {
+                        if (videoAddresses[nn] == "#") {
+                            k9.push({ text: nest[nn] })
+                        }
+                        else {
+                            k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
+                        }
+                    }
+                    k9.push("\n");
                 }
-            }
-            console.log(nest);
-
-            $('#advice_heading').find('a').each(function () {
-                videoAddresses.push($(this).attr('href'))
-            });
-
-            k9 = [];
-            console.log(videoAddresses);
-
-            for (nn = 0; nn < nest.length; nn++) {
-                if (videoAddresses[nn] == "#") {
-                    k9.push({ text: nest[nn] })
-                }
-                else {
-                    k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
-                }
-
-            }
-            k9.push("\n");
-
-
 
             videoAddress = $('#advice_heading a:first').attr('href')
             var videoDescriptor = $('#advice_heading a:first').parent().text()
@@ -503,40 +503,45 @@ bold: 'Rajdhani-Bold.ttf'
 
             }
 
-            var tmpComplaints = $('#complaints_heading').html().split("<br>");
-            for (index = 1; index < tmpComplaints.length; index++) {
-                n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
-                n1 = n.replace("<b>", "");
-                n2 = n1.replace("</b>", "");
-                n3 = n2.replace("<u>", "");
-                n4 = n3.replace("</u>", "");
-                n5 = n4.replace(/<\/?[^>]+(>|$)/g, "");
-                n6 = n5.replace("&amp;", "& ");
-                tmpComplaints[index] = n6;
-
-            }
-            tmpComplaints.shift();
-            k2h2 = tmpComplaints.join("\n");
+           var tmpComplaints = $('#complaints_heading').html().split("<br>");
+                for (index = 1; index < tmpComplaints.length; index++) {
+                    n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
+                    n1 = n.replace("<b>", "");
+                    n2 = n1.replace("</b>", "");
+                    n3 = n2.replace("<u>", "");
+                    n4 = n3.replace("</u>", "");
+                    n5 = n4.replace(/<\/?[^>]+(>|$)/g, "");
+                    n6 = n5.replace("&amp;", "& ");
+                    tmpComplaints[index] = n6;
+                }
+                tmpComplaints.shift();
+                k2h2 = tmpComplaints;
+                k2h2.push("\n");
 
             //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
             var dd = {
                 "pageSize": "A4",
                 content: [
-                    {
-                        image : 'ih_logo',
-                        width: 100,
-                        height: 38
-                    },
-                    {
-
-                        stack: [
-                            'Demo-Intelehealth Project',
-                            { text: 'e-prescription', style: 'subheader' },
-                            { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1, color: 'green' }] }
-                        ],
-                        style: 'header'
-                    },
+                {
+                            stack: [
+                                {
+                                    columns: [
+                                        {
+                                            text: 'Intelehealth Telemedicine Project', fontSize: 14
+                                        },
+                                        {
+                                            image: 'ih_logo',
+                                            width:60,
+                                            height:30
+                                        },
+                                    ]
+                                },
+                                { text: 'ePrescription', style: 'subheader' },
+                                {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
+                            ],
+                            style: 'header'
+                        },
                     {
                         stack: [
                             { text: $('#patient_name').text(), bold: true,  fontSize: 14,lineHeight: 1.25 },
@@ -548,14 +553,14 @@ bold: 'Rajdhani-Bold.ttf'
                         ]
                     },
                     {
-                        stack: [{ text: 'Presenting complaint', bold: true, fontSize: 14 },
-                        { text: k2h2, lineHeight: .75 }]
+                        stack: [{ text: 'Presenting complaint', bold: true,  decoration: 'underline', fontSize: 14 },
+                                k2h2]
                         //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
                     },
 
                     {
-                        stack: [{ text: 'Vitals', bold: true, fontSize: 14 },
+                        stack: [{ text: 'Vitals', bold: true, decoration: 'underline', fontSize: 14 },
                         { text: $('#vitals').text().slice(6) + "\n\n" }
                         ]
 
@@ -588,7 +593,7 @@ bold: 'Rajdhani-Bold.ttf'
                     {
                         stack: [
 
-                            { text: 'General Advice', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
+                            { text: 'General Advice', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
                             k9,
                         ]
 
@@ -599,7 +604,7 @@ bold: 'Rajdhani-Bold.ttf'
 
                             { text: 'Follow Up Date', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
                             { text: $('#follow_up_heading').text().slice(14).split(" ")[0] },
-                            { text: j.join(" "), lineHeight: 2 },
+                            { text: j.join(" "), lineHeight: 1 },
                         ]
 
                     },
@@ -625,14 +630,16 @@ ih_logo : 'https://demo.intelehealth.org/preApi/ih-logo.png',
 }, 
                 styles: {
                     header: {
-                        fontSize: 18,
-                        bold: true,
-                        alignment: 'center',
-                        margin: [0, 10, 0, 10]
-                    },
-                    subheader: {
-                        fontSize: 14
-                    }
+                            fontSize: 18,
+                            bold: true,
+                            alignment: 'center',
+                            margin: [0, 10, 0, 10]
+                        },
+                        subheader: {
+                            fontSize: 14,
+                            alignment: 'center',
+                            margin: [0, 0, 40, 0]
+                        }
                 },
 		defaultStyle: {
 font: 'Rajdhani',
