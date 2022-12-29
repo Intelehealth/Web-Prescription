@@ -50,23 +50,21 @@
             src: url('fonts/signature.ttf');
         }
 
-@font-face {
-    font-family: 'Rajdhani';
-    src: url('fonts/Rajdhani-Regular.ttf') ;
-}
+        @font-face {
+            font-family: 'Rajdhani';
+            src: url('fonts/Rajdhani-Regular.ttf');
+        }
 
 
 
-body {
-color:black;
-font-family: 'Rajdhani',sans-serif;
-}
+        body {
+            color: black;
+            font-family: 'Rajdhani', sans-serif;
+        }
 
-html
-{
-color:black;
-}
-
+        html {
+            color: black;
+        }
     </style>
 </head>
 
@@ -88,14 +86,16 @@ color:black;
     </div>
     <br>
     <div id="prescription" style="display: none" class="container">
-          <div class="row" style="text-align:center">
+        <div class="row" style="text-align:center">
             <div class="col-md-10 col-sm-10" style="text-align:center">
-                <span ><h4><strong>Intelehealth Telemedicine Project</strong></h4></span>
+                <span>
+                    <h4><strong>Intelehealth Telemedicine Project</strong></h4>
+                </span>
             </div>
-            <div class="col-md-2 col-sm-2 pull-right" >
+            <div class="col-md-2 col-sm-2 pull-right">
                 <img src="ih-logo.png" width="50%">
             </div>
-	    </div>
+        </div>
         <br>
         <div class="row" style="text-align:center">
 
@@ -106,7 +106,8 @@ color:black;
                 e-prescription
             </div>
             <div class="col-md-5 co-sm-5">
-                <button class="btn btn-primary" style="margin-left: 215px;" onclick="createPDF();">Download Prescription</button>
+                <button class="btn btn-primary" style="margin-left: 215px;" onclick="createPDF();">Download
+                    Prescription</button>
             </div>
 
         </div>
@@ -127,13 +128,14 @@ color:black;
 
             <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
             <p id="rx_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
-            <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
             <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+            <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
+            <p id="referral" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
             <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
-            <div style="text-align:right;margin-right:50px;margin-top:0px;" >
+            <div style="text-align:right;margin-right:50px;margin-top:0px;">
                 <span style="font-size:3rem;padding: 0px;" id="docSign">
                 </span>
                 <br>
@@ -162,7 +164,7 @@ color:black;
             $('#errDesc').text('');
 
             jQuery.ajax({
-                url: "https://demo.intelehealth.org/prescription/prescription/visitData",
+                url: "https://uiux.intelehealth.org/prescription/prescription/visitData",
                 type: "POST",
                 data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -185,7 +187,7 @@ color:black;
                     else {
                         $('#queryDiv').hide();
                         $('#prescription').show();
-                        $('#patient_name').html("<b>"+data.name.replaceAll(",", " ") + "</b>");
+                        $('#patient_name').html("<b>" + data.name.replaceAll(",", " ") + "</b>");
                         $('#patient_details').text('Age: ' + data.age + " | Gender: " + data.gender);
                         $('#address_and_contact').text('Address: ' + data.address);
                         wt = parseFloat(data.weight);
@@ -194,7 +196,7 @@ color:black;
 
 
                         $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                        $('#vitals').html('<b><u>Vitals</u></b><br> Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) + ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
+                        $('#vitals').html('<b style="font-size:15pt"><u>Vitals</u></b><br> Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) + ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
                         complaintString = data.complaint.trim().split("<br/>");
                         //  console.log(complaintString);
                         //
@@ -227,80 +229,93 @@ color:black;
                             $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + data.diagnosis.trim() + "<br></div>");
                         }
                         if (data.medication.substring(0, 1) == ';') {
-                            $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + data.medication.trim().substring(1) + "<br></div>");
+                            let med = data.medication.trim().substring(1).replaceAll(";", "<br>")
+                            $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + med.trim() + "<br></div>");
 
                         }
                         else {
-                            $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + data.medication.trim() + "<br></div>");
+                            let med = data.medication.trim().replaceAll(";", "<br>")
+                            $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + med.trim() + "<br></div>");
 
                         }
 
                         if (data.testsAdvised.substring(0, 1) == ';') {
-                            $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + data.testsAdvised.trim().substring(1) + "<br></div>");
+                            let tests = data.testsAdvised.trim().substring(1).replaceAll(";", "<br>")
+                            $('#tests_heading').html('<b><u>Test</u></b><br><div style="font-size:14px;">' + tests.trim()+ "<br></div>");
 
                         }
                         else {
-                            $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + data.testsAdvised.trim() + "<br></div>");
+                            let tests = data.testsAdvised.trim().replaceAll(";", "<br>")
+                            $('#tests_heading').html('<b><u>Test</u></b><br><div style="font-size:14px;">' + tests.trim() + "<br></div>");
+
+                        }
+                        if (data.referral.substring(0, 1) == ';') {
+                            let referral = data.referral.trim().substring(1).replaceAll(";", "<br>")
+                            $('#referral').html('<b><u>Referral</u></b><br><div style="font-size:14px;">' + referral + "<br></div>");
+                        }
+                        else {
+                            let referral = data.referral.trim().replaceAll(";", "<br>")
+                            $('#referral').html('<b><u>Referral</u></b><br><div style="font-size:14px;">' + referral + "<br></div>");
 
                         }
                         if (data.medicalAdvice.trim().length > 0 && data.medicalAdvice.trim().length !== 1) {
-                        if (data.medicalAdvice.substring(0, 1) == ';') {
+                            if (data.medicalAdvice.substring(0, 1) == ';') {
 
-                            kk = data.medicalAdvice.trim().substr(1)
+                                kk = data.medicalAdvice.trim().substr(1)
 
-                            console.log(kk)
-                            jks = kk.split(";")
-                            killers = ""
-                            for (counter = 0; counter < jks.length; counter++) {
-                                if (jks[counter].indexOf("Audio") > -1) {
+                                console.log(kk)
+                                jks = kk.split(";")
+                                killers = ""
+                                for (counter = 0; counter < jks.length; counter++) {
+                                    if (jks[counter].indexOf("Audio") > -1) {
+                                    }
+                                    else if (jks[counter].trim().includes(" ")) {
+                                        killers += jks[counter] + "<br>";
+                                    }
                                 }
-                                else if (jks[counter].trim().includes(" ")) {
-                                    killers += jks[counter] + "<br>";
-                                }
+                                console.log(killers)
+
+                                //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
+
+                                $('#advice_heading').html('<b><u>Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
+
+
                             }
-                            console.log(killers)
+                            else {
+                                kk = data.medicalAdvice.trim()
+                                jks = kk.split(";")
+                                killers = ""
+                                for (counter = 0; counter < jks.length; counter++) {
+                                    if (jks[counter].indexOf("Audio") > -1) {
+                                    }
+                                    else {
 
-                            //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
 
-                            $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
-
-
-                        }
-                        else {
-                            kk = data.medicalAdvice.trim()
-                            jks = kk.split(";")
-                            killers = ""
-                            for (counter = 0; counter < jks.length; counter++) {
-                                if (jks[counter].indexOf("Audio") > -1) {
+                                        killers += jks[counter] + "<br>";
+                                    }
                                 }
-                                else {
+                                console.log(killers)
+
+                                //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
+                                $('#advice_heading').html('<b><u>Advice</u></b><br><div style="font-size:14px;">' + killers + "<br></div>");
 
 
-                                    killers += jks[counter] + "<br>";
-                                }
                             }
-                            console.log(killers)
-
-                            //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                            $('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">' + killers + "<br></div>");
-
-
                         }
-                    }
 
                         if (data.followupNeeded.substr(0, 1) == ';') {
 
-                            $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().substring(1).replace(",", "<br>") + "<br></div>");
+                            $('#follow_up_heading').html('<b><u>Follow Up</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().substring(1).replace(",", "<br>") + "<br></div>");
                         }
                         else {
-                            $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().replace(",", "<br>") + "<br></div>");
+                            $('#follow_up_heading').html('<b><u>Follow Up</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().replace(",", "<br>") + "<br></div>");
 
                         }
 
 
 
 
-                        var docName = data.doctorName.replace(","," ");;
+                        var docName = data.doctorName.replace(",", " ");;
                         var fullDets = "";
                         fullDets += docName;
                         fullDets += "<br>";
@@ -313,17 +328,21 @@ color:black;
                         var phoneNumber = "";
                         var email = "";
                         var regNumber = "";
+                        var signatureUrl = "";
                         for (i = 0; i < docAttributes.length; i++) {
-                            if (docAttributes[i].indexOf("fontOfSign") > -1) {
-                                $('#docSign').css('font-family', docAttributes[i].split(":")[1]);
+                            // if (docAttributes[i].indexOf("fontOfSign") > -1) {
+                            //     $('#docSign').css('font-family', docAttributes[i].split(":")[1]);
 
 
-                            }
-                            if (docAttributes[i].indexOf("textOfSign") > -1) {
-                                $('#docSign').text(docAttributes[i].split(":")[1]);
+                            // }
+                            // if (docAttributes[i].indexOf("textOfSign") > -1) {
+                            //     $('#docSign').text(docAttributes[i].split(":")[1]);
 
 
-                            }
+                            // }
+                            let providerId = data?.providerUUID;
+                            signatureUrl = "https://uiux.intelehealth.org/ds/"+providerId+"_sign.png";
+                            $('#docSign').html("<img id=imageid style=margin:-40px; src=" + signatureUrl + ">");
 
                             if ((docAttributes[i].indexOf("textOfSign") == -1) && (docAttributes[i].indexOf("fontOfSign") == -1)) {
                                 if (docAttributes[i].indexOf("qualification") > -1) {
@@ -351,7 +370,7 @@ color:black;
 
                             }
                         }
-                        fullDets += qual.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+                        fullDets += qual.trim() ? qual + "," + specialization + "<br>" : "" + specialization + "<br>";
                         //fullDets+=phoneNumber+"<br>";
                         // fullDets+=email+"<br>";
 
@@ -399,43 +418,61 @@ color:black;
 
 
         function createPDF() {
+            var base64 = getBase64Image(document.getElementById("imageid"));
+            function getBase64Image(img) {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                var dataURL = canvas.toDataURL("image/png");
+                return dataURL;
+            }
 
-
-            var j = $('#follow_up_heading').text().slice(14).split(" ");
+            var j = $('#follow_up_heading').text().slice(9).split(" ");
             j.shift();
 
-            var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">', '')
-                nest = tmpK.split("<br>")
-                videoAddresses = [];
-                nest.pop();
-                // nest.pop();
-                for (i = 0; i < nest.length; i++) {
-                    if (nest[i].indexOf("<") == -1) {
-                        videoAddresses.push("#");
+            var tmpK = $('#advice_heading').html().replace('<b><u>Advice</u></b><div style="font-size:14px;">', '')
+            nest = tmpK.split("<br>")
+            videoAddresses = [];
+            nest.pop();
+            // nest.pop();
+            for (i = 0; i < nest.length; i++) {
+                if (nest[i].indexOf("<") == -1) {
+                    videoAddresses.push("#");
+                }
+                else {
+                    console.log(nest[i].indexOf("<"))
+                    nest[i] = nest[i].substr(0, nest[i].indexOf("<") - 1);
+                }
+            }
+            console.log(nest);
+            $('#advice_heading').find('a').each(function () {
+                videoAddresses.push($(this).attr('href'))
+            });
+            k9 = [];
+            if (nest.length > 0) {
+                console.log(videoAddresses);
+                k9.push("\n");
+                for (nn = 0; nn < nest.length; nn++) {
+                    if (videoAddresses[nn] == "#") {
+                        k9.push({ text: nest[nn] })
                     }
                     else {
-                        console.log(nest[i].indexOf("<"))
-                        nest[i] = nest[i].substr(0, nest[i].indexOf("<") - 1);
+                        k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
                     }
                 }
-                console.log(nest);
-                $('#advice_heading').find('a').each(function () {
-                    videoAddresses.push($(this).attr('href'))
-                });
-                k9 = [];
-                if (nest.length > 0) {
-                    console.log(videoAddresses);
-                    k9.push("\n");
-                    for (nn = 0; nn < nest.length; nn++) {
-                        if (videoAddresses[nn] == "#") {
-                            k9.push({ text: nest[nn] })
-                        }
-                        else {
-                            k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
-                        }
-                    }
-                    k9.push("\n");
-                }
+                k9.push("\n");
+            }
+
+            var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
+            var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n");
+
+            var referraldata = $('#referral').html().replace('<b><u>Referral</u></b><br><div style="font-size:14px;">', '')
+            var referral = referraldata.replaceAll("<br>","\n").replace("</div>", "\n");
+            
+            var tmpK = $('#tests_heading').html().replace('<b><u>Test</u></b><br><div style="font-size:14px;">', '')
+            var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n");
 
             videoAddress = $('#advice_heading a:first').attr('href')
             var videoDescriptor = $('#advice_heading a:first').parent().text()
@@ -486,10 +523,10 @@ color:black;
                 },
 
 
-Rajdhani: {
-normal: 'Rajdhani-Regular.ttf',
-bold: 'Rajdhani-Bold.ttf'
-}, 
+                Rajdhani: {
+                    normal: 'Rajdhani-Regular.ttf',
+                    bold: 'Rajdhani-Bold.ttf'
+                },
 
 
                 // download default Roboto font from cdnjs.com
@@ -503,48 +540,48 @@ bold: 'Rajdhani-Bold.ttf'
 
             }
 
-           var tmpComplaints = $('#complaints_heading').html().split("<br>");
-                for (index = 1; index < tmpComplaints.length; index++) {
-                    n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
-                    n1 = n.replace("<b>", "");
-                    n2 = n1.replace("</b>", "");
-                    n3 = n2.replace("<u>", "");
-                    n4 = n3.replace("</u>", "");
-                    n5 = n4.replace(/<\/?[^>]+(>|$)/g, "");
-                    n6 = n5.replace("&amp;", "& ");
-                    tmpComplaints[index] = n6;
-                }
-                tmpComplaints.shift();
-                k2h2 = tmpComplaints;
-                k2h2.push("\n");
+            var tmpComplaints = $('#complaints_heading').html().split("<br>");
+            for (index = 1; index < tmpComplaints.length; index++) {
+                n = tmpComplaints[index].replaceAll('<div style="font-size:14px;">', "");
+                n1 = n.replace("<b>", "");
+                n2 = n1.replace("</b>", "");
+                n3 = n2.replace("<u>", "");
+                n4 = n3.replace("</u>", "");
+                n5 = n4.replace(/<\/?[^>]+(>|$)/g, "");
+                n6 = n5.replace("&amp;", "& ");
+                tmpComplaints[index] = n6;
+            }
+            tmpComplaints.shift();
+            k2h2 = tmpComplaints;
+            k2h2.push("\n");
 
             //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
             var dd = {
                 "pageSize": "A4",
                 content: [
-                {
-                            stack: [
-                                {
-                                    columns: [
-                                        {
-                                            text: 'Intelehealth Telemedicine Project', fontSize: 14
-                                        },
-                                        {
-                                            image: 'ih_logo',
-                                            width:60,
-                                            height:30
-                                        },
-                                    ]
-                                },
-                                { text: 'ePrescription', style: 'subheader' },
-                                {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
-                            ],
-                            style: 'header'
-                        },
                     {
                         stack: [
-                            { text: $('#patient_name').text(), bold: true,  fontSize: 14,lineHeight: 1.25 },
+                            {
+                                columns: [
+                                    {
+                                        text: 'Intelehealth Telemedicine Project', fontSize: 14
+                                    },
+                                    {
+                                        image: 'ih_logo',
+                                        width: 60,
+                                        height: 30
+                                    },
+                                ]
+                            },
+                            { text: 'ePrescription', style: 'subheader' },
+                            { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1, color: 'green' }] }
+                        ],
+                        style: 'header'
+                    },
+                    {
+                        stack: [
+                            { text: $('#patient_name').text(), bold: true, fontSize: 14, lineHeight: 1.25 },
                             { text: $('#patient_details').text(), lineHeight: 1.25 },
                             { text: $('#address_and_contact').text(), lineHeight: 1.25 },
                             { text: $('#visit_details').text(), lineHeight: 2 }
@@ -553,8 +590,8 @@ bold: 'Rajdhani-Bold.ttf'
                         ]
                     },
                     {
-                        stack: [{ text: 'Presenting complaint', bold: true,  decoration: 'underline', fontSize: 14 },
-                                k2h2]
+                        stack: [{ text: 'Presenting complaint', bold: true, decoration: 'underline', fontSize: 14 },
+                            k2h2]
                         //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
                     },
@@ -578,32 +615,38 @@ bold: 'Rajdhani-Bold.ttf'
                         stack: [
 
                             { text: 'Medication(s)', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                            { text: $('#rx_heading').text().slice(13), lineHeight: 2 }]
+                            medications ]
 
                     },
-
                     {
                         stack: [
 
-                            { text: 'Recommended Investigation(s)', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                            { text: $('#tests_heading').text().slice(28), lineHeight: 2 }]
-
-                    },
-
-                    {
-                        stack: [
-
-                            { text: 'General Advice', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
+                            { text: 'Advice', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
                             k9,
                         ]
 
                     },
+                    {
+                        stack: [
+
+                            { text: 'Test', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
+                            tests]
+
+                    },
 
                     {
                         stack: [
 
-                            { text: 'Follow Up Date', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                            { text: $('#follow_up_heading').text().slice(14).split(" ")[0] },
+                            { text: 'Referral', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
+                            referral ]
+
+                    },
+
+                    {
+                        stack: [
+
+                            { text: 'Follow Up', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
+                            { text: $('#follow_up_heading').text().slice(9).split(" ")[0] },
                             { text: j.join(" "), lineHeight: 1 },
                         ]
 
@@ -612,10 +655,14 @@ bold: 'Rajdhani-Bold.ttf'
 
                     {
                         stack: [
-                             {text: $('#docSign').text(), font:$('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:32,alignment:'right'},
-                            {text:docDe, alignment:'right',lineHeight:1},
-                            {text:$('#docReg').text(), bold:true,alignment:'right'}
-            ]
+                            {
+                                image: base64,
+                                margin: [-40, -10, 0, -40],
+                                alignment: 'right'
+                            },
+                            { text: docDe, alignment: 'right', lineHeight: 1 },
+                            { text: $('#docReg').text(), bold: true, alignment: 'right' }
+                        ]
 
                     },
 
@@ -624,27 +671,27 @@ bold: 'Rajdhani-Bold.ttf'
 
 
                 ],
-				images: {
-ih_logo : 'https://demo.intelehealth.org/preApi/ih-logo.png',
+                images: {
+                    ih_logo: 'https://uiux.intelehealth.org/preApi/ih-logo.png',
 
-}, 
+                },
                 styles: {
                     header: {
-                            fontSize: 18,
-                            bold: true,
-                            alignment: 'center',
-                            margin: [0, 10, 0, 10]
-                        },
-                        subheader: {
-                            fontSize: 14,
-                            alignment: 'center',
-                            margin: [0, 0, 40, 0]
-                        }
+                        fontSize: 18,
+                        bold: true,
+                        alignment: 'center',
+                        margin: [0, 10, 0, 10]
+                    },
+                    subheader: {
+                        fontSize: 14,
+                        alignment: 'center',
+                        margin: [0, 0, 40, 0]
+                    }
                 },
-		defaultStyle: {
-font: 'Rajdhani',
-fontSize:10
-}
+                defaultStyle: {
+                    font: 'Rajdhani',
+                    fontSize: 10
+                }
 
 
             }
