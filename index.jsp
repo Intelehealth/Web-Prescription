@@ -366,7 +366,7 @@ color:black;}
                                                 }
                                     }
                                     fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
-                                    fullDets+=phoneNumber+"<br>";
+                                    //fullDets+=phoneNumber+"<br>";
                                     fullDets+=email+"<br>";
 
                                     //fullDets+=regNumber+"<br>";
