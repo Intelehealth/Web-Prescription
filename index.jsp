@@ -342,7 +342,7 @@
                             // }
                             let providerId = data?.providerUUID;
                             signatureUrl = "https://uiux.intelehealth.org/ds/"+providerId+"_sign.png";
-                            $('#docSign').html("<img id=imageid style=margin:-40px; src=" + signatureUrl + ">");
+                            $('#docSign').html("<img id=imageid style=margin-top:30px;margin-right:-10px; src=" + signatureUrl + ">");
 
                             if ((docAttributes[i].indexOf("textOfSign") == -1) && (docAttributes[i].indexOf("fontOfSign") == -1)) {
                                 if (docAttributes[i].indexOf("qualification") > -1) {
@@ -657,7 +657,7 @@
                         stack: [
                             {
                                 image: base64,
-                                margin: [-40, -10, 0, -40],
+                                margin: [30, 0, -20, 0],
                                 alignment: 'right'
                             },
                             { text: docDe, alignment: 'right', lineHeight: 1 },
