@@ -237,10 +237,12 @@
                             $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">' + finalComplaint + "</div>");
                             if (data.diagnosis.trim().length > 0) {
                                 if (data.diagnosis.substring(0, 1) == ';') {
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + data.diagnosis.trim().substring(1) + "<br></div>");
+                                    let diagnosis = data.diagnosis.trim().substring(1).replaceAll(";", "<br>")
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + diagnosis + "<br></div>");
                                 }
                                 else {
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + data.diagnosis.trim() + "<br></div>");
+                                    let diagnosis = data.diagnosis.trim().replaceAll(";", "<br>")
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + diagnosis + "<br></div>");
                                 }
                             }
                             if (data.medication.trim().length > 0) {
@@ -464,6 +466,9 @@
                     k9.push("\n");
                 }
 
+                var diagnosis1 = $('#diagnosis_heading').html().replace('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">', '')
+                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n");
+
                 var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
                 var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n");
 
@@ -618,7 +623,7 @@
                             stack: [
 
                                 { text: 'Diagnosis', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                                { text: $('#diagnosis_heading').text().slice(9), lineHeight: 2 }]
+                                diagnosisA]
 
                         },
 
