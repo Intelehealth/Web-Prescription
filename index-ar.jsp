@@ -197,7 +197,7 @@ font-family: 'Arial Unicode MS',sans-serif;
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://sila.swaida.org/prescription/prescription/visitData",
+                             url: "https://service.sila.care/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -234,7 +234,7 @@ font-family: 'Arial Unicode MS',sans-serif;
                                     $('#visit_details').text('رقم البطاقة التعريفية للمريض :  '+data.openMRSID+ " | موعد زيارة : "+data.visitDate);
                                     $('#vitals').html('<b><u>العلامات الحيوية</u></b><br> الطول (سم) : '+data.height+' | الوزن (كغ) : '+data.weight+
                                     ' | مؤشر كتلة الجسم :  '+bmi.toFixed(2)+' | ضغط الدم : '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | النبض ( نبضة بالدقيقة) :  '+ data.pulseRate+
-                                    ' | درجة الحرارة (فهرنهايت)  :  '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | نسبة الأكسجة : '+ data.spo2 + '  معدل التنفس : '+ data.respRate+"<br>");
+                                    ' | درجة الحرارة (فهرنهايت)  :  '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | نسبة الأكسجة : '+ data.spo2 + '  معدل التنفس : '+ data.respRate+"<br>");
                             
                                     let complaint1;
                                     if (data.complaint.toString().startsWith("{")) {
@@ -746,8 +746,8 @@ font: 'Arial Unicode MS',
 fontSize:10
 },
 images: {
-          nhm_logo: "https://sila.swaida.org/preApi/ih-logo.png",
-          ss_logo: "https://sila.swaida.org/preApi/sila.png"
+          nhm_logo: "https://service.sila.care/preApi/ih-logo.png",
+          ss_logo: "https://service.sila.care/preApi/sila.png"
            },
 
 

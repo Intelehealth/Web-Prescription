@@ -164,7 +164,7 @@ color:black;}
                 $('#errDesc').text('');
 
                 jQuery.ajax ({
-                             url: "https://sila.swaida.org/prescription/prescription/visitData",
+                             url: "https://service.sila.care/prescription/prescription/visitData",
                              type: "POST",
                              data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -201,7 +201,7 @@ color:black;}
                                     $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
                                     $('#vitals').html('<b><u>Vitals</u></b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
                                     ' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
-                                    ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(0) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
+                                    ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
                                     let complaint1;
                                     if (data.complaint.toString().startsWith("{")) {
                                          let value = JSON.parse(data.complaint.toString());
@@ -698,8 +698,8 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
         }
     },
     images: {
-          nhm_logo: "https://sila.swaida.org/preApi/ih-logo.png",
-          ss_logo: "https://sila.swaida.org/preApi/sila.png"
+          nhm_logo: "https://service.sila.care/preApi/ih-logo.png",
+          ss_logo: "https://service.sila.care/preApi/sila.png"
            },
 
 }
