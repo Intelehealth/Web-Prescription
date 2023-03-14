@@ -217,10 +217,10 @@
                             for (counter = 0; counter < complaintString.length; counter++) {
                                 if (complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("Associated symptoms") == -1) {
                                     if (counter > 0) {
-                                        finalComplaint += complaintString[counter].slice(5, -2) + "<br>";
+                                        finalComplaint += "<li>" + complaintString[counter].slice(5, -2) + "</li>";
                                     }
                                     else {
-                                        finalComplaint += complaintString[counter].slice(4, -2) + "<br>";
+                                        finalComplaint += "<li>" + complaintString[counter].slice(4, -2) + "</li>";
                                     }
 
                                 }
@@ -234,39 +234,60 @@
                             //                       }
                             //                  }
 
-                            $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">' + finalComplaint + "</div>");
+                            $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;"><ul>' + finalComplaint + "</ul></div>");
                             if (data.diagnosis.trim().length > 0) {
                                 if (data.diagnosis.substring(0, 1) == ';') {
-                                    let diagnosis = data.diagnosis.trim().substring(1).replaceAll(";", "<br>")
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + diagnosis + "<br></div>");
+                                    let diagnosis = data.diagnosis.trim().substring(1).split(";")
+                                    finalDiagnosis = "";
+                                    for(counter = 0; counter < diagnosis.length; counter++){
+                                        finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
+                                    }
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;"><ul>' + finalDiagnosis + "</ul></div>");
                                 }
                                 else {
-                                    let diagnosis = data.diagnosis.trim().replaceAll(";", "<br>")
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + diagnosis + "<br></div>");
+                                    let diagnosis = data.diagnosis.trim().substring(1).split(";")
+                                    finalDiagnosis = "";
+                                    for(counter = 0; counter < diagnosis.length; counter++){
+                                        finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
+                                    }
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;"><ul>' + finalDiagnosis + "</ul></div>");
                                 }
                             }
                             if (data.medication.trim().length > 0) {
                                 if (data.medication.substring(0, 1) == ';') {
-                                    let med = data.medication.trim().substring(1).replaceAll(";", "<br>")
-                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + med.trim() + "<br></div>");
-
+                                    let med = data.medication.trim().substring(1).split(";")
+                                    finalMedication = "";
+                                    for(counter = 0; counter < med.length; counter++){
+                                        finalMedication += "<li>" + med[counter] + "</li>";
+                                    }
+                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;"><ul>' + finalMedication + "</ul></div>");
                                 }
                                 else {
-                                    let med = data.medication.trim().replaceAll(";", "<br>")
-                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + med.trim() + "<br></div>");
-
+                                    // 
+                                    let med = data.medication.trim().substring(1).split(";")
+                                    finalMedication = "";
+                                    for(counter = 0; counter < med.length; counter++){
+                                        finalMedication += "<li>" + med[counter] + "</li>";
+                                    }
+                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;"><ul>' + finalMedication + "</ul></div>");
                                 }
                             }
                             if (data.testsAdvised.trim().length > 0) {
                                 if (data.testsAdvised.substring(0, 1) == ';') {
-                                    let tests = data.testsAdvised.trim().substring(1).replaceAll(";", "<br>")
-                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + tests.trim() + "<br></div>");
-
+                                    let tests = data.testsAdvised.trim().substring(1).split(";")
+                                    finalTest = "";
+                                    for(counter = 0; counter < tests.length; counter++){
+                                        finalTest += "<li>" + tests[counter] + "</li>";
+                                    }
+                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;"><ul>' + finalTest + "</ul></div>");
                                 }
                                 else {
-                                    let tests = data.testsAdvised.trim().replaceAll(";", "<br>")
-                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + tests.trim() + "<br></div>");
-
+                                    let tests = data.testsAdvised.trim().split(";")
+                                    finalTest = "";
+                                    for(counter = 0; counter < tests.length; counter++){
+                                        finalTest += "<li>" + tests[counter] + "</li>";
+                                    }
+                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;"><ul>' + finalTest + "</ul></div>");
                                 }
                             }
                             if (data.medicalAdvice.trim().length > 0 && data.medicalAdvice.trim().length !== 1) {
@@ -281,13 +302,13 @@
                                         if (jks[counter].indexOf("Audio") > -1) {
                                         }
                                         else if (jks[counter].trim().includes(" ")) {
-                                            killers += jks[counter] + "<br>";
+                                            killers += "<li>" + jks[counter] + "</li>";
                                         }
                                     }
 
                                     //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
 
-                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
+                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;"><ul>' + killers + "</ul></div>");
 
 
                                 }
@@ -315,10 +336,10 @@
                             if (data.followupNeeded.trim().length > 0) {
                                 if (data.followupNeeded.substr(0, 1) == ';') {
 
-                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().substring(1).replace(",", "<br>") + "<br></div>");
+                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;"><ul><li>' + data.followupNeeded.trim().substring(1).replace(",", "<br>") + "</li></ul></div>");
                                 }
                                 else {
-                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().replace(",", "<br>") + "<br></div>");
+                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;"><ul><li>' + data.followupNeeded.trim().replace(",", "<br>") + "</li></ul></div>");
 
                                 }
                             }
