@@ -322,13 +322,13 @@
                                         else if (jks[counter].trim().includes(" ")) {
 
 
-                                            killers += jks[counter] + "<br>";
+                                            killers += "<li>" + jks[counter] + "</li>";
                                         }
                                     }
                                     console.log(killers)
 
                                     //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
+                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;"><ul>' + killers + "</ul></div>");
 
 
                                 }
@@ -452,20 +452,20 @@
                 j.shift();
 
                 var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">', '')
-                nest = tmpK.split("<br>")
+                nest = tmpK.replaceAll("<li>", "\u2022").replace("<ul>","").split("</li>")
                 videoAddresses = [];
                 nest.pop();
                 // nest.pop();
-                for (i = 0; i < nest.length; i++) {
-                    if (nest[i].indexOf("<") == -1) {
-                        videoAddresses.push("#");
-                    }
-                    else {
-                        console.log(nest[i].indexOf("<"))
-                        nest[i] = nest[i].substr(0, nest[i].indexOf("<") - 1);
-                    }
-                }
-                console.log(nest);
+                // for (i = 0; i < nest.length; i++) {
+                //     if (nest[i].indexOf("<") == -1) {
+                //         videoAddresses.push("#");
+                //     }
+                //     else {
+                //         console.log(nest[i].indexOf("<"))
+                //         nest[i] = nest[i].substr(0, nest[i].indexOf("<") - 1);
+                //     }
+                // }
+                // console.log(nest);
 
                 $('#advice_heading').find('a').each(function () {
                     videoAddresses.push($(this).attr('href'))
@@ -480,7 +480,8 @@
                             k9.push({ text: nest[nn] })
                         }
                         else {
-                            k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
+                            // k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
+                            k9.push({ text: nest[nn] })
                         }
 
                     }
@@ -488,13 +489,13 @@
                 }
 
                 var diagnosis1 = $('#diagnosis_heading').html().replace('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">', '')
-                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n");
+                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n").replace("<ul>", "").replace("</ul>", "");
 
                 var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
-                var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n");
+                var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n").replace("<ul>", "").replace("</ul>", "");
 
                 var tmpK = $('#tests_heading').html().replace('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">', '')
-                var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n");
+                var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n").replace("<ul>", "").replace("</ul>", "");
 
                 videoAddress = $('#advice_heading a:first').attr('href')
                 var videoDescriptor = $('#advice_heading a:first').parent().text()
@@ -568,9 +569,13 @@
                     n2 = n1.replace("</b>", "");
                     n3 = n2.replace("<u>", "");
                     n4 = n3.replace("</u>", "");
-                    n5 = n4.replace(/<\/?[^>]+(>|$)/g, "");
-                    n6 = n5.replace("&amp;", "& ");
-                    tmpComplaints[index] = n6;
+                    n5 = n4.replace("<ul>", "");
+                    n6 = n5.replace("</ul>", "");
+                    n7 = n6.replaceAll("<li>", "\u2022");
+                    n8 = n7.replaceAll("</li>", "\n");
+                    n9 = n8.replace(/<\/?[^>]+(>|$)/g, "");
+                    n10 = n9.replace("&amp;", "& ");
+                    tmpComplaints[index] = n10;
 
                 }
                 tmpComplaints.shift();
