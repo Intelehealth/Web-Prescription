@@ -79,13 +79,13 @@ color:black;}
         <div id="prescription" style="display: none" class="container">
             <div class="row" style="text-align:center;margin-right: 0px; margin-left: 0px;">
                 <div class="col-md-3">
-                  <img src="sila.png" width="50%" />
+                  <!-- <img src="sila.png" width="50%" /> -->
                 </div>
-                <div class="col-md-6" style="text-align: center;padding-top: 10px;font-size: 25px;">
-                  <span><strong>Sila</strong></span>
+                <div class="col-md-6" style="text-align: center;padding-top: 10px;font-size: 15pt;">
+                  <span id="projectName"><strong>"Registration Village Location - Dynamic" Health Unit</strong></span>
                 </div>
                 <div class="col-md-3" style="text-align: center;padding-top: 10px;">
-                  <img src="ih-logo.png" width="50%" />
+                  <!-- <img src="ih-logo.png" width="50%" /> -->
                 </div>
               </div>
               <br />
@@ -109,12 +109,13 @@ color:black;}
 
             <br>
             <div id="detailDiv" style="margin:0px">
-            <p id="patient_name" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
+                <p id="patient_info" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
+                <p id="patient_name" style="font-size:12pt; margin: 0px; padding: 0px;"></p></b>
                 <p id="patient_details" style="font-size:12pt; margin: 0px; padding: 0px;"> </p>
                 <p id="address_and_contact" style="font-size:12pt; margin: 0px; padding: 0px;"></p>
                 <p id="visit_details" style="font-size:12pt; margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <b><p id="vitals_heading" style="font-size:12pt;margin-top:5px; margin-bottom:0px;; padding: 0px;"></p></b>
-                <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p>
+                <!-- <p id="vitals" style="font-size:12pt;margin:0px; padding: 0px;"></p> -->
               <p id="complaints_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <p id="diagnosis_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
@@ -189,20 +190,21 @@ color:black;}
                                 {
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b>"+data.name.replaceAll(",", " ") + "</b>");
+                                    $('#projectName').html("<strong>" + data.locationName+" Health Unit"+ "</strong>");
+                                    $('#patient_info').html("<b style=font-size:15pt;><u>Patient information:</u></b>");
+                                    $('#patient_name').html("Name: "+data.name.replaceAll(",", " ")+"</br>");
                                     $('#patient_details').text('Age: '+data.age + " | Gender: "+data.gender);
-                                    $('#address_and_contact').text('Address: ' + data.address);
+                                    $('#address_and_contact').text('Address and Contact: ' + data.address);
                                     wt = parseFloat(data.weight);
                                     ht = parseInt(data.height)/100;
                                     bmi = 0.0;
                                     if(wt && ht) {
                                          bmi = wt / (ht * ht);
                                     }
-                                    $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);
-                                    $('#vitals').html('<b><u>Vitals</u></b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
-                                    ' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
-                                    ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
-                                    let complaint1;
+                                    $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);                                    // $('#vitals').html('<b><u>Vitals</u></b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
+                                    // ' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
+                                    // ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
+                                     let complaint1;
                                     if (data.complaint.toString().startsWith("{")) {
                                          let value = JSON.parse(data.complaint.toString());
                                          complaint1 = value["en"];
@@ -233,34 +235,34 @@ color:black;}
                                        }
                                    }
 
-                                    $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:12pt;">'+finalComplaint +"</div>");
+                                    $('#complaints_heading').html('<b><u>Reason of visit:</u></b><br><div style="font-size:12pt;">'+finalComplaint +"</div>");
                                     if(data.diagnosis.substring(0,1)==';')
                                     {
-                                        $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><div style="font-size:12pt;">'+getData(data.enDiagnosis)+"<br></div>");
+                                        $('#diagnosis_heading').html('<b><u>Diagnosis:</u></b><div style="font-size:12pt;">'+getData(data.enDiagnosis)+"<br></div>");
                                     }
                                     else
                                     {
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><div style="font-size:12pt;">'+getData(data.enDiagnosis)+"<br></div>");
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis:</u></b><div style="font-size:12pt;">'+getData(data.enDiagnosis)+"<br></div>");
                                     }
                                     if(data.medication.substring(0,1)==';')
                                     {
-                                         $('#rx_heading').html('<b><u>Medication(s)</u></b><div style="font-size:12pt;">'+getData(data.enMedication)+"<br></div>");
+                                         $('#rx_heading').html('<b><u>Medication plan:</u></b><div style="font-size:12pt;">'+getData(data.enMedication)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#rx_heading').html('<b><u>Medication(s)</u></b><div style="font-size:12pt;">'+getData(data.enMedication)+"<br></div>");
+                                        $('#rx_heading').html('<b><u>Medication plan:</u></b><div style="font-size:12pt;">'+getData(data.enMedication)+"<br></div>");
 
                                     }
 
                                     if(data.testsAdvised.substring(0,1)==';')
                                     {
-                                        $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><div style="font-size:12pt;">'+getData(data.enMedicalTests)+"<br></div>");
+                                        $('#tests_heading').html('<b><u>Recommended Investigation(s):</u></b><div style="font-size:12pt;">'+getData(data.enMedicalTests)+"<br></div>");
 
                                     }
                                     else
                                     {
-                                        $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><div style="font-size:12pt;">'+getData(data.enMedicalTests)+"<br></div>");
+                                        $('#tests_heading').html('<b><u>Recommended Investigation(s):</u></b><div style="font-size:12pt;">'+getData(data.enMedicalTests)+"<br></div>");
 
                                     }
                                     if(data.medicalAdvice.substring(0,1)==';')
@@ -284,7 +286,7 @@ color:black;}
 																				     
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
     
-                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:12pt;">'+getData(data.enMedicalAdvice)+"</div>");
+                                        $('#advice_heading').html('<b><u>General Instructions:</u></b><div style="font-size:12pt;">'+getData(data.enMedicalAdvice)+"</div>");
 
 
                                     }
@@ -308,7 +310,7 @@ color:black;}
 					 console.log(killers)
 					
                                         //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                        $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:12pt;">'+getData(data.enMedicalAdvice)+"</div>");
+                                        $('#advice_heading').html('<b><u>General Instructions:</u></b><div style="font-size:12pt;">'+getData(data.enMedicalAdvice)+"</div>");
 
 
                                     }
@@ -316,12 +318,12 @@ color:black;}
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
                                         let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {en:""};
-                                        $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:12pt;">'+followup['en']?.replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;">'+followup['en']?.replace(",","<br>")+"<br></div>");
                                     }
                                     else
                                     {
                                         let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {en:""};
-                                        $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:12pt;">'+followup['en']?.trim().replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;">'+followup['en']?.trim().replace(",","<br>")+"<br></div>");
 
                                     }
 
@@ -330,7 +332,7 @@ color:black;}
 
                                     var docName = data.doctorName.replace(","," ");
                                     var fullDets ="";
-                                    fullDets+=docName;
+                                    fullDets+= docName;
                                     fullDets+="<br>";
 
                                     var docAttributes = data.doctorAttributes.split("|");
@@ -375,19 +377,19 @@ color:black;}
 
                                                     if(docAttributes[i].indexOf("emailId") > -1)
                                                     {
-                                                        email="E-Mail: "+docAttributes[i].split(":")[1];
+                                                        email="Email id: "+docAttributes[i].split(":")[1];
 
                                                     }
                                                     if(docAttributes[i].indexOf("registrationNumber") > -1)
                                                     {
-                                                        regNumber="<b>Registration No: "+docAttributes[i].split(":")[1]+"</b>";
+                                                        regNumber="Registration No: "+docAttributes[i].split(":")[1];
 
                                                     }
 
                                                 }
                                     }
-                                    fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
-                                    fullDets+=phoneNumber+"<br>";
+                                    // fullDets+= qual? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+                                   // fullDets+=phoneNumber+"<br>";
                                     fullDets+=email+"<br>";
 
                                     //fullDets+=regNumber+"<br>";
@@ -446,7 +448,7 @@ function getData(element) {
 var j = $('#follow_up_heading').text().slice(14).split(" ");
 j.shift();
 
-		    var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:12pt;">','')
+		    var tmpK = $('#advice_heading').html().replace('<b><u>General Instructions:</u></b><div style="font-size:12pt;">','')
 		    nest = tmpK.split("<br>")
 		    videoAddresses = [];
 		    nest.pop();
@@ -580,20 +582,10 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             {
                 columns: [
                   {
-                    image: "ss_logo",
-                    width: 80,
-                    height: 80,
-                  },
-                  {
-                    text: "Sila",
+                    text: {text:$('#projectName').text(),bold:true},
                     fontSize: 20,
                     bold:true
-                  },
-                  {
-                    image: "nhm_logo",
-                    width: 100,
-                    height: 38,
-                  },
+                  }
                 ],
               },
                 {text: 'e-prescription', style: 'subheader'},
@@ -603,57 +595,57 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
         },
         {
             stack: [
-                {text:$('#patient_name').text(),bold:true,lineHeight: 1.25},
+                {text:$('#patient_info').text(),decoration: 'underline',bold:true,fontSize:14,lineHeight: 1.25},
+                {text:$('#patient_name').text(),lineHeight: 1.25},
                 {text: $('#patient_details').text(), lineHeight:1.25},
                 {text:$('#address_and_contact').text(), lineHeight:1.25},
                 {text:$('#visit_details').text(), lineHeight:2}
 
-
             ]
         },
         {
-            stack: [{text:'Presenting complaint',decoration: 'underline', bold:true,fontSize:14},
+            stack: [{text:'Reason of visit:\n\n',decoration: 'underline', bold:true,fontSize:14},
             k2h2 ]
 //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
 
         },
 
-        {
-            stack: [{text:'Vitals', decoration: 'underline', bold:true,fontSize:14},
-            {text:$('#vitals').text().slice(6)+"\n\n",lineHeight:1}
-            ]
+        // {
+        //     stack: [{text:'Vitals', decoration: 'underline', bold:true,fontSize:14},
+        //     {text:$('#vitals').text().slice(6)+"\n\n",lineHeight:1}
+        //     ]
 
-        },
+        // },
 
         {
             stack: [
 
-            {text:'Diagnosis', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#diagnosis_heading').text().slice(9),lineHeight:2}]
+            {text:'Diagnosis:', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#diagnosis_heading').text().slice(10),lineHeight:2}]
 
         },
 
          {
             stack: [
 
-            {text:'Medication(s)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#rx_heading').text().slice(13),lineHeight:2}]
+            {text:'Medication plan:', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#rx_heading').text().slice(16),lineHeight:2}]
 
         },
 
         {
             stack: [
 
-            {text:'Recommended Investigation(s)', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#tests_heading').text().slice(28),lineHeight:2}]
+            {text:'Recommended Investigation(s):', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:$('#tests_heading').text().slice(29),lineHeight:2}]
 
         },
 
         {
             stack: [
 
-            {text:'General Advice \n\n', bold:true,decoration: 'underline', fontSize:14, lineHeight:1},
-              {text:$('#advice_heading').text().slice(14),lineHeight:2}
+            {text:'General Instructions: \n\n', bold:true,decoration: 'underline', fontSize:14, lineHeight:1},
+              {text:$('#advice_heading').text().slice(21),lineHeight:2}
 		    ]
 
         },
@@ -661,7 +653,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
          {
             stack: [
 
-            {text:'Follow Up Date', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
+            {text:'Followup date:', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
             {text:$('#follow_up_heading').text().slice(14).split(" ")[0]},
             {text:j.join(" ") , lineHeight:2},
             ]
@@ -696,11 +688,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             fontSize: 14,
             decoration: "underline"
         }
-    },
-    images: {
-          nhm_logo: "https://service.sila.care/preApi/ih-logo.png",
-          ss_logo: "https://service.sila.care/preApi/sila.png"
-           },
+    }
 
 }
 fileName = getParameterByName("v").slice(-5)+"_prescription";
