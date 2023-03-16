@@ -223,14 +223,15 @@
                             $('#projectName').html("<strong> فريق  " + data.locationName + " الصحي" + "</strong>");
                             $('#patient_info').html("<b style=font-size:15pt;><u>معلومات المريض</u></b>");
                             $('#patient_name').html("الاسم :  " + data.name.replaceAll(",", " ") + "</br>");
-                            $('#patient_details').text(' العمر : '+data.age + " | الجنس : "+ (data.gender === 'M' ? 'ذكر': 'أنثى'));                      $('#address_and_contact').text('العنوان : ' + data.address);
+                            $('#patient_details').text(' العمر : ' + data.age + " | الجنس : " + (data.gender === 'M' ? 'ذكر' : 'أنثى'));
+                            $('#address_and_contact').text('العنوان : ' + data.address + "," +(data.citizenId === "-" ? "غير مزود" : data.citizenId));
                             wt = parseFloat(data.weight);
                             ht = parseInt(data.height) / 100;
                             bmi = 0.0;
                             if (wt && ht) {
                                 bmi = wt / (ht * ht);
                             }
-                            $('#visit_details').text('رقم البطاقة التعريفية للمريض :  '+data.openMRSID+ " | موعد زيارة : "+data.visitDate);
+                            $('#visit_details').text('رقم الاضبارة :  ' + data.openMRSID + "| تاريخ الزيارة : " + getFollowup(moment(data.visitDate).format('DD-MMMM-YYYY')));
                             // $('#vitals').html('<b><u>العلامات الحيوية</u></b><br> الطول (سم) : '+data.height+' | الوزن (كغ) : '+data.weight+
                             // ' | مؤشر كتلة الجسم :  '+bmi.toFixed(2)+' | ضغط الدم : '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | النبض ( نبضة بالدقيقة) :  '+ data.pulseRate+
                             // ' | درجة الحرارة (فهرنهايت)  :  '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | نسبة الأكسجة : '+ data.spo2 + '  معدل التنفس : '+ data.respRate+"<br>");
@@ -331,11 +332,11 @@
 
                             if (data.followupNeeded.substr(0, 1) == ';') {
                                 let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : { ar: "" };
-                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;">' + followup['ar']?.replace(",", "<br>") + "<br></div>");
+                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;">' + getFollowup(followup['ar']) + "<br></div>");
                             }
                             else {
                                 let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().toString()) : { ar: "" };
-                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;">' + followup['ar']?.replace(",", "<br>") + "<br></div>");
+                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;">' + getFollowup(followup['ar']) + "<br></div>");
 
                             }
 
@@ -450,19 +451,35 @@
                 }
             }
 
+            function getFollowup(data) {
+                let followUp_date = data
+                    .replace("January", "كانون الثاني")
+                    .replace("February", "شهر شباط")
+                    .replace("March", "شهر اذار")
+                    .replace("April", "أشهر نيسان")
+                    .replace("May", "شهر أيار")
+                    .replace("June", "شهر حزيران")
+                    .replace("July", "شهر تموز")
+                    .replace("August", "شهر أب")
+                    .replace("September", "شهر أيلول")
+                    .replace("October", "شهر تشرين الأول")
+                    .replace("November", "شهر تشرين الثاني")
+                    .replace("December", "شهر كانون الأول");
+                return followUp_date;
+            }
 
 
 
             function createPDF() {
 
 
-                var j = $('#follow_up_heading').text().slice(14).split(" ");
-                j.shift();
+                // var j = $('#follow_up_heading').text().slice(14).split(" ");
+                // j.shift();
 
                 var tmpK = $('#advice_heading').html().replace('<b><u>توجيهات عامة</u></b><div style="font-size:12pt;">', '')
                 nest = tmpK.replace('</div>', '').split("<br>")
                 videoAddresses = [];
-			
+
                 console.log(nest);
 
                 $('#advice_heading').find('a').each(function () {
@@ -652,8 +669,7 @@
                             stack: [
 
                                 { text: ' تاريخ زيارة المتابعة', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
-                                { text: $('#follow_up_heading').text().slice(21).split(" ")[0], alignment: 'right', font: 'Arial Unicode MS' },
-                                { text: j.join(" "), alignment: 'right', lineHeight: 2, font: 'Arial Unicode MS' },
+                                { text: $('#follow_up_heading').text().slice(21), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' },
                             ]
 
                         },
@@ -709,5 +725,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/pdfmake.min.js"></script>
     <script src="js/vfs_fonts.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
 
     </html>

@@ -194,14 +194,14 @@ color:black;}
                                     $('#patient_info').html("<b style=font-size:15pt;><u>Patient information:</u></b>");
                                     $('#patient_name').html("Name: "+data.name.replaceAll(",", " ")+"</br>");
                                     $('#patient_details').text('Age: '+data.age + " | Gender: "+data.gender);
-                                    $('#address_and_contact').text('Address and Contact: ' + data.address);
+                                    $('#address_and_contact').text('Address and Contact: ' + data.address + "," + (data.citizenId === "-" ?  "Not provided": data.citizenId));
                                     wt = parseFloat(data.weight);
                                     ht = parseInt(data.height)/100;
                                     bmi = 0.0;
                                     if(wt && ht) {
                                          bmi = wt / (ht * ht);
                                     }
-                                    $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+data.visitDate);                                    // $('#vitals').html('<b><u>Vitals</u></b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
+                                    $('#visit_details').text('Patient Id: '+data.openMRSID+ " | Date of visit: "+ moment(data.visitDate).format('DD-MMMM-YYYY'));                                    // $('#vitals').html('<b><u>Vitals</u></b><br> Height(cm): '+data.height+' | Weight(kg): '+data.weight+
                                     // ' | BMI: '+bmi.toFixed(2)+' | Blood Pressure: '+ parseInt(data.sbp).toFixed(0) + '/'+ parseInt(data.dbp).toFixed(0) +' | Pulse(bpm): '+ data.pulseRate+
                                     // ' | Temperature(F): '+ (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | SpO2(%): '+ data.spo2 + ' | Respiratory Rate: '+ data.respRate+"<br>");
                                      let complaint1;
@@ -318,12 +318,12 @@ color:black;}
                                     if(data.followupNeeded.substr(0,1)==';')
                                     {
                                         let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {en:""};
-                                        $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;">'+followup['en']?.replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;">'+followup['en']+"<br></div>");
                                     }
                                     else
                                     {
                                         let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : {en:""};
-                                        $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;">'+followup['en']?.trim().replace(",","<br>")+"<br></div>");
+                                        $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;">'+followup['en']+"<br></div>");
 
                                     }
 
@@ -445,8 +445,8 @@ function getData(element) {
             function createPDF() {
 
 
-var j = $('#follow_up_heading').text().slice(14).split(" ");
-j.shift();
+// var j = $('#follow_up_heading').text().slice(14).split(" ");
+// j.shift();
 
 		    var tmpK = $('#advice_heading').html().replace('<b><u>General Instructions:</u></b><div style="font-size:12pt;">','')
 		    nest = tmpK.split("<br>")
@@ -654,8 +654,7 @@ $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
             stack: [
 
             {text:'Followup date:', bold:true,decoration: 'underline', fontSize:14, lineHeight:2},
-            {text:$('#follow_up_heading').text().slice(14).split(" ")[0]},
-            {text:j.join(" ") , lineHeight:2},
+            {text:$('#follow_up_heading').text().slice(14),lineHeight:2},
             ]
 
         },
@@ -704,5 +703,5 @@ alert('Prescription will be downloaded shortly');
 <script src="js/bootstrap.min.js"></script>
 <script src="js/pdfmake.min.js"></script>
 <script src="js/vfs_fonts.js"></script>
-
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 </html>
