@@ -450,6 +450,7 @@
 
                 var j = $('#follow_up_heading').text().slice(14).split(" ");
                 j.shift();
+                followUp = "\u2022 " + j[0]
 
                 var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">', '')
                 nest = tmpK.replaceAll("<li>", "\u2022").replace("<ul>","").split("</li>")
@@ -571,7 +572,7 @@
                     n4 = n3.replace("</u>", "");
                     n5 = n4.replace("<ul>", "");
                     n6 = n5.replace("</ul>", "");
-                    n7 = n6.replaceAll("<li>", "\u2022");
+                    n7 = n6.replaceAll("<li>", "\u2022 ");
                     n8 = n7.replaceAll("</li>", "\n");
                     n9 = n8.replace(/<\/?[^>]+(>|$)/g, "");
                     n10 = n9.replace("&amp;", "& ");
@@ -681,8 +682,9 @@
                             stack: [
 
                                 { text: 'Follow Up Date', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                                { text: $('#follow_up_heading').text().slice(14).split(" ")[0] },
-                                { text: j.join(" "), lineHeight: 2 },
+                                // { text: $('#follow_up_heading').text().slice(14).split(" ")[0] },
+                                // { text: j.join(" "), lineHeight: 2 },
+                                followUp
                             ]
 
                         },
