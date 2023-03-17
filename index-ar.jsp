@@ -248,96 +248,60 @@
                             for (counter = 0; counter < complaintString?.length; counter++) {
                                 if (complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("الأعراض المرافقة") == -1) {
                                     if (counter > 0) {
-                                        finalComplaint += complaintString[counter].slice(5, -2) + "<br>";
-                                    }
-                                    else {
-                                        finalComplaint += complaintString[counter].slice(4, -2) + "<br>";
-                                    }
+                                    finalComplaint += "<li>" + complaintString[counter].slice(5, -2) + "</li>";
+                                }
+                                else {
+                                    finalComplaint += "<li>" + complaintString[counter].slice(4, -2) + "</li>"
+                                }
 
                                 }
                             }
 
-                            finalComplaint = "";
-                            for (counter = 0; counter < complaintString?.length; counter++) {
-                                if (complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("الأعراض المرافقة") == -1) {
-                                    finalComplaint += complaintString[counter].slice(1, -2);
-
-                                }
-                            }
                             $('#complaints_heading').html('<b><u>سبب الزيارة</u></b><br><div style="font-size:12pt;">' + finalComplaint + "</div>");
                             if (data.diagnosis.substring(0, 1) == ';') {
-                                $('#diagnosis_heading').html('<b><u> التشخيص</u></b><div style="font-size:12pt;">' + getData(data.arDiagnosis) + "<br></div>");
+                                let diagnosis = getData(data.arDiagnosis)?.split("<br>");
+                            finalDiagnosis = "";
+                            for (counter = 0; counter < diagnosis.length; counter++) {
+                                finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
                             }
-                            else {
-                                $('#diagnosis_heading').html('<b><u> التشخيص</u></b><div style="font-size:12pt;">' + getData(data.arDiagnosis) + "<br></div>");
-                            }
-                            if (data.medication.substring(0, 1) == ';') {
-                                $('#rx_heading').html('<b><u>الخطة العلاجية</u></b><div style="font-size:12pt;">' + getData(data.arMedication) + "<br></div>");
-
-                            }
-                            else {
-                                $('#rx_heading').html('<b><u>الخطة العلاجية</u></b><div style="font-size:12pt;">' + getData(data.arMedication) + "<br></div>");
-
+                                $('#diagnosis_heading').html('<b><u> التشخيص</u></b><div style="font-size:12pt;">' + finalDiagnosis + "</div>");
                             }
 
-                            if (data.testsAdvised.substring(0, 1) == ';') {
-                                $('#tests_heading').html('<b><u>التحاليل و الفحوصات المطلوبة</u></b><div style="font-size:12pt;">' + getData(data.arMedicalTests) + "<br></div>");
+                            if (data.arMedication) {
+                              let med = getData(data.arMedication)?.split("<br>");
+                            finalMedication = "";
+                            for (counter = 0; counter < med.length; counter++) {
+                                finalMedication += "<li>" + med[counter] + "</li>";
+                            }
+                                $('#rx_heading').html('<b><u>الخطة العلاجية</u></b><div style="font-size:12pt;">' + finalMedication + "</div>");
 
                             }
-                            else {
-                                $('#tests_heading').html('<b><u>التحاليل و الفحوصات المطلوبة</u></b><div style="font-size:12pt;">' + getData(data.arMedicalTests) + "<br></div>");
+
+                            if (data.arMedicalTests) {
+                                let testsAdvised = getData(data.arMedicalTests)?.split("<br>");
+                            finalTest = "";
+                            for (counter = 0; counter < testsAdvised.length; counter++) {
+                                finalTest += "<li>" + testsAdvised[counter] + "</li>";
+                            }
+                                $('#tests_heading').html('<b><u>التحاليل و الفحوصات المطلوبة</u></b><div style="font-size:12pt;">' + finalTest + "</div>");
 
                             }
-                            if (data.medicalAdvice.substring(0, 1) == ';') {
 
-                                kk = data.medicalAdvice.trim().substr(1)
-
-                                console.log(kk)
-                                jks = kk.split(";")
-                                killers = ""
-                                for (counter = 0; counter < jks.length; counter++) {
-                                    if (jks[counter].indexOf("Audio") > -1) {
-                                    }
-                                    else if (jks[counter].trim().includes(" ")) {
-                                        killers += jks[counter] + "<br>";
-                                    }
-                                }
-
-                                //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
-
-                                $('#advice_heading').html('<b><u>توجيهات عامة</u></b><div style="font-size:12pt;">' + getData(data.arMedicalAdvice) + "</div>");
-
-
+                            if (data.arMedicalAdvice) {
+                            let medicalAdvice = getData(data.arMedicalAdvice)?.split("<br>");
+                            finalMedicalAdvice = "";
+                            for (counter = 0; counter < medicalAdvice.length; counter++) {
+                                if (!medicalAdvice[counter].includes("Audio"))
+                                    finalMedicalAdvice += "<li>" + medicalAdvice[counter] + "</li>";
                             }
-                            else {
-                                kk = data.medicalAdvice.trim()
-                                jks = kk.split(";")
-                                killers = ""
-                                for (counter = 0; counter < jks.length; counter++) {
-                                    if (jks[counter].indexOf("Audio") > -1) {
-                                    }
-                                    else if (jks[counter].trim().includes(" ")) {
-
-
-                                        killers += jks[counter] + "<br>";
-                                    }
-                                }
-                                console.log(killers)
-
-                                //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                $('#advice_heading').html('<b><u>توجيهات عامة</u></b><div style="font-size:12pt;">' + getData(data.arMedicalAdvice) + "</div>");
+                                $('#advice_heading').html('<b><u>توجيهات عامة</u></b><div style="font-size:12pt;">' + finalMedicalAdvice + "</div>");
 
 
                             }
 
-                            if (data.followupNeeded.substr(0, 1) == ';') {
+                            if (data.followupNeeded) {
                                 let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : { ar: "" };
-                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;">' + getFollowup(followup['ar']) + "<br></div>");
-                            }
-                            else {
-                                let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().toString()) : { ar: "" };
-                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;">' + getFollowup(followup['ar']) + "<br></div>");
-
+                                $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;"><li>' + getFollowup(followup['ar']) + "</li><br></div>");
                             }
 
 
@@ -471,41 +435,6 @@
 
 
             function createPDF() {
-
-
-                // var j = $('#follow_up_heading').text().slice(14).split(" ");
-                // j.shift();
-
-                var tmpK = $('#advice_heading').html().replace('<b><u>توجيهات عامة</u></b><div style="font-size:12pt;">', '')
-                nest = tmpK.replace('</div>', '').split("<br>")
-                videoAddresses = [];
-
-                console.log(nest);
-
-                $('#advice_heading').find('a').each(function () {
-                    videoAddresses.push($(this).attr('href'))
-                });
-
-                k9 = [];
-                console.log(videoAddresses);
-                k9.push("\n");
-                for (nn = 0; nn < nest.length; nn++) {
-                    if (videoAddresses[nn] == "#") {
-                        k9.push({ text: nest[nn] })
-                    }
-                    else {
-                        k9.push({ text: nest[nn] + "Video Link ", link: videoAddresses[nn] })
-                    }
-
-                }
-                k9.push("\n");
-
-
-                videoAddress = $('#advice_heading a:first').attr('href')
-                var videoDescriptor = $('#advice_heading a:first').parent().text()
-                var videoLinkPos = videoDescriptor.indexOf("video link")
-
-                videoDescriptor = videoDescriptor.substr(0, videoLinkPos - 1)
                 var docDe = $('#docDetail').html().replaceAll("<br>", "\n");
 
                 var fonts = {
@@ -574,9 +503,13 @@
                     n2 = n1.replace("</b>", "");
                     n3 = n2.replace("<u>", "");
                     n4 = n3.replace("</u>", "");
-                    n5 = n4.replace(/<\/?[^>]+(>|$)/g, "");
-                    n6 = n5.replace("&amp;", "& ");
-                    tmpComplaints[index] = n6;
+                    n5 = n4.replace("<ul>", "");
+                    n6 = n5.replace("</ul>", "");
+                    n7 = n6.replaceAll("<li>", "\u2022");
+                    n8 = n7.replaceAll("</li>", "\n");
+                    n9 = n8.replace(/<\/?[^>]+(>|$)/g, "");
+                    n10 = n9.replace("&amp;", "& ");
+                    tmpComplaints[index] = n10;
 
                 }
                 tmpComplaints.shift();
@@ -584,11 +517,12 @@
                 k2h2.push("\n\n");
 
 
-                $("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<br>", "\n"));
-                $("#rx_heading").html($("#rx_heading").html().replaceAll("<br>", "\n"));
-                $("#tests_heading").html($("#tests_heading").html().replaceAll("<br>", "\n"));
-                $("#advice_heading").html($("#advice_heading").html().replaceAll("<br>", "\n"));
-                //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
+            $("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+            $("#rx_heading").html($("#rx_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+            $("#tests_heading").html($("#tests_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+            $("#advice_heading").html($("#advice_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+            $("#follow_up_heading").html($("#follow_up_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+
 
                 var dd = {
                     "pageSize": "A4",
@@ -681,7 +615,7 @@
 
                                 { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 50, alignment: 'left' },
                                 { text: docDe, alignment: 'left', lineHeight: 1 },
-                                { text: $('#docReg').text(), bold: true, alignment: 'left' }
+                                { text: $('#docReg').text(), alignment: 'left' }
                             ]
 
                         },
