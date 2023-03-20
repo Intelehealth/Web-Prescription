@@ -198,11 +198,11 @@
                                 bmi = wt / (ht * ht);
                             }
                             $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                            if (data.height.length > 0 || data.weight.length > 0 || data.sbp.length > 0 || data.dbp.length > 0 || data.pulseRate.length > 0 ||
-                                data.respRate.length > 0) {
+                            if (data.height.length > 0 || data.weight.length > 0 || data.sbp.length > 0 || data.dbp.length > 0 || data.pulseRate.length > 0 || data.temperature.length > 0 ||
+                                data.respRate.length > 0 || data.spo2.length > 0) {
                             $('#vitals').html('<b>Vitals</b><br>Height(cm): ' + data.height + ' | Weight(kg): ' + data.weight +
                                     ' | BMI: ' + bmi.toFixed(2) + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
-                                    ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
+                                    ' | Pulse(bpm): ' + data.pulseRate + ' | Temperature(F): ' + (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) + ' | Respiratory Rate: ' + data.respRate + ' | Sp02(%): ' + Number(data.spo2)) + "<br>";
                             }
                             if (data.blood_glucose_random_id.length > 0 || data.blood_glucose_after_food.length > 0 || data.blood_glucose_post_prandial_id.length > 0
                              || data.haemoGlobin.length > 0 || data.uricAcid.length > 0 ||   data.totalCholesterol.length > 0) {
@@ -234,7 +234,7 @@
                             //                       }
                             //                  }
 
-                            $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;"><ul>' + finalComplaint + "</ul></div>");
+                            $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">' + finalComplaint + "</div>");
                             if (data.diagnosis.trim().length > 0) {
                                 if (data.diagnosis.substring(0, 1) == ';') {
                                     let diagnosis = data.diagnosis.trim().substring(1).split(";")
@@ -242,7 +242,7 @@
                                     for(counter = 0; counter < diagnosis.length; counter++){
                                         finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
                                     }
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;"><ul>' + finalDiagnosis + "</ul></div>");
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + finalDiagnosis + "</div>");
                                 }
                                 else {
                                     let diagnosis = data.diagnosis.trim().substring(1).split(";")
@@ -250,7 +250,7 @@
                                     for(counter = 0; counter < diagnosis.length; counter++){
                                         finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
                                     }
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;"><ul>' + finalDiagnosis + "</ul></div>");
+                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + finalDiagnosis + "</div>");
                                 }
                             }
                             if (data.medication.trim().length > 0) {
@@ -260,7 +260,7 @@
                                     for(counter = 0; counter < med.length; counter++){
                                         finalMedication += "<li>" + med[counter] + "</li>";
                                     }
-                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;"><ul>' + finalMedication + "</ul></div>");
+                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + finalMedication + "</div>");
                                 }
                                 else {
                                     // 
@@ -269,7 +269,7 @@
                                     for(counter = 0; counter < med.length; counter++){
                                         finalMedication += "<li>" + med[counter] + "</li>";
                                     }
-                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;"><ul>' + finalMedication + "</ul></div>");
+                                    $('#rx_heading').html('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">' + finalMedication + "</div>");
                                 }
                             }
                             if (data.testsAdvised.trim().length > 0) {
@@ -279,7 +279,7 @@
                                     for(counter = 0; counter < tests.length; counter++){
                                         finalTest += "<li>" + tests[counter] + "</li>";
                                     }
-                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;"><ul>' + finalTest + "</ul></div>");
+                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + finalTest + "</div>");
                                 }
                                 else {
                                     let tests = data.testsAdvised.trim().split(";")
@@ -287,7 +287,7 @@
                                     for(counter = 0; counter < tests.length; counter++){
                                         finalTest += "<li>" + tests[counter] + "</li>";
                                     }
-                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;"><ul>' + finalTest + "</ul></div>");
+                                    $('#tests_heading').html('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' + finalTest + "</div>");
                                 }
                             }
                             if (data.medicalAdvice.trim().length > 0 && data.medicalAdvice.trim().length !== 1) {
@@ -308,7 +308,7 @@
 
                                     //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+kk.substr(kk.lastIndexOf(";")+1)+"<br></div>");
 
-                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;"><ul>' + killers + "</ul></div>");
+                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
 
 
                                 }
@@ -328,7 +328,7 @@
                                     console.log(killers)
 
                                     //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
-                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;"><ul>' + killers + "</ul></div>");
+                                    $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
 
 
                                 }
@@ -336,10 +336,10 @@
                             if (data.followupNeeded.trim().length > 0) {
                                 if (data.followupNeeded.substr(0, 1) == ';') {
 
-                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;"><ul><li>' + data.followupNeeded.trim().substring(1).replace(",", "<br>") + "</li></ul></div>");
+                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;"><li>' + data.followupNeeded.trim().substring(1) + "</li></div>");
                                 }
                                 else {
-                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;"><ul><li>' + data.followupNeeded.trim().replace(",", "<br>") + "</li></ul></div>");
+                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;"><li>' + data.followupNeeded.trim() + "</li></div>");
 
                                 }
                             }
@@ -448,12 +448,11 @@
             function createPDF() {
 
 
-                var j = $('#follow_up_heading').text().slice(14).split(" ");
-                j.shift();
-                followUp = "\u2022 " + j[0]
+                var j = $('#follow_up_heading').text().slice(14);
+                followUp = "\u2022 " + j
 
                 var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">', '')
-                nest = tmpK.replaceAll("<li>", "\u2022").replace("<ul>","").split("</li>")
+                nest = tmpK.replaceAll("<li>", "\u2022").split("</li>")
                 videoAddresses = [];
                 nest.pop();
                 // nest.pop();
@@ -490,13 +489,13 @@
                 }
 
                 var diagnosis1 = $('#diagnosis_heading').html().replace('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">', '')
-                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n").replace("<ul>", "").replace("</ul>", "");
+                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n");
 
                 var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
-                var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n").replace("<ul>", "").replace("</ul>", "");
+                var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n");
 
                 var tmpK = $('#tests_heading').html().replace('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">', '')
-                var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n").replace("<ul>", "").replace("</ul>", "");
+                var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n").replaceAll("<li>", "\u2022").replaceAll("</li>", "\n");
 
                 videoAddress = $('#advice_heading a:first').attr('href')
                 var videoDescriptor = $('#advice_heading a:first').parent().text()
@@ -570,13 +569,11 @@
                     n2 = n1.replace("</b>", "");
                     n3 = n2.replace("<u>", "");
                     n4 = n3.replace("</u>", "");
-                    n5 = n4.replace("<ul>", "");
-                    n6 = n5.replace("</ul>", "");
-                    n7 = n6.replaceAll("<li>", "\u2022 ");
-                    n8 = n7.replaceAll("</li>", "\n");
-                    n9 = n8.replace(/<\/?[^>]+(>|$)/g, "");
-                    n10 = n9.replace("&amp;", "& ");
-                    tmpComplaints[index] = n10;
+                    n5 = n4.replaceAll("<li>", "\u2022 ");
+                    n6 = n5.replaceAll("</li>", "\n");
+                    n7 = n6.replace(/<\/?[^>]+(>|$)/g, "");
+                    n8 = n7.replace("&amp;", "& ");
+                    tmpComplaints[index] = n8;
 
                 }
                 tmpComplaints.shift();
