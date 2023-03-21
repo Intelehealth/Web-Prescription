@@ -1,0 +1,7 @@
+org\intelehealth\prescription\ServletInitializer.class
+org\intelehealth\prescription\service\PrescriptionService.class
+org\intelehealth\prescription\PrescriptionDao.class
+org\intelehealth\prescription\model\DataTraveller.class
+org\intelehealth\prescription\PrescriptionApplication.class
+org\intelehealth\prescription\PrescriptionController.class
+org\intelehealth\prescription\model\ReturnMe.class
