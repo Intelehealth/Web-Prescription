@@ -75,16 +75,12 @@
                 <div class="col-md-2 col-sm-2">
                     <img src="scd.png" width="65%" height="110%">
                 </div>
-                <div class="col-md-7 col-sm-8" style="text-align:center;padding-top: 25px">
-                    <span> <strong>Smart Care Doc Telemedicine Project</strong></span>
-                    <br>
-                    <span>
-                        <strong>स्मार्ट केयर डॉक टेलीमेडिसिन प्रोजेक्ट</strong>
-                    </span>
+                <div class="col-md-7 col-sm-8" style="text-align:center;padding-top: 40px">
+                    <span> <strong>MySmartCareDoc Telemedicine Project</strong></span>
                 </div>
-                <div class="col-md-2 col-sm-2">
-                    <img src="ih-logo.png" style="padding-top: 25px;" width="60%">
-                </div>
+                <!-- <div class="col-md-2 col-sm-2">
+                    <img src="ih-logo.png" style="padding-top: 40px;" width="60%">
+                </div> -->
             </div>
             <br>
             <div class="row" style="text-align:center">
@@ -181,9 +177,14 @@
                             $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
                             if (data.height.length > 0 || data.weight.length > 0 || data.sbp.length > 0 || data.dbp.length > 0 || data.pulseRate.length > 0 ||
                                 data.respRate.length > 0) {
-                            $('#vitals').html('<b>Vitals</b><br>Temp(F): ' + data.temperature + ' | Height(cm): ' + data.height + ' | Weight(kg): ' + data.weight +
-                                    ' | BMI: ' + bmi.toFixed(2) + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
-                                    ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + "<br>");
+                            let ecg = getECGData(data.ecg);    
+                            $('#vitals').html('<b>Vitals<br></b>Temperature(F): ' +(data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2): 0) + ' | Height(cm): ' + data.height + ' | Weight(kg): ' + data.weight +
+                                    ' | BMI: ' + bmi.toFixed(2) + '| SpO2(%): ' + data.spo2 + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
+                                    ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + ' | Abdominal Girth: ' + data.abdominalGirth + ' | Arm Girth: ' + data.armGirth +
+                                    ' | Blood Glucose(Non Fasting): ' + data.bloodGlucoseNonFasting + ' | Blood Glucose(Fasting): ' + data.bloodGlucoseFasting + ' | Hemoglobin(mg/dL): ' + data.haemoGlobin +
+                                    ' | HbA1c(%): ' + data.hba1c +' | Total cholesterol: ' + data.totalCholesterolId +  "<br>" +
+                                    ' ECG:'+ "<br>"+ 'R-R interval(ms): ' + ecg.rInterval + ' | HRV(ms): ' + ecg.hrv +' | Mood: ' + ecg.mood +' | Heart beat: ' + ecg.heartBeat +
+                                    ' | Stress level: ' + ecg.stressLevel +' | Heart rate(bpm): ' + ecg.heartRate +' | Repository rate: ' + ecg.repositoryRate +' | Heart age: ' + ecg.heartAge +' | Robust heart rate: ' + ecg.robustHeartRate);
                             }
                             complaintString = data.complaint.trim().split("<br/>");
                             //  console.log(complaintString);
@@ -208,11 +209,13 @@
                             $('#complaints_heading').html('<b><u>Presenting complaint</u></b><br><div style="font-size:14px;">' + finalComplaint + "</div>");
                             if (data.diagnosis.trim().length > 0) {
                                 if (data.diagnosis.substring(0, 1) == ';') {
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + data.diagnosis.trim().substring(1) + "<br></div>");
-                                }
-                                else {
-                                    $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + data.diagnosis.trim() + "<br></div>");
-                                }
+                                let diagnosis = data.diagnosis.trim().substring(1).replaceAll(";", "<br>")
+                                $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + diagnosis + "<br></div>");
+                            }
+                            else {
+                                let diagnosis = data.diagnosis.trim().replaceAll(";", "<br>")
+                                $('#diagnosis_heading').html('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">' + diagnosis + "<br></div>");
+                            }
                             }
                             if (data.medication.trim().length > 0) {
                                 if (data.medication.substring(0, 1) == ';') {
@@ -237,7 +240,6 @@
                             if (data.medicalAdvice.trim().length > 0 && data.medicalAdvice.trim().length !== 1) {
                                 if (data.medicalAdvice.substring(0, 1) == ';') {
                                     kk = data.medicalAdvice.trim().substr(1)
-                                    console.log(kk)
                                     jks = kk.split(";")
                                     killers = ""
                                     for (counter = 0; counter < jks.length; counter++) {
@@ -261,19 +263,16 @@
                                             killers += jks[counter] + "<br>";
                                         }
                                     }
-                                    console.log(killers)
                                     //$('#advice_heading').html('<b><u>General Advice</u></b><br><div style="font-size:14px;">'+data.medicalAdvice.trim().substr(data.medicalAdvice.trim().lastIndexOf(";")+1)+"<br></div>");
                                     $('#advice_heading').html('<b><u>General Advice</u></b><div style="font-size:14px;">' + killers + "</div>");
                                 }
                             }
-                            if (data.followupNeeded.trim().length > 0) {
-                                if (data.followupNeeded.substr(0, 1) == ';') {
-                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().substring(1).replace(",", "<br>") + "<br></div>");
-                                }
-                                else {
-                                    $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().replace(",", "<br>") + "<br></div>");
-                                }
-                            }
+                            if (data.followupNeeded.substr(0, 1) == ';') {
+                            $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim().substring(1)+ "<br></div>");
+                        }
+                        else {
+                            $('#follow_up_heading').html('<b><u>Follow Up Date</u></b><br><div style="font-size:14px;">' + data.followupNeeded.trim()+ "<br></div>");
+                        }
                             var docName = data.doctorName.replace(",", " ");
                             var fullDets = "";
                             fullDets += docName;
@@ -337,9 +336,27 @@
                 });
                 return body;
             }
+
+            function getECGData(ecg) {
+            let ecgData= {rInterval:"", hrv:"", mood:"",heartBeat:"",stressLevel:"",heartRate:"",repositoryRate:"",heartAge:"",robustHeartRate:""};
+            if (ecg.toString().startsWith("{")) {
+              let value = JSON.parse(ecg.toString());
+              ecgData.rInterval = value?.r_r_interval;
+              ecgData.hrv = value?.hrv;
+              ecgData.mood = value?.mood;
+              ecgData.heartBeat = value?.heart_beat;
+              ecgData.stressLevel = value?.stress_level;
+              ecgData.heartRate = value?.heart_rate;
+              ecgData.repositoryRate = value?.respiratory_rate;
+              ecgData.heartAge = value?.heart_age;
+              ecgData.robustHeartRate = value?.robust_heart_rate;
+            }
+            return ecgData;
+          }
             function createPDF() {
-                var j = $('#follow_up_heading').text().slice(14).split(" ");
-                j.shift();
+                // var j = $('#follow_up_heading').text().slice(14).split(" ");
+                //  j.shift();
+            
                 var tmpK = $('#advice_heading').html().replace('<b><u>General Advice</u></b><div style="font-size:14px;">', '')
                 nest = tmpK.split("<br>")
                 videoAddresses = [];
@@ -372,6 +389,8 @@
                     }
                     k9.push("\n");
                 }
+                var diagnosis1 = $('#diagnosis_heading').html().replace('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">', '')
+                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n");
                 var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
                 var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n");
                 var tmpK = $('#tests_heading').html().replace('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">', '')
@@ -455,17 +474,13 @@
                                         {
                                             image: 'scd_logo',
                                             width: 60,
-                                            height: 60,
-                                      
+                                            height: 60,                                    
                                         },
                                         {
-                                            text: 'Smart Care Doc \n स्मार्ट केयर डॉक टेलीमेडिसिन प्रोजेक्ट', fontSize: 12
-                                        },
-                                        {
-                                            image: 'ih_logo',
-                                            width:80,
-                                            height:30
-                                        },
+                                            text: 'MySmartCareDoc Telemedicine Project', 
+                                            fontSize: 12,
+                                            margin: 10
+                                        }
                                     ]
                                 },
                                 { text: 'ePrescription', style: 'subheader' },
@@ -488,13 +503,13 @@
                         },
                         {
                             stack: [{ text: 'Vitals', bold: true, fontSize: 14 },
-                            { text: $('#vitals').text().slice(6) + "\n\n" }
+                            { text: $('#vitals').html().replace('<b>Vitals<br></b>','').replaceAll("<br>", "\n") + "\n\n" }
                             ]
                         },
                         {
                             stack: [
                                 { text: 'Diagnosis', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                                { text: $('#diagnosis_heading').text().slice(9), lineHeight: 2 }]
+                                diagnosisA]
                         },
                         {
                             stack: [
@@ -514,14 +529,13 @@
                         },
                         {
                             stack: [
-                                { text: 'Follow Up Date', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                                { text: $('#follow_up_heading').text().slice(14).split(" ")[0] },
-                                { text: j.join(" "), lineHeight: 2 },
+                            { text: 'Follow Up Date', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
+                            { text: $('#follow_up_heading').text().slice(14), lineHeight: 2 },
                             ]
                         },
                         {
                             stack: [
-                                { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 12, alignment: 'right' },
+                                { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 14, alignment: 'right' },
                                 { text: docDe, alignment: 'right', lineHeight: 1 },
                                 { text: $('#docReg').text(), bold: true, alignment: 'right' }
                             ]
@@ -532,7 +546,7 @@
                             fontSize: 18,
                             bold: true,
                             alignment: 'center',
-                            margin: [0, 10, 0, 10]
+                            margin: [0, 0, 0, 10]
                         },
                         subheader: {
                             fontSize: 14,
@@ -541,7 +555,7 @@
                         }
                     },
                     images: {
-                        ih_logo: 'https://development.mysmartcaredoc.com/preApi/ih-logo.png',
+                         ih_logo: 'https://development.mysmartcaredoc.com/preApi/ih-logo.png',
                         scd_logo: 'https://development.mysmartcaredoc.com/preApi/scd.png'
                     },
                     defaultStyle: {
