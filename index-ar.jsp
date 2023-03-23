@@ -115,7 +115,7 @@
                     <!-- <img src="sila.png" width="50%" /> -->
                 </div>
                 <div class="col-md-6" style="text-align: center;padding-top: 10px;font-size:15pt;">
-                    <span id="projectName"><strong> الصحي “Registration Village Location - Dynamic” فريق
+                    <span id="projectName"><strong> فريق الصحي
                         </strong></span>
                 </div>
                 <div class="col-md-3" style="text-align: center;padding-top: 10px;">
@@ -197,7 +197,7 @@
                 $('#errDesc').text('');
 
                 jQuery.ajax({
-                    url: "https://service.sila.care/prescription/prescription/visitData",
+                    url: "https://services.sila.care/prescription/prescription/visitData",
                     type: "POST",
                     data: JSON.stringify({
                         visitId: getParameterByName("v"),
@@ -220,11 +220,11 @@
                         else {
                             $('#queryDiv').hide();
                             $('#prescription').show();
-                            $('#projectName').html("<strong> فريق  " + data.locationName + " الصحي" + "</strong>");
+                            $('#projectName').html("<strong>فريق الصحي</strong>");
                             $('#patient_info').html("<b style=font-size:15pt;><u>معلومات المريض</u></b>");
                             $('#patient_name').html("الاسم :  " + data.name.replaceAll(",", " ") + "</br>");
                             $('#patient_details').text(' العمر : ' + data.age + " | الجنس : " + (data.gender === 'M' ? 'ذكر' : 'أنثى'));
-                            $('#address_and_contact').text('العنوان : ' + data.address + "," +(data.citizenId === "-" ? "غير مزود" : data.citizenId));
+                            $('#address_and_contact').text('العنوان : NA'+ "," +(data.citizenId === "-" ? "غير مزود" : data.citizenId));
                             wt = parseFloat(data.weight);
                             ht = parseInt(data.height) / 100;
                             bmi = 0.0;
@@ -533,7 +533,7 @@
                                 {
                                     columns: [
                                         {
-                                            text: { text: $('#projectName').text(), bold: true },
+                                            text: "الصحي فريق",
                                             fontSize: 20,
                                             bold: true
                                         }

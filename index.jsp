@@ -85,7 +85,7 @@
                 <!-- <img src="sila.png" width="50%" /> -->
             </div>
             <div class="col-md-6" style="text-align: center;padding-top: 10px;font-size: 15pt;">
-                <span id="projectName"><strong>"Registration Village Location - Dynamic" Health Unit</strong></span>
+                <span id="projectName"><strong>Health Unit</strong></span>
             </div>
             <div class="col-md-3" style="text-align: center;padding-top: 10px;">
                 <!-- <img src="ih-logo.png" width="50%" /> -->
@@ -169,7 +169,7 @@
             $('#errDesc').text('');
 
             jQuery.ajax({
-                url: "https://service.sila.care/prescription/prescription/visitData",
+                url: "https://services.sila.care/prescription/prescription/visitData",
                 type: "POST",
                 data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -192,11 +192,11 @@
                     else {
                         $('#queryDiv').hide();
                         $('#prescription').show();
-                        $('#projectName').html("<strong>" + data.locationName + " Health Unit" + "</strong>");
+                        $('#projectName').html("<strong> Health Unit </strong>");
                         $('#patient_info').html("<b style=font-size:15pt;><u>Patient information:</u></b>");
                         $('#patient_name').html("Name: " + data.name.replaceAll(",", " ") + "</br>");
                         $('#patient_details').text('Age: ' + data.age + " | Gender: " + data.gender);
-                        $('#address_and_contact').text('Address and Contact: ' + data.address + "," + (data.citizenId === "-" ? "Not provided" : data.citizenId));
+                        $('#address_and_contact').text('Address and Contact: NA'+ "," + (data.citizenId === "-" ? "Not provided" : data.citizenId));
                         wt = parseFloat(data.weight);
                         ht = parseInt(data.height) / 100;
                         bmi = 0.0;
