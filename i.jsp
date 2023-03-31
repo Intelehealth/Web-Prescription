@@ -445,11 +445,8 @@
             $("#vitals").html(
               '<b><u><span style="font-size:15pt;">नब्ज / Vitals </span></u></b><br>Height(cm): &nbsp;'+ parseInt(data.height).toFixed(0) +
               ' | Weight(kg): &nbsp;'+ parseInt(data.weight).toFixed(0) +' | BMI: &nbsp;'+ bmi.toFixed(2) + ' | Blood Pressure: ' +
-                parseInt(data.sbp).toFixed(0) +
-                "/" +
-                parseInt(data.dbp).toFixed(0) +
-                " |  Blood Glucose: "+ parseInt(data.bloodGlucose).toFixed(0)+
-                "<br>"
+              parseInt(data.sbp).toFixed(0) +"/" +parseInt(data.dbp).toFixed(0) +" |  Blood Glucose(ml/dl): "+ parseInt(data.bloodGlucose).toFixed(0)+ ' | Temperature(F): ' + (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2) : 0) +
+                ' | Respiratory Rate: ' + data.respRate + ' | Sp02(%): ' + Number(data.spo2)+"<br>"
             );
             complaintString = data.complaint.trim().split("<br/>");
             finalComplaint = "";
@@ -481,15 +478,17 @@
                 "</div>"
             );
             if (data.dietPrescription.substring(0, 1) == ";") {
+              let dietPrescription = data.dietPrescription.trim().substring(1).replaceAll(";", "<br>")
               $("#diagnosis_heading").html(
-                '<b><u>आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription </u></b><br><div style="font-size:14px;">' +
-                  data.dietPrescription.trim().substring(1)+
+                '<b><u>आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription</u></b><br><div style="font-size:14px;">' +
+                  dietPrescription.trim() +
                   "<br></div>"
               );
             } else {
+              let dietPrescription = data.dietPrescription.trim().replaceAll(";", "<br>")
               $("#diagnosis_heading").html(
                 '<b><u>आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription</u></b><br><div style="font-size:14px;">' +
-                  data.dietPrescription.trim() +
+                  dietPrescription.trim() +
                   "<br></div>"
               );
             }
@@ -510,29 +509,33 @@
             }
 
             if (data.foodAllergy.substring(0, 1) == ";") {
+              let foodAllergy = data.foodAllergy.trim().substring(1).replaceAll(";", "<br>")
               $("#food_allergy").html(
                 '<b><u>आहार-विशेष से एलर्जी / Food Allergy</u></b><br><div style="font-size:14px;white-space: pre-line;">' +
-                  data.foodAllergy.trim().substring(1) +
+                  foodAllergy.trim() +
                   "<br></div>"
               );
             } else {
+              let foodAllergy = data.foodAllergy.replaceAll(";", "<br>")
               $("#food_allergy").html(
                 '<b><u>आहार-विशेष से एलर्जी / Food Allergy</u></b><br><div style="font-size:14px;">' +
-                  data.foodAllergy.trim() +
+                  foodAllergy.trim() +
                   "<br></div>"
               );
             }
 
             if (data.testsAdvised.substring(0, 1) == ";") {
+              let tests = data.testsAdvised.trim().substring(1).replaceAll(";", "<br>")
               $("#tests_heading").html(
                 '<b><u>जांच की सिफारिश / Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' +
-                  data.testsAdvised.trim().substring(1) +
+                  tests.trim() +
                   "<br></div>"
               );
             } else {
+              let tests = data.testsAdvised.trim().replaceAll(";", "<br>")
               $("#tests_heading").html(
                 '<b><u>जांच की सिफारिश / Recommended Investigation(s)</u></b><br><div style="font-size:14px;">' +
-                  data.testsAdvised.trim() +
+                  tests.trim() +
                   "<br></div>"
               );
             }
@@ -586,13 +589,13 @@
             if (data.followupNeeded.substr(0, 1) == ";") {
               $("#follow_up_heading").html(
                 '<b><u>फिर से संपर्क कि तारीख / Follow Up Date</u></b><br><div style="font-size:14px;">' +
-                  data.followupNeeded.trim().substring(1).replace(",", "<br>") +
+                  data.followupNeeded.trim().substring(1) +
                   "<br></div>"
               );
             } else {
               $("#follow_up_heading").html(
                 '<b><u>फिर से संपर्क कि तारीख / Follow Up Date</u></b><br><div style="font-size:14px;">' +
-                  data.followupNeeded.trim().replace(",", "<br>") +
+                  data.followupNeeded.trim() +
                   "<br></div>"
               );
             }
@@ -744,6 +747,14 @@
       k2h2 = tmpComplaints.join("\n");
       console.log(k2h2);
 
+      var dietPrescription1 = $('#diagnosis_heading').html().replace('<b><u>आहार-सम्बन्धी अतिरिक्त जानकारी / Diet prescription</u></b><br><div style="font-size:14px;">', '')
+      var dietPrescription = dietPrescription1.replaceAll("<br>", "\n").replace("</div>", "\n");
+      
+      var food_allergy = $('#food_allergy').html().replace('<b><u>आहार-विशेष से एलर्जी / Food Allergy</u></b><br><div style="font-size:14px;white-space: pre-line;">', '')
+      var foodAllergy = food_allergy.replaceAll("<br>", "\n").replace("</div>", "\n");
+
+      var tmpK = $('#tests_heading').html().replace('<b><u>जांच की सिफारिश / Recommended Investigation(s)</u></b><br><div style="font-size:14px;">', '')
+      var tests = tmpK.replaceAll("<br>", "\n").replace("</div>", "\n");
       //pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
       var dd = {
@@ -804,7 +815,7 @@
                 decoration: "underline",
                 lineHeight: 1,
               },
-              { text: $("#vitals").text().slice(13), lineHeight: 2 },
+              { text: $("#vitals").text().slice(13)+"\n\n", lineHeight: 1 },
             ],
           },
           {
@@ -818,7 +829,7 @@
               },
 
               //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
-              { text: $("#diagnosis_heading").text().slice(50)+ "\n", lineHeight: 2 },
+              dietPrescription
             ],
           },
           {
@@ -832,7 +843,7 @@
               },
 
               //            {text:'निदान/ Diagnosis', bold:true,decoration: 'underline', fontSize:14,2lilineHeight:2},
-              { text: $("#food_allergy").text().slice(35), lineHeight: 2 },
+              foodAllergy
             ],
           },
           {
@@ -863,10 +874,7 @@
                 fontSize: 12,
                 lineHeight: 1,
               },
-              {
-                text: $("#tests_heading").text().slice(47) + "\n",
-                lineHeight: 1,
-              },
+              tests
             ],
           },
 
