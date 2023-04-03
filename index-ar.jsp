@@ -339,7 +339,16 @@
                                     if (docAttributes[i].indexOf("specialization") > -1) {
                                         if (docAttributes[i].split(":")[1]) {
                                             switch (docAttributes[i].split(":")[1]) {
-                                                case "General Physician": specialization = "طبيب عام"; break;
+                                                case "Physician": specialization = "طبيب"; break;
+                                                case "Doctor (General Consult)": specialization = "طبيب (استشارة عامة"; break;
+                                                case "Cardiology": specialization = "قلبية"; break;
+                                                case "Pulmonary": specialization = "صدرية"; break;
+                                                case "GI": specialization = "هضمية"; break;
+                                                case "Endocrinology": specialization = "غدد"; break;
+                                                case "Pediatrics": specialization = "أطفال"; break;
+                                                case "Surgery": specialization = "جراحة"; break;
+                                                case "Gyn": specialization = "نسائية"; break;
+                                                case "Admin": specialization = "إداري"; break;
                                                 default: specialization = docAttributes[i].split(":")[1];
                                             }
                                         }
