@@ -183,7 +183,7 @@
                                     ' | Pulse(bpm): ' + data.pulseRate + ' | Respiratory Rate: ' + data.respRate + ' | Abdominal Girth: ' + data.abdominalGirth + ' | Arm Girth: ' + data.armGirth +
                                     ' | Blood Glucose(Non Fasting): ' + data.bloodGlucoseNonFasting + ' | Blood Glucose(Fasting): ' + data.bloodGlucoseFasting + ' | Hemoglobin(mg/dL): ' + data.haemoGlobin +
                                     ' | HbA1c(%): ' + data.hba1c +' | Total cholesterol: ' + data.totalCholesterolId +  "<br>" +
-                                    ' ECG:'+ "<br>"+ 'R-R interval(ms): ' + ecg.rInterval + ' | HRV(ms): ' + ecg.hrv +' | Heart rate(bpm): ' + ecg.heartRate);
+                                    ' ECG:'+ "<br>"+ 'Respiratory rate: ' + ecg.repositoryRate + ' | HRV(ms): ' + ecg.hrv +' | Heart rate(bpm): ' + ecg.heartRate);
                             }
                             complaintString = data.complaint.trim().split("<br/>");
                             //  console.log(complaintString);
