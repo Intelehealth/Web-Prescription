@@ -301,7 +301,7 @@
                                     for (counter = 0; counter < jks.length; counter++) {
                                         if (jks[counter].indexOf("Audio") > -1) {
                                         }
-                                        else if (jks[counter].trim().includes(" ")) {
+                                        else if (jks[counter].trim()) {
                                             killers += "<li>" + jks[counter] + "</li>";
                                         }
                                     }
@@ -319,7 +319,7 @@
                                     for (counter = 0; counter < jks.length; counter++) {
                                         if (jks[counter].indexOf("Audio") > -1) {
                                         }
-                                        else if (jks[counter].trim().includes(" ")) {
+                                        else if (jks[counter].trim()) {
 
 
                                             killers += "<li>" + jks[counter] + "</li>";
