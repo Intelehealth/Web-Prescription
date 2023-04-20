@@ -389,7 +389,7 @@
                     k9.push("\n");
                 }
                 var diagnosis1 = $('#diagnosis_heading').html().replace('<b><u>Diagnosis</u></b><br><div style="font-size:14px;">', '')
-                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replace("</div>", "\n");
+                var diagnosisA = diagnosis1.replaceAll("<br>", "\n").replaceAll("&amp;", "\u0026").replace("</div>", "\n");
                 var medication = $('#rx_heading').html().replace('<b><u>Medication(s)</u></b><br><div style="font-size:14px;">', '')
                 var medications = medication.replaceAll("<br>", "\n").replace("</div>", "\n");
                 var tmpK = $('#tests_heading').html().replace('<b><u>Recommended Investigation(s)</u></b><br><div style="font-size:14px;">', '')
