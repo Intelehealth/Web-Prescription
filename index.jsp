@@ -139,7 +139,7 @@ color:black;}
                 <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <div style="text-align: right;margin-top: 0px;width: 100%;">
-                   <div style="float: left;width: 80%;">
+                   <div style="float: right;width: 80%;">
                         <span style="font-size:25px;padding: 0px;" id="docSign"></span>
                         <br>
                         <div class="pull-right" id="docDetail">
@@ -148,13 +148,13 @@ color:black;}
                    </div> 
                 </div>
                    </div> 
-                    <div style="float: right;width: 15%;">
+                    <!-- <div style="float: right;width: 15%;">
                         <span style="font-size:25px;padding: 0px;" id="docSign1"></span>
                         <br>
                         <div class="pull-right" id="docDetail1">
                         </div>
                         <p style="font-size:12pt; margin-top:-0px; padding: 0px;" id="docReg1"></p>
-                    </div>
+                    </div> -->
                 </div>
 
                </div>
@@ -203,7 +203,7 @@ color:black;}
                                 {
                                     $('#queryDiv').hide();
                                     $('#prescription').show();
-                                    $('#patient_name').html("<b> Full Name </b>("+data.name+")");
+                                    $('#patient_name').html("<b> Full Name </b>("+data.name?.replace(","," ")+")");
                                     $('#patient_details').html('Date of birth: &nbsp;'+data.birthDate?.replace(/\-/gi,"/") +  "&nbsp;&nbsp;&nbsp;Gender: &nbsp;"+(data.gender === 'M' ? 'Male': data.gender === 'F'? 'Female': data.gender));
                                     $('#address_and_contact').html('Home address:  &nbsp<br>' + data.address);
                                     $('#visit_details').html('Patient ID: &nbsp;'+data.citizenId+ "&nbsp;&nbsp;&nbsp; OpenMRS ID: &nbsp;"+data.openMRSID);
@@ -403,73 +403,73 @@ color:black;}
                                         $('#docReg').html(regNumber);
                                     }
 
-$('#docSImage').attr('src',  data.imageOfSignature);
-                                    var docName = data.doctorName.replace(","," ");
-                                    var fullDets ="";
-                                    fullDets+=docName;
-                                    fullDets+="<br>";
+// $('#docSImage').attr('src',  data.imageOfSignature);
+//                                     var docName = data.doctorName.replace(","," ");
+//                                     var fullDets ="";
+//                                     fullDets+=docName;
+//                                     fullDets+="<br>";
 
-                                    var docAttributes = data.doctorAttributes.split("|");
-                                    var tmpAttributes = new Array();
+//                                     var docAttributes = data.doctorAttributes.split("|");
+//                                     var tmpAttributes = new Array();
 
-                                    var qual="";
-                                    var specialization="";
-                                    var phoneNumber="";
-                                    var email="";
-                                    var regNumber="";
-                                        for (i = 0  ; i < docAttributes.length; i++) {
-                                                if(docAttributes[i].indexOf("fontOfSign") > -1)
-                                                {
-                                                    $('#docSign1').css('font-family',docAttributes[i].split(":")[1]);
-
-
-                                                }
-                                                if(docAttributes[i].indexOf("textOfSign") > -1)
-                                                {
-                                                    $('#docSign1').text(docAttributes[i].split(":")[1]);
+//                                     var qual="";
+//                                     var specialization="";
+//                                     var phoneNumber="";
+//                                     var email="";
+//                                     var regNumber="";
+//                                         for (i = 0  ; i < docAttributes.length; i++) {
+//                                                 if(docAttributes[i].indexOf("fontOfSign") > -1)
+//                                                 {
+//                                                     $('#docSign1').css('font-family',docAttributes[i].split(":")[1]);
 
 
-                                                }
+//                                                 }
+//                                                 if(docAttributes[i].indexOf("textOfSign") > -1)
+//                                                 {
+//                                                     $('#docSign1').text(docAttributes[i].split(":")[1]);
 
-                                                if((docAttributes[i].indexOf("textOfSign") == -1) && (docAttributes[i].indexOf("fontOfSign") == -1))    {
-                                                    if(docAttributes[i].indexOf("qualification") > -1)
-                                                    {
-                                                        qual=docAttributes[i].split(":")[1];
 
-                                                    }
-                                                    if(docAttributes[i].indexOf("specialization") > -1)
-                                                    {
-                                                        specialization=docAttributes[i].split(":")[1];
+//                                                 }
 
-                                                    }
+//                                                 if((docAttributes[i].indexOf("textOfSign") == -1) && (docAttributes[i].indexOf("fontOfSign") == -1))    {
+//                                                     if(docAttributes[i].indexOf("qualification") > -1)
+//                                                     {
+//                                                         qual=docAttributes[i].split(":")[1];
 
-                                                    if(docAttributes[i].indexOf("phoneNumber") > -1)
-                                                    {
-                                                        phoneNumber="Phone Number: "+docAttributes[i].split(":")[1];
+//                                                     }
+//                                                     if(docAttributes[i].indexOf("specialization") > -1)
+//                                                     {
+//                                                         specialization=docAttributes[i].split(":")[1];
 
-                                                    }
+//                                                     }
 
-                                                    if(docAttributes[i].indexOf("emailId") > -1)
-                                                    {
-                                                        email="E-Mail: "+docAttributes[i].split(":")[1];
+//                                                     if(docAttributes[i].indexOf("phoneNumber") > -1)
+//                                                     {
+//                                                         phoneNumber="Phone Number: "+docAttributes[i].split(":")[1];
 
-                                                    }
-                                                    if(docAttributes[i].indexOf("registrationNumber") > -1)
-                                                    {
-                                                        regNumber="<b>Registration No: "+docAttributes[i].split(":")[1]+"</b>";
+//                                                     }
 
-                                                    }
+//                                                     if(docAttributes[i].indexOf("emailId") > -1)
+//                                                     {
+//                                                         email="E-Mail: "+docAttributes[i].split(":")[1];
 
-                                                }
-                                    }
-                                    fullDets+= qual.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
-                                    //fullDets+=phoneNumber+"<br>";
-                                   // fullDets+=email+"<br>";
+//                                                     }
+//                                                     if(docAttributes[i].indexOf("registrationNumber") > -1)
+//                                                     {
+//                                                         regNumber="<b>Registration No: "+docAttributes[i].split(":")[1]+"</b>";
 
-                                    //fullDets+=regNumber+"<br>";
+//                                                     }
 
-                                    $('#docDetail1').html(fullDets);
-                                    $('#docReg1').html(regNumber);
+//                                                 }
+//                                     }
+//                                     fullDets+= qual.trim() ? qual+ "," +specialization+"<br>":"" +specialization+"<br>";
+//                                     //fullDets+=phoneNumber+"<br>";
+//                                    // fullDets+=email+"<br>";
+
+//                                     //fullDets+=regNumber+"<br>";
+
+//                                     $('#docDetail1').html(fullDets);
+//                                     $('#docReg1').html(regNumber);
 
                                 }
                              }
@@ -557,7 +557,7 @@ var videoLinkPos = videoDescriptor.indexOf("video link")
 		    
 videoDescriptor = videoDescriptor.substr(0,videoLinkPos -1)
 var docDe = $('#docDetail').html().replace(/<br>/gi,"\n");
-var docDe1 = $('#docDetail1').html().replace(/<br>/gi,"\n");
+// var docDe1 = $('#docDetail1').html().replace(/<br>/gi,"\n");
 var temp = $('#medical_history').html().replace('<b><u>Medical history</u></b><br><div style="font-size:14px;">','');
 var medical_history = temp.replace(/<br>/gi,"\n").replace(/[</div>]/gi,"");
 var temp1 = $('#objective_data').html().replace('<b><u>Objective data</u></b><br><div style="font-size:14px;">','');
@@ -756,16 +756,16 @@ k2h2 = tmpComplaints.join("\n");
 
         },
         
-        {
-            stack: [
+        // {
+        //     stack: [
 
 
-          {text: $('#docSign1').text(), font:$('#docSign1').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
-            {text:docDe1, alignment:'right',lineHeight:1},
-            {text:$('#docReg1').text(), bold:true,alignment:'right'}
-            ]
+        //   {text: $('#docSign1').text(), font:$('#docSign1').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()),fontSize:12,alignment:'right'},
+        //     {text:docDe1, alignment:'right',lineHeight:1},
+        //     {text:$('#docReg1').text(), bold:true,alignment:'right'}
+        //     ]
 
-        },
+        // },
 
 
 
