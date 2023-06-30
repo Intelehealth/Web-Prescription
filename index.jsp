@@ -96,9 +96,9 @@
                         <strong>आरोग्य संपदा</strong>
                     </span>
                 </div>
-                <div class="col-md-2 col-sm-2">
+                <!-- <div class="col-md-2 col-sm-2">
                     <img src="ih-logo.png" style="margin-top: 5px;" width="60%">
-                </div>
+                </div> -->
             </div>
             <br>
             <div class="row" style="text-align:center">
@@ -401,11 +401,14 @@
                             fullDets += qual ? qual + "," + specialization + "<br>" : "" + specialization + "<br>";
                             fullDets += phoneNumber + "<br>";
                             fullDets += email + "<br>";
+                            ih_logo = "Supported by<br><img src=ih-logo.png style=width:10%>";
+                            
 
                             //fullDets+=regNumber+"<br>";
 
                             $('#docDetail').html(fullDets);
                             $('#docReg').html(regNumber);
+                            $('#docReg').html(ih_logo);
 
                             $('#docSImage').attr('src', data.imageOfSignature);
 
@@ -600,13 +603,6 @@
                                         {
                                             text: 'Arogya Sampada \n आरोग्य संपदा', fontSize: 12
                                         },
-
-                                        {
-                                            image: 'ih_logo',
-                                            width:100,
-                                            height:38
-                                        },
-
                                     ]
                                 },
                                 { text: 'ePrescription', style: 'subheader' },
@@ -693,7 +689,15 @@
 
                                 { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 12, alignment: 'right' },
                                 { text: docDe, alignment: 'right', lineHeight: 1 },
-                                { text: $('#docReg').text(), bold: true, alignment: 'right' }
+                                { text: $('#docReg').text(),alignment: 'right' },
+
+                                {
+                                            image: 'ih_logo',
+                                            width:80,
+                                            height:30,
+                                            alignment: 'right'
+                                        },
+
                             ]
 
                         },
