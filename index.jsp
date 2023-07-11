@@ -129,7 +129,11 @@
 
             <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
+            <p id="aid_order_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+
             <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+
+            <p id="discharge_order_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
             <div style="text-align:right;margin-right:50px;margin-top:0px;">
                 <span style="font-size:25px;padding: 0px;" id="docSign">
@@ -169,7 +173,7 @@
             $('#errDesc').text('');
 
             jQuery.ajax({
-                url: "https://service.sila.care/prescription/prescription/visitData",
+                url: "https://training.sila.care/prescription/prescription/visitData",
                 type: "POST",
                 data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -192,11 +196,11 @@
                     else {
                         $('#queryDiv').hide();
                         $('#prescription').show();
-                        $('#projectName').html("<strong>" + data.locationName + " Health Unit" + "</strong>");
+                        $('#projectName').html("<strong>" + data.locationName.split('(')[0].trim() + " Health Unit" + "</strong>");
                         $('#patient_info').html("<b style=font-size:15pt;><u>Patient information:</u></b>");
                         $('#patient_name').html("Name: " + data.name.replaceAll(",", " ") + "</br>");
                         $('#patient_details').text('Age: ' + data.age + " | Gender: " + data.gender);
-                        $('#address_and_contact').text('Address and Contact: ' + data.address + "," + (data.citizenId === "-" ? "Not provided" : data.citizenId));
+                        $('#address_and_contact').text('Address and Contact: ' + data.address + "," + ((data.citizenId === "-"|| data.citizenId == null) ? "Not provided" : data.citizenId));
                         wt = parseFloat(data.weight);
                         ht = parseInt(data.height) / 100;
                         bmi = 0.0;
@@ -267,9 +271,44 @@
 
                         }
 
+                        // Aid Order
+                        let t1 = (data.enMEL) ? data.enMEL?.split("||") : null;
+                        let t2 = (data.enFME) ? data.enFME?.split("||") : null;
+                        let t3 = (data.enCME) ? data.enCME : null;
+                        let t4 = (data.enCSE) ? data.enCSE : null;
+                        let t5 = (data.enCCA) ? data.enCCA : null;
+                        finalAidOrder = "";
+                        if (t1) {
+                            finalAidOrder += "<li> Type 1: Medical equipement loan : " + t1.join(' : ') + "</li>";
+                        }
+                        if (t2) {
+                            finalAidOrder += "<li> Type 2: Free medical equipment : " + t2.join(' : ') + "</li>";
+                        }
+                        if (t3) {
+                            finalAidOrder += "<li> Type 3: Cover medication expenses : " + t3 + "</li>";
+                        }
+                        if (t4) {
+                            finalAidOrder += "<li> Type 4: Cover surgical expenses : " + t4 + "</li>";
+                        }
+                        if (t5) {
+                            finalAidOrder += "<li> Type 5: Cash assistance : " + t5 + "</li>";
+                        }
+                        $('#aid_order_heading').html('<b><u>Aid Order:</u></b><div style="font-size:12pt;">' + finalAidOrder + "</div>");
+
+
                         if (data.followupNeeded) {
                             let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : { en: "" };
                             $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;"><li>' + followup['en'] + "</li><br></div>");
+                        }
+
+                        if (data.dischargeOrder) {
+                            let dischargeOrder = getData(data.enDischargeOrder)?.split("<br>");
+                            finalDischargeOrder = "";
+                            for (counter = 0; counter < dischargeOrder.length; counter++) {
+                                if (!dischargeOrder[counter].includes("Audio"))
+                                    finalDischargeOrder += "<li>" + dischargeOrder[counter] + "</li>";
+                            }
+                            $('#discharge_order_heading').html('<b><u>Discharge Order:</u></b><div style="font-size:12pt;">' + finalDischargeOrder + "</div>");
                         }
 
 
@@ -503,7 +542,9 @@
             $("#rx_heading").html($("#rx_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
             $("#tests_heading").html($("#tests_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
             $("#advice_heading").html($("#advice_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+            $("#aid_order_heading").html($("#aid_order_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
             $("#follow_up_heading").html($("#follow_up_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+            $("#discharge_order_heading").html($("#discharge_order_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
 
 
             //                pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -588,8 +629,26 @@
                     {
                         stack: [
 
+                            { text: 'Aid Order: \n\n', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
+                            { text: $('#aid_order_heading').text().slice(10), lineHeight: 2 }
+                        ]
+
+                    },
+
+                    {
+                        stack: [
+
                             { text: 'Followup date:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
                             { text: $('#follow_up_heading').text().slice(14), lineHeight: 2 },
+                        ]
+
+                    },
+
+                    {
+                        stack: [
+
+                            { text: 'Discharge Order: \n\n', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
+                            { text: $('#discharge_order_heading').text().slice(21), lineHeight: 2 }
                         ]
 
                     },

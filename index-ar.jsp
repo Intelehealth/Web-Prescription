@@ -157,7 +157,12 @@
                 <p id="tests_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
                 <p id="advice_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
+                <p id="aid_order_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+
                 <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+
+                <p id="discharge_order_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
+
                 <div style="text-align: right;margin-top: 0px;width: 100%;">
                     <div style="float: left;">
                         <span style="font-size:25px;padding: 0px;" id="docSign"></span>
@@ -197,7 +202,7 @@
                 $('#errDesc').text('');
 
                 jQuery.ajax({
-                    url: "https://service.sila.care/prescription/prescription/visitData",
+                    url: "https://training.sila.care/prescription/prescription/visitData",
                     type: "POST",
                     data: JSON.stringify({
                         visitId: getParameterByName("v"),
@@ -220,11 +225,11 @@
                         else {
                             $('#queryDiv').hide();
                             $('#prescription').show();
-                            $('#projectName').html("<strong> فريق  " + getVillageName(data.locationName) + " الصحي" + "</strong>");
+                            $('#projectName').html("<strong> فريق  " + getVillageName(data.locationName.split('(')[0].trim()) + " الصحي" + "</strong>");
                             $('#patient_info').html("<b style=font-size:15pt;><u>معلومات المريض</u></b>");
                             $('#patient_name').html("الاسم :  " + data.name.replaceAll(",", " ") + "</br>");
                             $('#patient_details').text(' العمر : ' + data.age + " | الجنس : " + (data.gender === 'M' ? 'ذكر' : 'أنثى'));
-                            $('#address_and_contact').text('العنوان : ' + data.address?.replace(data.address?.split(",")[2],  getVillageName(data.address?.split(",")[2])) + "," +(data.citizenId === "-" ? "غير مزود" : data.citizenId));
+                            $('#address_and_contact').text('العنوان : ' + data.address?.replace(data.address?.split(",")[2], getVillageName(data.address?.split(",")[2])) + "," + ((data.citizenId === "-"|| data.citizenId == null) ? "غير مزود" : data.citizenId));
                             wt = parseFloat(data.weight);
                             ht = parseInt(data.height) / 100;
                             bmi = 0.0;
@@ -248,11 +253,11 @@
                             for (counter = 0; counter < complaintString?.length; counter++) {
                                 if (complaintString[counter].indexOf("<b>") > -1 && complaintString[counter].indexOf("الأعراض المرافقة") == -1) {
                                     if (counter > 0) {
-                                    finalComplaint += "<li>" + complaintString[counter].slice(5, -2) + "</li>";
-                                }
-                                else {
-                                    finalComplaint += "<li>" + complaintString[counter].slice(4, -2) + "</li>"
-                                }
+                                        finalComplaint += "<li>" + complaintString[counter].slice(5, -2) + "</li>";
+                                    }
+                                    else {
+                                        finalComplaint += "<li>" + complaintString[counter].slice(4, -2) + "</li>"
+                                    }
 
                                 }
                             }
@@ -260,48 +265,83 @@
                             $('#complaints_heading').html('<b><u>سبب الزيارة</u></b><br><div style="font-size:12pt;">' + finalComplaint + "</div>");
                             if (data.diagnosis.substring(0, 1) == ';') {
                                 let diagnosis = getData(data.arDiagnosis)?.split("<br>");
-                            finalDiagnosis = "";
-                            for (counter = 0; counter < diagnosis.length; counter++) {
-                                finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
-                            }
+                                finalDiagnosis = "";
+                                for (counter = 0; counter < diagnosis.length; counter++) {
+                                    finalDiagnosis += "<li>" + diagnosis[counter] + "</li>";
+                                }
                                 $('#diagnosis_heading').html('<b><u> التشخيص</u></b><div style="font-size:12pt;">' + finalDiagnosis + "</div>");
                             }
 
                             if (data.arMedication) {
-                              let med = getData(data.arMedication)?.split("<br>");
-                            finalMedication = "";
-                            for (counter = 0; counter < med.length; counter++) {
-                                finalMedication += "<li>" + med[counter] + "</li>";
-                            }
+                                let med = getData(data.arMedication)?.split("<br>");
+                                finalMedication = "";
+                                for (counter = 0; counter < med.length; counter++) {
+                                    finalMedication += "<li>" + med[counter] + "</li>";
+                                }
                                 $('#rx_heading').html('<b><u>الخطة العلاجية</u></b><div style="font-size:12pt;">' + finalMedication + "</div>");
 
                             }
 
                             if (data.arMedicalTests) {
                                 let testsAdvised = getData(data.arMedicalTests)?.split("<br>");
-                            finalTest = "";
-                            for (counter = 0; counter < testsAdvised.length; counter++) {
-                                finalTest += "<li>" + testsAdvised[counter] + "</li>";
-                            }
+                                finalTest = "";
+                                for (counter = 0; counter < testsAdvised.length; counter++) {
+                                    finalTest += "<li>" + testsAdvised[counter] + "</li>";
+                                }
                                 $('#tests_heading').html('<b><u>التحاليل و الفحوصات المطلوبة</u></b><div style="font-size:12pt;">' + finalTest + "</div>");
 
                             }
 
                             if (data.arMedicalAdvice) {
-                            let medicalAdvice = getData(data.arMedicalAdvice)?.split("<br>");
-                            finalMedicalAdvice = "";
-                            for (counter = 0; counter < medicalAdvice.length; counter++) {
-                                if (!medicalAdvice[counter].includes("Audio"))
-                                    finalMedicalAdvice += "<li>" + medicalAdvice[counter] + "</li>";
-                            }
+                                let medicalAdvice = getData(data.arMedicalAdvice)?.split("<br>");
+                                finalMedicalAdvice = "";
+                                for (counter = 0; counter < medicalAdvice.length; counter++) {
+                                    if (!medicalAdvice[counter].includes("Audio"))
+                                        finalMedicalAdvice += "<li>" + medicalAdvice[counter] + "</li>";
+                                }
                                 $('#advice_heading').html('<b><u>توجيهات عامة</u></b><div style="font-size:12pt;">' + finalMedicalAdvice + "</div>");
 
 
                             }
 
+                            // Aid Order
+                            let t1 = (data.arMEL) ? data.arMEL?.split("||") : null;
+                            let t2 = (data.arFME) ? data.arFME?.split("||") : null;
+                            let t3 = (data.arCME) ? data.arCME : null;
+                            let t4 = (data.arCSE) ? data.arCSE : null;
+                            let t5 = (data.arCCA) ? data.arCCA : null;
+                            finalAidOrder = "";
+                            if (t1) {
+                                finalAidOrder += "<li>إعارة أجهزة (جهاز ارذاذ، عبوة اوكسجين،  عكازات، كرسي نقال، سرير مشفى) : "+ t1.join(' : ') +"</li>";
+                            }
+                            if (t2) {
+                                finalAidOrder += "<li>معدات طبية مجانية (قثطرة، بالون توسيع) : "+ t2.join(' : ') +"</li>";
+                            }
+                            if (t3) {
+                                finalAidOrder += "<li>تغطية ثمن أدوية (سقف المساعدة) : "+ t3 +"</li>";
+                            }
+                            if (t4) {
+                                finalAidOrder += "<li>تغطية تكاليف عمليات جراحية (قيمة) : "+ t4 +"</li>";
+                            }
+                            if (t5) {
+                                finalAidOrder += "<li>مساعد مادية مباشرة (قيمة)  : "+ t5 +"</li>";
+                            }
+                            $('#aid_order_heading').html('<b><u>امر صرف مساعدة</u></b><div style="font-size:12pt;">' + finalAidOrder + "</div>");
+
+
                             if (data.followupNeeded) {
                                 let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : { ar: "" };
                                 $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;"><li>' + getFollowup(followup['ar']) + "</li><br></div>");
+                            }
+
+                            if (data.dischargeOrder) {
+                                let dischargeOrder = getData(data.arDischargeOrder)?.split("<br>");
+                                finalDischargeOrder = "";
+                                for (counter = 0; counter < dischargeOrder.length; counter++) {
+                                    if (!dischargeOrder[counter].includes("Audio"))
+                                        finalDischargeOrder += "<li>" + dischargeOrder[counter] + "</li>";
+                                }
+                                $('#discharge_order_heading').html('<b><u>تخريج الحالة:</u></b><div style="font-size:12pt;">' + finalDischargeOrder + "</div>");
                             }
 
 
@@ -441,496 +481,496 @@
                 return followUp_date;
             }
 
-    function getVillageName(val) {
-    switch (val) {
-        case "Al-Shomarah":
-            val = "الشوماره";
-            break;
-        case "Ariqa":
-            val = "عريقة";
-            break;
-        case "Dama":
-            val = "داما";
-            break;
-        case "Deir Dama":
-            val = "دير داما";
-            break;
-        case "Harran (Ariqa)":
-            val = "حران";
-            break;
-        case "Jrein":
-            val = "جرين";
-            break;
-        case "Kharsa":
-            val = "خرسة";
-            break;
-        case "Lebbin":
-            val = "ليبين";
-            break;
-        case "Smeid":
-            val = "صميد";
-            break;
-        case "Waqm":
-            val = "وقم";
-            break;
-        case "Ain Azzaman":
-            val = "مستوصف عين الزمان";
-            break;
-        case "Al- Thawrah - As-Sweida (ne)":
-            val = "حي الثورة-السويداء";
-            break;
-        case "Aslaha":
-            val = "اصلحة";
-            break;
-        case "Atil":
-            val = "عتيل";
-            break;
-        case "Dara":
-            val = "دارة";
-            break;
-        case "Fursan (ne)":
-            val = "حي الفرسان-السويداء";
-            break;
-        case "Habran":
-            val = "حبران";
-            break;
-        case "Hurriyeh - As-Sweida (ne)":
-            val = "حي الحرية-السويداء";
-            break;
-        case "Istiqlal (ne)":
-            val = "حي الاستقلال-السويداء";
-            break;
-        case "Jbib":
-            val = "جبيب";
-            break;
-        case "Jihad (ne)":
-            val = "حي الجهاد-السويداء";
-            break;
-        case "Joulan (ne)":
-            val = "حي الجولان-السويداء";
-            break;
-        case "Kafr":
-            val = "الكفر";
-            break;
-        case "Kafr Ellahaf":
-            val = "كفر اللحف";
-            break;
-        case "Kanaker (As-Sweida)":
-            val = "كناكر";
-            break;
-        case "Kherba":
-            val = "خربا";
-            break;
-        case "Mafaala":
-            val = "مفعلة";
-            break;
-        case "Masad":
-            val = "مصاد";
-            break;
-        case "Mayamas":
-            val = "مياماس";
-            break;
-        case "Mazra'a (ne)":
-            val = "حي المزرعة-السويداء";
-            break;
-        case "Mjeimer":
-            val = "مجيمر";
-            break;
-        case "Nahda - As-Sweida (ne)":
-            val = "حي النهضة-السويداء";
-            break;
-        case "Ora":
-            val = "عرى";
-            break;
-        case "Qanawat":
-            val = "قنوات";
-            break;
-        case "Raha (As-Sweida)":
-            val = "الرحى";
-            break;
-        case "Rassas":
-            val = "رساس";
-            break;
-        case "Rima Hazem":
-            val = "ريمة حازم";
-            break;
-        case "Sahwet Balata":
-            val = "سهوة البلاطة";
-            break;
-        case "Sahwet Elkhodar":
-            val = "سهوة الخضر";
-            break;
-        case "Sakaka":
-            val = "سكاكة";
-            break;
-        case "Salim (As-Sweida)":
-            val = "سليم";
-            break;
-        case "Shuhada - As-Sweida (ne)":
-            val = "حي الشهداء-السويداء";
-            break;
-        case "Thaala":
-            val = "ثعلة";
-            break;
-        case "Walgha":
-            val = "ولغا";
-            break;
-        case "Wihdeh - As-Sweida (ne)":
-            val = "حي الوحدة-السويداء";
-            break;
-        case "Anz (Gharyeh)":
-            val = "عنز";
-            break;
-        case "Gharyeh":
-            val = "الغاريه";
-            break;
-        case "Kherbet Awad":
-            val = "خربة عواد";
-            break;
-        case "Maghir (Gharyeh)":
-            val = "المغير";
-            break;
-        case "Big Sura":
-            val = "الصورة الكبيرة";
-            break;
-        case "Haqf":
-            val = "الحقف";
-            break;
-        case "Hazm (Little Sura)":
-            val = "حازم";
-            break;
-        case "Kalidiyeh (Little Sura)":
-            val = "الخالدية";
-            break;
-        case "Khalkhaleh":
-            val = "خلخلة";
-            break;
-        case "Kherbet Ghotha":
-            val = "خربة الغوثة";
-            break;
-        case "Lahetheh":
-            val = "لاهثة";
-            break;
-        case "Little Sura":
-            val = "الصورة الصغيرة";
-            break;
-        case "Nothern Ushayhib":
-            val = "شمال الشهيب";
-            break;
-        case "Radimeh Ellewa":
-            val = "رضيمة اللوا";
-            break;
-        case "Salmiyeh (Little Sura)":
-            val = "سالميه (صورة الصغيرة)";
-            break;
-        case "Seerat Alyah":
-            val = "سيرة العلي";
-            break;
-        case "Tal Asfar":
-            val = "تل الأصفر";
-            break;
-        case "Thakir":
-            val = "ذكير";
-            break;
-        case "Um Hartein (Little Sura)":
-            val = "ام حارتين";
-            break;
-        case "Bosan":
-            val = "بوسان";
-            break;
-        case "Gheida":
-            val = "غيضة";
-            break;
-        case "Kassib":
-            val = "كسيب";
-            break;
-        case "Khribet ad Diyath":
-            val = "خربة الضياث";
-            break;
-        case "Mashnaf":
-            val = "مشنف";
-            break;
-        case "Ojeilat":
-            val = "العجيلات";
-            break;
-        case "Rami (Mashnaf)":
-            val = "رامي";
-            break;
-        case "Rashideh":
-            val = "رشيده";
-            break;
-        case "Saana":
-            val = "سعنا";
-            break;
-        case "Sala":
-            val = "سالة";
-            break;
-        case "Shabki":
-            val = "الشبكي";
-            break;
-        case "Shrehi":
-            val = "شريحي";
-            break;
-        case "Tarba":
-            val = "طربا";
-            break;
-        case "Tiba (Mashnaf)":
-            val = "الطيبة";
-            break;
-        case "Um Riwaq":
-            val = "ام رواق";
-            break;
-        case "Dor":
-            val = "دور";
-            break;
-        case "Dweira":
-            val = "دويرة";
-            break;
-        case "Jidya (Mazra'a)":
-            val = "جدية";
-            break;
-        case "Majdal 6":
-            val = "مجدل";
-            break;
-        case "Mazra'a - Sijn":
-            val = "المزرعة";
-            break;
-        case "Najran":
-            val = "نجران";
-            break;
-        case "Qarrasa":
-            val = "قراصة";
-            break;
-        case "Rima Ellahf":
-            val = "ريمة إللحف";
-            break;
-        case "Samie":
-            val = "سميع";
-            break;
-        case "Samma Al-Hneidat":
-            val = "صمة الهنيدات";
-            break;
-        case "Taara":
-            val = "تعارة";
-            break;
-        case "Tira":
-            val = "الطيرة";
-            break;
-        case "Abu Zreik":
-            val = "ابو زريق";
-            break;
-        case "Behem":
-            val = "بهم";
-            break;
-        case "Hoya":
-            val = "هويا";
-            break;
-        case "Hreiseh":
-            val = "الحريسة";
-            break;
-        case "Khazmeh":
-            val = "خازمة";
-            break;
-        case "Milh":
-            val = "ملح";
-            break;
-        case "Qaysama":
-            val = "قيصمة";
-            break;
-        case "Shaaf":
-            val = "شعف";
-            break;
-        case "Sheab":
-            val = "شعيب";
-            break;
-        case "Tal Elloz":
-            val = "تل اللوز";
-            break;
-        case "Tal Majdaa":
-            val = "تل مجدا";
-            break;
-        case "Tleilin":
-            val = "طليلين";
-            break;
-        case "Um Shama":
-            val = "أم شامة";
-            break;
-        case "Afineh":
-            val = "العفينة";
-            break;
-        case "Barad":
-            val = "برد";
-            break;
-        case "Hot":
-            val = "حوط";
-            break;
-        case "Qarayya":
-            val = "القريا";
-            break;
-        case "Amtan":
-            val = "أمتان";
-            break;
-        case "Anat":
-            val = "العانات";
-            break;
-        case "Arman":
-            val = "عرمان";
-            break;
-        case "Karis":
-            val = "كاريس";
-            break;
-        case "Mashquq (Salkhad)":
-            val = "مشقوق";
-            break;
-        case "Mneithreh":
-            val = "منيذرة";
-            break;
-        case "Os":
-            val = "عوس";
-            break;
-        case "Oyun":
-            val = "عيون";
-            break;
-        case "Rafqa":
-            val = "رافقة";
-            break;
-        case "Salkhad":
-            val = "صلخد";
-            break;
-        case "Sama Elbardan":
-            val = "صمة البردان";
-            break;
-        case "Shannireh":
-            val = "شنيرة";
-            break;
-        case "Tahula":
-            val = "تحولة";
-            break;
-        case "Al-Bajaa":
-            val = "البجع";
-            break;
-        case "Amra":
-            val = "عمرة";
-            break;
-        case "Breika":
-            val = "بريكة";
-            break;
-        case "Majadel":
-            val = "مجادل";
-            break;
-        case "Mardak":
-            val = "مردك";
-            break;
-        case "Mtuna":
-            val = "المتونة";
-            break;
-        case "Nemreh":
-            val = "نمرة";
-            break;
-        case "Salakhed":
-            val = "صلاخد";
-            break;
-        case "Shahba (Shahba)":
-            val = "شهبا";
-            break;
-        case "Sweimreh":
-            val = "سويمرة";
-            break;
-        case "Tima":
-            val = "تيما";
-            break;
-        case "Um Dbeib":
-            val = "ام ضبيب";
-            break;
-        case "Um Elzaytun":
-            val = "أم إلزايتون";
-            break;
-        case "Araja":
-            val = "عراجة";
-            break;
-        case "Banat Baeir":
-            val = "بنات باير";
-            break;
-        case "Barek":
-            val = "بارك";
-            break;
-        case "Bothaina":
-            val = "البثينة";
-            break;
-        case "Duma (Shaqa)":
-            val = "دوما";
-            break;
-        case "Hayat (Shaqa)":
-            val = "الهيات";
-            break;
-        case "Hit (Shaqa)":
-            val = "الهيت";
-            break;
-        case "Jneineh (Shaqa)":
-            val = "جنينة";
-            break;
-        case "Qasr":
-            val = "القصر";
-            break;
-        case "Rdeimeh":
-            val = "رضيمة";
-            break;
-        case "Sakia":
-            val = "ساقية";
-            break;
-        case "Shaqa":
-            val = "شقا";
-            break;
-        case "Shinwan":
-            val = "شنوان";
-            break;
-        case "Taala (Shaqa)":
-            val = "تعلا";
-            break;
-        case "Baka":
-            val = "بكا";
-            break;
-        case "Thibeen":
-            val = "ذبين";
-            break;
-        case "Um Elrumman (Thibeen)":
-            val = "ام الرمان";
-            break;
-        case "Homs":
-            val = "حمص";
-            break;
-        case "Homs-":
-            val = "حمص-";
-            break;    
-        case "Wadi":
-            val = "الوادي";
-            break;
-        case "Wadi-":
-            val = "الوادي-";
-            break;    
-        case "Tartous":
-            val = "طرطوس";
-            break;
-        case "Tartous-":
-            val = "طرطوس-";
-            break; 
-        case "Jaraman":
-            val = "جرمانا";
-            break;
-        case "Jaraman-":
-            val = "جرمانا-";
-            break;
-        case "Sihnaya":
-            val = "صحنايا";
-            break;
-        case "Sihnaya-":
-            val = "صحنايا-";
-            break;  
-        default:
-            return val;
-    }
-    return val;
-}
+            function getVillageName(val) {
+                switch (val) {
+                    case "Al-Shomarah":
+                        val = "الشوماره";
+                        break;
+                    case "Ariqa":
+                        val = "عريقة";
+                        break;
+                    case "Dama":
+                        val = "داما";
+                        break;
+                    case "Deir Dama":
+                        val = "دير داما";
+                        break;
+                    case "Harran (Ariqa)":
+                        val = "حران";
+                        break;
+                    case "Jrein":
+                        val = "جرين";
+                        break;
+                    case "Kharsa":
+                        val = "خرسة";
+                        break;
+                    case "Lebbin":
+                        val = "ليبين";
+                        break;
+                    case "Smeid":
+                        val = "صميد";
+                        break;
+                    case "Waqm":
+                        val = "وقم";
+                        break;
+                    case "Ain Azzaman":
+                        val = "مستوصف عين الزمان";
+                        break;
+                    case "Al- Thawrah - As-Sweida (ne)":
+                        val = "حي الثورة-السويداء";
+                        break;
+                    case "Aslaha":
+                        val = "اصلحة";
+                        break;
+                    case "Atil":
+                        val = "عتيل";
+                        break;
+                    case "Dara":
+                        val = "دارة";
+                        break;
+                    case "Fursan (ne)":
+                        val = "حي الفرسان-السويداء";
+                        break;
+                    case "Habran":
+                        val = "حبران";
+                        break;
+                    case "Hurriyeh - As-Sweida (ne)":
+                        val = "حي الحرية-السويداء";
+                        break;
+                    case "Istiqlal (ne)":
+                        val = "حي الاستقلال-السويداء";
+                        break;
+                    case "Jbib":
+                        val = "جبيب";
+                        break;
+                    case "Jihad (ne)":
+                        val = "حي الجهاد-السويداء";
+                        break;
+                    case "Joulan (ne)":
+                        val = "حي الجولان-السويداء";
+                        break;
+                    case "Kafr":
+                        val = "الكفر";
+                        break;
+                    case "Kafr Ellahaf":
+                        val = "كفر اللحف";
+                        break;
+                    case "Kanaker (As-Sweida)":
+                        val = "كناكر";
+                        break;
+                    case "Kherba":
+                        val = "خربا";
+                        break;
+                    case "Mafaala":
+                        val = "مفعلة";
+                        break;
+                    case "Masad":
+                        val = "مصاد";
+                        break;
+                    case "Mayamas":
+                        val = "مياماس";
+                        break;
+                    case "Mazra'a (ne)":
+                        val = "حي المزرعة-السويداء";
+                        break;
+                    case "Mjeimer":
+                        val = "مجيمر";
+                        break;
+                    case "Nahda - As-Sweida (ne)":
+                        val = "حي النهضة-السويداء";
+                        break;
+                    case "Ora":
+                        val = "عرى";
+                        break;
+                    case "Qanawat":
+                        val = "قنوات";
+                        break;
+                    case "Raha (As-Sweida)":
+                        val = "الرحى";
+                        break;
+                    case "Rassas":
+                        val = "رساس";
+                        break;
+                    case "Rima Hazem":
+                        val = "ريمة حازم";
+                        break;
+                    case "Sahwet Balata":
+                        val = "سهوة البلاطة";
+                        break;
+                    case "Sahwet Elkhodar":
+                        val = "سهوة الخضر";
+                        break;
+                    case "Sakaka":
+                        val = "سكاكة";
+                        break;
+                    case "Salim (As-Sweida)":
+                        val = "سليم";
+                        break;
+                    case "Shuhada - As-Sweida (ne)":
+                        val = "حي الشهداء-السويداء";
+                        break;
+                    case "Thaala":
+                        val = "ثعلة";
+                        break;
+                    case "Walgha":
+                        val = "ولغا";
+                        break;
+                    case "Wihdeh - As-Sweida (ne)":
+                        val = "حي الوحدة-السويداء";
+                        break;
+                    case "Anz (Gharyeh)":
+                        val = "عنز";
+                        break;
+                    case "Gharyeh":
+                        val = "الغاريه";
+                        break;
+                    case "Kherbet Awad":
+                        val = "خربة عواد";
+                        break;
+                    case "Maghir (Gharyeh)":
+                        val = "المغير";
+                        break;
+                    case "Big Sura":
+                        val = "الصورة الكبيرة";
+                        break;
+                    case "Haqf":
+                        val = "الحقف";
+                        break;
+                    case "Hazm (Little Sura)":
+                        val = "حازم";
+                        break;
+                    case "Kalidiyeh (Little Sura)":
+                        val = "الخالدية";
+                        break;
+                    case "Khalkhaleh":
+                        val = "خلخلة";
+                        break;
+                    case "Kherbet Ghotha":
+                        val = "خربة الغوثة";
+                        break;
+                    case "Lahetheh":
+                        val = "لاهثة";
+                        break;
+                    case "Little Sura":
+                        val = "الصورة الصغيرة";
+                        break;
+                    case "Nothern Ushayhib":
+                        val = "شمال الشهيب";
+                        break;
+                    case "Radimeh Ellewa":
+                        val = "رضيمة اللوا";
+                        break;
+                    case "Salmiyeh (Little Sura)":
+                        val = "سالميه (صورة الصغيرة)";
+                        break;
+                    case "Seerat Alyah":
+                        val = "سيرة العلي";
+                        break;
+                    case "Tal Asfar":
+                        val = "تل الأصفر";
+                        break;
+                    case "Thakir":
+                        val = "ذكير";
+                        break;
+                    case "Um Hartein (Little Sura)":
+                        val = "ام حارتين";
+                        break;
+                    case "Bosan":
+                        val = "بوسان";
+                        break;
+                    case "Gheida":
+                        val = "غيضة";
+                        break;
+                    case "Kassib":
+                        val = "كسيب";
+                        break;
+                    case "Khribet ad Diyath":
+                        val = "خربة الضياث";
+                        break;
+                    case "Mashnaf":
+                        val = "مشنف";
+                        break;
+                    case "Ojeilat":
+                        val = "العجيلات";
+                        break;
+                    case "Rami (Mashnaf)":
+                        val = "رامي";
+                        break;
+                    case "Rashideh":
+                        val = "رشيده";
+                        break;
+                    case "Saana":
+                        val = "سعنا";
+                        break;
+                    case "Sala":
+                        val = "سالة";
+                        break;
+                    case "Shabki":
+                        val = "الشبكي";
+                        break;
+                    case "Shrehi":
+                        val = "شريحي";
+                        break;
+                    case "Tarba":
+                        val = "طربا";
+                        break;
+                    case "Tiba (Mashnaf)":
+                        val = "الطيبة";
+                        break;
+                    case "Um Riwaq":
+                        val = "ام رواق";
+                        break;
+                    case "Dor":
+                        val = "دور";
+                        break;
+                    case "Dweira":
+                        val = "دويرة";
+                        break;
+                    case "Jidya (Mazra'a)":
+                        val = "جدية";
+                        break;
+                    case "Majdal 6":
+                        val = "مجدل";
+                        break;
+                    case "Mazra'a - Sijn":
+                        val = "المزرعة";
+                        break;
+                    case "Najran":
+                        val = "نجران";
+                        break;
+                    case "Qarrasa":
+                        val = "قراصة";
+                        break;
+                    case "Rima Ellahf":
+                        val = "ريمة إللحف";
+                        break;
+                    case "Samie":
+                        val = "سميع";
+                        break;
+                    case "Samma Al-Hneidat":
+                        val = "صمة الهنيدات";
+                        break;
+                    case "Taara":
+                        val = "تعارة";
+                        break;
+                    case "Tira":
+                        val = "الطيرة";
+                        break;
+                    case "Abu Zreik":
+                        val = "ابو زريق";
+                        break;
+                    case "Behem":
+                        val = "بهم";
+                        break;
+                    case "Hoya":
+                        val = "هويا";
+                        break;
+                    case "Hreiseh":
+                        val = "الحريسة";
+                        break;
+                    case "Khazmeh":
+                        val = "خازمة";
+                        break;
+                    case "Milh":
+                        val = "ملح";
+                        break;
+                    case "Qaysama":
+                        val = "قيصمة";
+                        break;
+                    case "Shaaf":
+                        val = "شعف";
+                        break;
+                    case "Sheab":
+                        val = "شعيب";
+                        break;
+                    case "Tal Elloz":
+                        val = "تل اللوز";
+                        break;
+                    case "Tal Majdaa":
+                        val = "تل مجدا";
+                        break;
+                    case "Tleilin":
+                        val = "طليلين";
+                        break;
+                    case "Um Shama":
+                        val = "أم شامة";
+                        break;
+                    case "Afineh":
+                        val = "العفينة";
+                        break;
+                    case "Barad":
+                        val = "برد";
+                        break;
+                    case "Hot":
+                        val = "حوط";
+                        break;
+                    case "Qarayya":
+                        val = "القريا";
+                        break;
+                    case "Amtan":
+                        val = "أمتان";
+                        break;
+                    case "Anat":
+                        val = "العانات";
+                        break;
+                    case "Arman":
+                        val = "عرمان";
+                        break;
+                    case "Karis":
+                        val = "كاريس";
+                        break;
+                    case "Mashquq (Salkhad)":
+                        val = "مشقوق";
+                        break;
+                    case "Mneithreh":
+                        val = "منيذرة";
+                        break;
+                    case "Os":
+                        val = "عوس";
+                        break;
+                    case "Oyun":
+                        val = "عيون";
+                        break;
+                    case "Rafqa":
+                        val = "رافقة";
+                        break;
+                    case "Salkhad":
+                        val = "صلخد";
+                        break;
+                    case "Sama Elbardan":
+                        val = "صمة البردان";
+                        break;
+                    case "Shannireh":
+                        val = "شنيرة";
+                        break;
+                    case "Tahula":
+                        val = "تحولة";
+                        break;
+                    case "Al-Bajaa":
+                        val = "البجع";
+                        break;
+                    case "Amra":
+                        val = "عمرة";
+                        break;
+                    case "Breika":
+                        val = "بريكة";
+                        break;
+                    case "Majadel":
+                        val = "مجادل";
+                        break;
+                    case "Mardak":
+                        val = "مردك";
+                        break;
+                    case "Mtuna":
+                        val = "المتونة";
+                        break;
+                    case "Nemreh":
+                        val = "نمرة";
+                        break;
+                    case "Salakhed":
+                        val = "صلاخد";
+                        break;
+                    case "Shahba (Shahba)":
+                        val = "شهبا";
+                        break;
+                    case "Sweimreh":
+                        val = "سويمرة";
+                        break;
+                    case "Tima":
+                        val = "تيما";
+                        break;
+                    case "Um Dbeib":
+                        val = "ام ضبيب";
+                        break;
+                    case "Um Elzaytun":
+                        val = "أم إلزايتون";
+                        break;
+                    case "Araja":
+                        val = "عراجة";
+                        break;
+                    case "Banat Baeir":
+                        val = "بنات باير";
+                        break;
+                    case "Barek":
+                        val = "بارك";
+                        break;
+                    case "Bothaina":
+                        val = "البثينة";
+                        break;
+                    case "Duma (Shaqa)":
+                        val = "دوما";
+                        break;
+                    case "Hayat (Shaqa)":
+                        val = "الهيات";
+                        break;
+                    case "Hit (Shaqa)":
+                        val = "الهيت";
+                        break;
+                    case "Jneineh (Shaqa)":
+                        val = "جنينة";
+                        break;
+                    case "Qasr":
+                        val = "القصر";
+                        break;
+                    case "Rdeimeh":
+                        val = "رضيمة";
+                        break;
+                    case "Sakia":
+                        val = "ساقية";
+                        break;
+                    case "Shaqa":
+                        val = "شقا";
+                        break;
+                    case "Shinwan":
+                        val = "شنوان";
+                        break;
+                    case "Taala (Shaqa)":
+                        val = "تعلا";
+                        break;
+                    case "Baka":
+                        val = "بكا";
+                        break;
+                    case "Thibeen":
+                        val = "ذبين";
+                        break;
+                    case "Um Elrumman (Thibeen)":
+                        val = "ام الرمان";
+                        break;
+                    case "Homs":
+                        val = "حمص";
+                        break;
+                    case "Homs-":
+                        val = "حمص-";
+                        break;
+                    case "Wadi":
+                        val = "الوادي";
+                        break;
+                    case "Wadi-":
+                        val = "الوادي-";
+                        break;
+                    case "Tartous":
+                        val = "طرطوس";
+                        break;
+                    case "Tartous-":
+                        val = "طرطوس-";
+                        break;
+                    case "Jaraman":
+                        val = "جرمانا";
+                        break;
+                    case "Jaraman-":
+                        val = "جرمانا-";
+                        break;
+                    case "Sihnaya":
+                        val = "صحنايا";
+                        break;
+                    case "Sihnaya-":
+                        val = "صحنايا-";
+                        break;
+                    default:
+                        return val;
+                }
+                return val;
+            }
 
 
             function createPDF() {
@@ -1016,12 +1056,13 @@
                 k2h2.push("\n\n");
 
 
-            $("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
-            $("#rx_heading").html($("#rx_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
-            $("#tests_heading").html($("#tests_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
-            $("#advice_heading").html($("#advice_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
-            $("#follow_up_heading").html($("#follow_up_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
-
+                $("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+                $("#rx_heading").html($("#rx_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+                $("#tests_heading").html($("#tests_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+                $("#advice_heading").html($("#advice_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+                $("#aid_order_heading").html($("#aid_order_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+                $("#follow_up_heading").html($("#follow_up_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
+                $("#discharge_order_heading").html($("#discharge_order_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
 
                 var dd = {
                     "pageSize": "A4",
@@ -1101,8 +1142,25 @@
                         {
                             stack: [
 
+                                { text: 'امر صرف مساعدة: \n\n', bold: true, fontSize: 14, decoration: 'underline', alignment: 'right', lineHeight: 1, font: 'Arial Unicode MS' },
+                                { text: $('#aid_order_heading').text().slice(10), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
+                            ]
+                        },
+
+                        {
+                            stack: [
+
                                 { text: ' تاريخ زيارة المتابعة', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#follow_up_heading').text().slice(21), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' },
+                            ]
+
+                        },
+
+                        {
+                            stack: [
+
+                                { text: 'تخريج الحالة: \n\n', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 1, font: 'Arial Unicode MS' },
+                                { text: $('#discharge_order_heading').text().slice(21), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
                             ]
 
                         },
