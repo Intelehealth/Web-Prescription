@@ -326,7 +326,9 @@
                             if (t5) {
                                 finalAidOrder += "<li>مساعد مادية مباشرة (قيمة)  : "+ t5 +"</li>";
                             }
-                            $('#aid_order_heading').html('<b><u>امر صرف مساعدة</u></b><div style="font-size:12pt;">' + finalAidOrder + "</div>");
+                            if (finalAidOrder != "") {
+                                $('#aid_order_heading').html('<b><u>امر صرف مساعدة</u></b><div style="font-size:12pt;">' + finalAidOrder + "</div>");
+                            }
 
 
                             if (data.followupNeeded) {

@@ -250,7 +250,7 @@
 
                         }
 
-                        if (data.testsAdvised) {
+                        if (data.enMedicalTests) {
                             let testsAdvised = getData(data.enMedicalTests)?.split("<br>");
                             finalTest = "";
                             for (counter = 0; counter < testsAdvised.length; counter++) {
@@ -259,7 +259,7 @@
                             $('#tests_heading').html('<b><u>Recommended Investigation(s):</u></b><div style="font-size:12pt;">' + finalTest + "</div>");
 
                         }
-                        if (data.medicalAdvice) {
+                        if (data.enMedicalAdvice) {
                             let medicalAdvice = getData(data.enMedicalAdvice)?.split("<br>");
                             finalMedicalAdvice = "";
                             for (counter = 0; counter < medicalAdvice.length; counter++) {
@@ -293,7 +293,9 @@
                         if (t5) {
                             finalAidOrder += "<li> Type 5: Cash assistance : " + t5 + "</li>";
                         }
-                        $('#aid_order_heading').html('<b><u>Aid Order:</u></b><div style="font-size:12pt;">' + finalAidOrder + "</div>");
+                        if (finalAidOrder != "") {
+                            $('#aid_order_heading').html('<b><u>Aid Order:</u></b><div style="font-size:12pt;">' + finalAidOrder + "</div>");
+                        }
 
 
                         if (data.followupNeeded) {
