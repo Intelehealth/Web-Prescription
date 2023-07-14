@@ -87,13 +87,13 @@
         <div id="prescription" style="display: none" class="container">
             <div class="row" style="text-align:center">
                 <div class="col-md-2 col-sm-2">
-                    <img src="nas-logo.png" width="50%">
+                    <img src="nas-logo.png" width="100%">
                 </div>
-                <div class="col-md-7 col-sm-8" style="text-align:center">
+                <div class="col-md-7 col-sm-8" style="text-align:center; font-size: 50px;">
                     <span> <strong>Arogya Sampada</strong></span>
                     <br>
                     <span>
-                        <strong>आरोग्य संपदा</strong>
+                        <strong style="font-size: 30px;">आरोग्य संपदा</strong>
                     </span>
                 </div>
                 <!-- <div class="col-md-2 col-sm-2">
@@ -106,11 +106,11 @@
                 <div class="col-md-4 col-sm-4">
                     &nbsp;
                 </div>
-                <div class="col-md-3 col-sm-3" style="font-size:14;text-align:center">
+                <div class="col-md-3 col-sm-3" style="font-size:25px;text-align:center">
                     <u> <b>ePrescription</b></u>
                 </div>
                 <div class="col-md-5 co-sm-3">
-                    <button class="btn btn-primary" style="margin-left: 30px;" onclick="createPDF();">Download Prescription</button>
+                    <button class="btn btn-primary" style="margin-left: 30px; font-weight :bold" onclick="createPDF();">Download Prescription</button>
                 </div>
 
             </div>
@@ -136,7 +136,7 @@
                 <p id="follow_up_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <div style="text-align:right;margin-right:50px;margin-top:0px;">
-                    <span style="font-size:25px;padding: 0px;" id="docSign">
+                    <span style="font-size:45px;padding: 0px;" id="docSign">
 
                     </span>
                     <br>
@@ -400,7 +400,7 @@
                             }
                             fullDets += qual ? qual + "," + specialization + "<br>" : "" + specialization + "<br>";
                             fullDets += phoneNumber + "<br>";
-                            fullDets += email + "<br>";
+                            fullDets += email ? email + "<br>": "";
                             ih_logo = "Supported by<br><img src=ih-logo.png style=width:10%>";
                             
 
@@ -601,14 +601,13 @@
                                       
                                         },
                                         {
-                                            text: 'Arogya Sampada \n आरोग्य संपदा', fontSize: 12
+                                            text: 'Arogya Sampada \n आरोग्य संपदा', fontSize: 12, alignment:'center', bold: true,
                                         },
                                     ]
                                 },
-                                { text: 'ePrescription', style: 'subheader' },
+                                { text: 'ePrescription', fontSize: 12, alignment:'center', bold: true},
                                 {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 1, color:'green' }]}
                             ],
-                            style: 'header'
                         },
                         {
                             stack: [
@@ -687,7 +686,7 @@
                             stack: [
 
 
-                                { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 12, alignment: 'right' },
+                                { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 45, alignment: 'right' },
                                 { text: docDe, alignment: 'right', lineHeight: 1 },
                                 { text: $('#docReg').text(),alignment: 'right' },
 
