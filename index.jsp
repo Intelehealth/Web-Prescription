@@ -650,7 +650,7 @@
                         stack: [
 
                             { text: 'Discharge Order: \n\n', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
-                            { text: $('#discharge_order_heading').text().slice(21), lineHeight: 2 }
+                            { text: $('#discharge_order_heading').text().slice(16), lineHeight: 2 }
                         ]
 
                     },
