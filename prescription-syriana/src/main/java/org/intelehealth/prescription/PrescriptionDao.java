@@ -55,7 +55,7 @@ public class PrescriptionDao {
 						"location_id, \n" +
 						"location_name, \n" +
 						"birthdate AS 'DateOfBirth' , \n" +
-						"value AS 'CitizenId' , \n" +
+					//	"value AS 'CitizenId' , \n" +
 						"max(CurrCom) as 'Chief Complaint', \n" +
 						"max(PhyExm) as 'Physical Examination', \n" +
 						"max(FamHis) as 'Family History', \n" +
@@ -73,14 +73,14 @@ public class PrescriptionDao {
 						"max(SugarFasting) as 'Sugar Fasting' , \n" +
 						"max(SugarRandom) as 'Sugar Random' , \n" +
 						"max(SugarPP) as 'Sugar After Meal' , \n" +
-						" max(arm_girth) as 'Arm Girth' , \n" +
-						" max(total_cholesterol_id) as 'Total Cholesterol Id' , \n" +
-						" max(abdominal_girth) as 'Abdominal Girth' , \n" +
-						" max(billPriceBloodGlucoseFastingId) as 'Bill Price Blood Glucose Fasting Id' , \n" +
-						" max(billPriceBloodGlucoseId) as 'Bill Price Blood Glucose Id' , \n" +
-						" max(billPriceBloodGlucoseRandomId) as 'Bill Price Blood Glucose Random Id' , \n" +
-						" max(billPriceBloodGlucosePostPrandialId) as 'Bill Price Blood Glucose Post Prandial Id' , \n"+
-						" max(ecg) as 'ECG' , \n"+
+				//		" max(arm_girth) as 'Arm Girth' , \n" +
+				//		" max(total_cholesterol_id) as 'Total Cholesterol Id' , \n" +
+				//		" max(abdominal_girth) as 'Abdominal Girth' , \n" +
+			//			" max(billPriceBloodGlucoseFastingId) as 'Bill Price Blood Glucose Fasting Id' , \n" +
+			//			" max(billPriceBloodGlucoseId) as 'Bill Price Blood Glucose Id' , \n" +
+			//			" max(billPriceBloodGlucoseRandomId) as 'Bill Price Blood Glucose Random Id' , \n" +
+		//				" max(billPriceBloodGlucosePostPrandialId) as 'Bill Price Blood Glucose Post Prandial Id' , \n"+
+		//				" max(ecg) as 'ECG' , \n"+
 						"group_concat(distinct Diagnosis separator '; ') as 'Diagnosis', \n" +
 						"group_concat(distinct Medication separator '; ') as 'Medication', \n" +
 						"group_concat(distinct Medical_Advice separator '; ') as 'Medical Advice', \n" +
@@ -97,7 +97,7 @@ public class PrescriptionDao {
 						"v.date_started, \n" +
 						"p.gender,\n" +
 						"p.birthdate,\n" +
-						"pat.value,\n" +
+					//	"pat.value,\n" +
 						"concat_ws(',',  pn.given_name, pn.middle_name, pn.family_name) as patient_name,\n" +
 						"concat_ws(',', pa.address1, pa.address2, pa.city_village, pa.postal_code) AS address,\n" +
 					//	"pa.state_province as Address,\n" +
@@ -181,7 +181,7 @@ public class PrescriptionDao {
 						"obs o,\n" +
 						"person_name pn, \n" +
 						"person_address pa, \n" +
-						"person_attribute pat, \n" +
+						//"person_attribute pat, \n" +
 						"person p,\n" +
 						"location l\n"+
 						"where v.voided = 0 \n" +
@@ -194,16 +194,17 @@ public class PrescriptionDao {
 						"and e.visit_id = v.visit_id \n" +
 						"and o.encounter_id = e.encounter_id \n" +
 						"and o.voided = 0 \n" +
+						"and o.comments is  null " + // Added for non-empty comments SOFT DELETE 07072023
 						"and p.person_id = v.patient_id\n" +
 						"and pn.person_id = v.patient_id\n" +
 						"and pa.person_id = v.patient_id\n" +
 						"and p.voided = 0\n" +
-						" and pat.person_attribute_type_id = 8 \n"+
-						"and pat.person_id = v.patient_id \n"+
+						//" and pat.person_attribute_type_id = 8 \n"+
+						//"and pat.person_id = v.patient_id \n"+
 						"and o.person_id in (SELECT patient_id from patient_identifier WHERE identifier = ?)\n" +
 						"and v.uuid in (?)\n" +
 						") as t \n" +
-						"group by patient_id,identifier,visit_id,date_started,location_id,gender,Age,patient_name,birthdate,value, address\n" +
+						"group by patient_id,identifier,visit_id,date_started,location_id,gender,Age,patient_name,birthdate, address\n" +
 						"order by 1,5";
 				//37 - person_attribute_type_id UNICEF
 				// 8 - Telephone number
@@ -217,7 +218,7 @@ public class PrescriptionDao {
 				returnme.setDBP(rst2.getString("DBP"));
 				returnme.setSBP(rst2.getString("SBP"));
 				returnme.setBirthDate(rst2.getString("DateOfBirth"));
-				returnme.setCitizenId(rst2.getString("CitizenId"));
+				//returnme.setCitizenId(rst2.getString("CitizenId"));
 
 				returnme.setComplaint(rst2.getString("Chief Complaint"));
 				returnme.setName(rst2.getString("patient_name"));
@@ -306,7 +307,7 @@ public class PrescriptionDao {
 						" from obs where concept_id = 163219 "+
 						" AND "+
 						" person_id = (select patient_id from patient_identifier where identifier=?) "+
-						" AND voided = 0 "+
+						" AND voided = 0 AND comments IS  NULL"+
 						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
 						" (select visit_id from visit where uuid = ?))";
 
@@ -328,7 +329,7 @@ public class PrescriptionDao {
 						" obs where concept_id = 163202 "+
 						" AND "+
 						" person_id = (select patient_id from patient_identifier where identifier=?) "+
-						" AND voided = 0 "+
+						" AND voided = 0 AND comments IS NULL "+
 						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
 						" (select visit_id from visit where uuid = ?))";
 
@@ -350,7 +351,7 @@ public class PrescriptionDao {
 						" obs where concept_id = 163206 "+
 						" AND "+
 						" person_id = (select patient_id from patient_identifier where identifier=?) "+
-						" AND voided = 0 "+
+						" AND voided = 0 AND comments IS  NULL "+
 						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
 						" (select visit_id from visit where uuid = ?))";
 
@@ -372,7 +373,7 @@ public class PrescriptionDao {
 						" obs where concept_id = 163205 "+
 						" AND "+
 						" person_id = (select patient_id from patient_identifier where identifier=?) "+
-						" AND voided = 0 "+
+						" AND voided = 0 AND comments IS  NULL "+
 						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
 						" (select visit_id from visit where uuid = ?)) AND JSON_VALID(value_text)";
 
@@ -394,7 +395,7 @@ public class PrescriptionDao {
 						" obs where concept_id = 162169 "+
 						" AND "+
 						" person_id = (select patient_id from patient_identifier where identifier=?) "+
-						" AND voided = 0 "+
+						" AND voided = 0 AND comments IS  NULL "+
 						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
 						" (select visit_id from visit where uuid = ?))";
 
@@ -416,7 +417,7 @@ public class PrescriptionDao {
 						" obs where concept_id = 162169 "+
 						" AND "+
 						" person_id = (select patient_id from patient_identifier where identifier=?) "+
-						" AND voided = 0 "+
+						" AND voided = 0 AND comments IS  NULL "+
 						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
 						" (select visit_id from visit where uuid = ?))";
 
@@ -430,6 +431,135 @@ public class PrescriptionDao {
 
 				rstFollowup.close();
 				followupStatement.close();
+
+				String medicalEquipmentLoanQuery="SELECT json_unquote(json_extract(value_text,'$.en')) as enMELoan, " +
+				"json_unquote(json_extract(value_text,'$.ar')) as arMELoan" +
+						" from "+
+						" obs where concept_id = 165406 "+
+						" AND "+
+						" person_id = (select patient_id from patient_identifier where identifier=?) "+
+						" AND voided = 0  AND comments IS NULL"+
+						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
+						" (select visit_id from visit where uuid = ?))";
+
+				PreparedStatement medicalEquipmentLoanStatement = con.prepareStatement(medicalEquipmentLoanQuery);
+				medicalEquipmentLoanStatement.setString(1,openMRSId);
+				medicalEquipmentLoanStatement.setString(2,visitUUID);
+				ResultSet rstMEL = medicalEquipmentLoanStatement.executeQuery();
+				if(rstMEL.next()) {
+					returnme.setArMEL(rstMEL.getString(2));
+					returnme.setEnMEL(rstMEL.getString(1));
+				}
+				rstMEL.close();
+				medicalEquipmentLoanStatement.close();
+
+				String freeMedicalEquipementQuery="SELECT json_unquote(json_extract(value_text,'$.en')) as enFreeMedicalEquipment, " +
+						"json_unquote(json_extract(value_text,'$.ar')) as arFreeMedicalEquipment" +
+						" from "+
+						" obs where concept_id = 165407 "+
+						" AND "+
+						" person_id = (select patient_id from patient_identifier where identifier=?) "+
+						" AND voided = 0  AND comments IS NULL "+
+						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
+						" (select visit_id from visit where uuid = ?))";
+
+				PreparedStatement freeMedicalEquipmentStatement = con.prepareStatement(freeMedicalEquipementQuery);
+				freeMedicalEquipmentStatement.setString(1,openMRSId);
+				freeMedicalEquipmentStatement.setString(2,visitUUID);
+				ResultSet rstFME = freeMedicalEquipmentStatement.executeQuery();
+
+				if(rstFME.next()) {
+					returnme.setArFME(rstFME.getString(2));
+					returnme.setEnFME(rstFME.getString(1));
+				}
+				rstFME.close();
+				freeMedicalEquipmentStatement.close();
+
+				String coverMedicalExpensesQuery="SELECT json_unquote(json_extract(value_text,'$.en')) as enCoverMedicalExpenses, " +
+						"json_unquote(json_extract(value_text,'$.ar')) as arCoverMedicalExpenses" +
+						" from "+
+						" obs where concept_id = 165408"+
+						" AND "+
+						" person_id = (select patient_id from patient_identifier where identifier=?) "+
+						" AND voided = 0 AND comments IS  NULL "+
+						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
+						" (select visit_id from visit where uuid = ?))";
+
+				PreparedStatement coverMedicalExpensesStatement = con.prepareStatement(coverMedicalExpensesQuery);
+				coverMedicalExpensesStatement.setString(1,openMRSId);
+				coverMedicalExpensesStatement.setString(2,visitUUID);
+				ResultSet rstCME = coverMedicalExpensesStatement.executeQuery();
+				if(rstCME.next()) {
+					returnme.setArCME(rstCME.getString(2));
+					returnme.setEnCME(rstCME.getString(1));
+				}
+				rstCME.close();
+				coverMedicalExpensesStatement.close();
+
+				String coverSurgicalExpensesQuery="SELECT json_unquote(json_extract(value_text,'$.en')) as enCoverSurgicalExpenses, " +
+						"json_unquote(json_extract(value_text,'$.ar')) as arCoverMedicalExpenses" +
+						" from "+
+						" obs where concept_id = 165409"+
+						" AND "+
+						" person_id = (select patient_id from patient_identifier where identifier=?) "+
+						" AND voided = 0 AND comments IS  NULL "+
+						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
+						" (select visit_id from visit where uuid = ?))";
+
+				PreparedStatement coverSurgicalExpensesStatement = con.prepareStatement(coverSurgicalExpensesQuery);
+				coverSurgicalExpensesStatement.setString(1,openMRSId);
+				coverSurgicalExpensesStatement.setString(2,visitUUID);
+				ResultSet rstCSE = coverSurgicalExpensesStatement.executeQuery();
+				if(rstCSE.next()) {
+					returnme.setArCSE(rstCSE.getString(2));
+					returnme.setEnCSE(rstCSE.getString(1));
+				}
+				rstCSE.close();
+				coverSurgicalExpensesStatement.close();
+
+				String cashAssistanceQuery="SELECT json_unquote(json_extract(value_text,'$.en')) as enCashAssistance, " +
+						"json_unquote(json_extract(value_text,'$.ar')) as arCashAssitance" +
+						" from "+
+						" obs where concept_id = 165410"+
+						" AND "+
+						" person_id = (select patient_id from patient_identifier where identifier=?) "+
+						" AND voided = 0 AND comments IS  NULL "+
+						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
+						" (select visit_id from visit where uuid = ?))";
+
+				PreparedStatement cashAssistanceStatement = con.prepareStatement(cashAssistanceQuery);
+				cashAssistanceStatement.setString(1,openMRSId);
+				cashAssistanceStatement.setString(2,visitUUID);
+				ResultSet rstCCA = cashAssistanceStatement.executeQuery();
+				if(rstCCA.next() ) {
+					returnme.setArCCA(rstCCA.getString(2));
+					returnme.setEnCCA(rstCCA.getString(1));
+				}
+				rstCCA.close();
+				cashAssistanceStatement.close();
+
+				String dischargeOrderQuery="SELECT json_unquote(json_extract(value_text,'$.en')) as enDischargeOrder, " +
+						"json_unquote(json_extract(value_text,'$.ar')) as arDischargeOrder" +
+						" from "+
+						" obs where concept_id = 165411"+
+						" AND "+
+						" person_id = (select patient_id from patient_identifier where identifier=?) "+
+						" AND voided = 0 AND comments IS NULL "+
+						" AND encounter_id in (select encounter_id from encounter where visit_id in "+
+						" (select visit_id from visit where uuid = ?))";
+				PreparedStatement dischargeOrderStatement = con.prepareStatement(dischargeOrderQuery);
+				dischargeOrderStatement.setString(1,openMRSId);
+				dischargeOrderStatement.setString(2,visitUUID);
+				ResultSet rstDO = dischargeOrderStatement.executeQuery();
+				if(rstDO.next()) {
+					returnme.setDischargeOrder(true);
+					returnme.setArDischargeOrder(rstDO.getString(2));
+					returnme.setEnDischargeOrder(rstDO.getString(1));
+				}
+
+				rstDO.close();
+				dischargeOrderStatement.close();
+
 
 
 

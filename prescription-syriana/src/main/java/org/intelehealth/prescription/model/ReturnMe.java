@@ -568,4 +568,134 @@ public class ReturnMe {
     public void setECG(String ecg) {
         this.ECG = ecg;
     }
+
+
+    String arMEL;
+
+    public String getEnMEL() {
+        return enMEL;
+    }
+
+    public void setEnMEL(String enMEL) {
+        this.enMEL = enMEL;
+    }
+
+    String enMEL;
+    public void setArMEL(String arMEL) {
+        this.arMEL = arMEL;
+    }
+
+    public String getArMEL() {
+        return arMEL;
+    }
+
+    String arFME;
+
+    public String getEnFME() {
+        return enFME;
+    }
+
+    public void setEnFME(String enFME) {
+        this.enFME = enFME;
+    }
+
+    String enFME;
+
+    public void setArFME(String arFME) {
+        this.arFME = arFME;
+    }
+
+    public String getArFME() {
+        return arFME;
+    }
+
+
+    String arCME;
+
+    public void setArCME(String arCME) {
+        this.arCME = arCME;
+    }
+
+    public String getArCME() {
+        return arCME;
+    }
+
+    public String getEnCME() {
+        return enCME;
+    }
+
+    public void setEnCME(String enCME) {
+        this.enCME = enCME;
+    }
+
+    String enCME;
+
+    String arCSE;
+
+    public void setArCSE(String arCSE) {
+        this.arCSE = arCSE;
+    }
+
+    public String getArCSE() {
+        return arCSE;
+    }
+
+    public String getEnCSE() {
+        return enCSE;
+    }
+
+    public void setEnCSE(String enCSE) {
+        this.enCSE = enCSE;
+    }
+
+    String enCSE;
+
+
+    String arCCA;
+
+    public void setArCCA(String arCCA) {
+        this.arCCA = arCCA;
+    }
+
+    public String getArCCA() {
+        return arCCA;
+    }
+
+    public String getEnCCA() {
+        return enCCA;
+    }
+
+    public void setEnCCA(String enCCA) {
+        this.enCCA = enCCA;
+    }
+
+    String enCCA;
+
+    String arDischargeOrder;
+    public void setArDischargeOrder(String arDischargeOrder) {
+        this.arDischargeOrder = arDischargeOrder;
+    }
+
+    public String getArDischargeOrder() {
+        return arDischargeOrder;
+    }
+
+    String enDischargeOrder;
+    public void setEnDischargeOrder(String enDischargeOrder) {
+        this.enDischargeOrder = enDischargeOrder;
+    }
+
+    public String getEnDischargeOrder() {
+        return enDischargeOrder;
+    }
+
+    boolean dischargeOrder;
+
+    public void setDischargeOrder(boolean dischargeOrder) {
+        this.dischargeOrder = dischargeOrder;
+    }
+
+    public boolean isDischargeOrder() {
+        return dischargeOrder;
+    }
 }
