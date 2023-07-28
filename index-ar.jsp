@@ -336,12 +336,11 @@
                                 $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;"><li>' + getFollowup(followup['ar']) + "</li><br></div>");
                             }
 
-                            if (data.dischargeOrder) {
+                            if (data.arDischargeOrder) {
                                 let dischargeOrder = getData(data.arDischargeOrder)?.split("<br>");
                                 finalDischargeOrder = "";
                                 for (counter = 0; counter < dischargeOrder.length; counter++) {
-                                    if (!dischargeOrder[counter].includes("Audio"))
-                                        finalDischargeOrder += "<li>" + dischargeOrder[counter] + "</li>";
+                                    finalDischargeOrder += "<li>" + dischargeOrder[counter] + "</li>";
                                 }
                                 $('#discharge_order_heading').html('<b><u>تخريج الحالة:</u></b><div style="font-size:12pt;">' + finalDischargeOrder + "</div>");
                             }
@@ -1162,7 +1161,7 @@
                             stack: [
 
                                 { text: 'تخريج الحالة: \n\n', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 1, font: 'Arial Unicode MS' },
-                                { text: $('#discharge_order_heading').text().slice(21), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
+                                { text: $('#discharge_order_heading').text().slice(13), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
                             ]
 
                         },
