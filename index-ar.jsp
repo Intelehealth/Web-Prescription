@@ -336,11 +336,11 @@
                                 $('#follow_up_heading').html('<b><u> تاريخ زيارة المتابعة</u></b><br><div style="font-size:12pt;"><li>' + getFollowup(followup['ar']) + "</li><br></div>");
                             }
 
-                            if (data.arDischargeOrder) {
-                                let dischargeOrder = getData(data.arDischargeOrder)?.split("<br>");
+                            if (data.disChargeOrders.length) {
+                                // let dischargeOrder = getData(data.arDischargeOrder)?.split("<br>");
                                 finalDischargeOrder = "";
-                                for (counter = 0; counter < dischargeOrder.length; counter++) {
-                                    finalDischargeOrder += "<li>" + dischargeOrder[counter] + "</li>";
+                                for (counter = 0; counter < data.disChargeOrders.length; counter++) {
+                                    finalDischargeOrder += "<li>" + data.disChargeOrders[counter].arDischargeOrder + "</li>";
                                 }
                                 $('#discharge_order_heading').html('<b><u>تخريج الحالة:</u></b><div style="font-size:12pt;">' + finalDischargeOrder + "</div>");
                             }
@@ -975,6 +975,8 @@
 
 
             function createPDF() {
+                window.print();
+                return;
                 var docDe = $('#docDetail').html().replaceAll("<br>", "\n");
 
                 var fonts = {
@@ -1054,7 +1056,7 @@
                 }
                 tmpComplaints.shift();
                 k2h2 = tmpComplaints;
-                k2h2.push("\n\n");
+                // k2h2.push("\n\n");
 
 
                 $("#diagnosis_heading").html($("#diagnosis_heading").html().replaceAll("<li>", "\u2022").replaceAll("</li>", "\n"));
@@ -1081,13 +1083,13 @@
                                     ],
                                 },
                                 { text: 'وصفة طبية إلكتروني', style: 'subheader' },
-                                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1, color: 'green' }] }
+                                { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 2, color: 'green' }] }
                             ],
                             style: 'header'
                         },
                         {
                             stack: [
-                                { text: $('#patient_info').text(), alignment: 'right', decoration: 'underline', bold: true, fontSize: 14, lineHeight: 1.25, font: 'Arial Unicode MS' },
+                                { text: $('#patient_info').text(), alignment: 'right', decoration: 'underline', bold: true, fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#patient_name').text(), bold: true, lineHeight: 1.25, alignment: 'right', font: 'Arial Unicode MS' },
                                 { text: $('#patient_details').text(), lineHeight: 1.25, alignment: 'right', font: 'Arial Unicode MS' },
                                 { text: $('#address_and_contact').text(), lineHeight: 1.25, alignment: 'right', font: 'Arial Unicode MS' },
@@ -1095,93 +1097,68 @@
                             ]
                         },
                         {
-                            stack: [{ text: 'سبب الزيارة', bold: true, fontSize: 14, alignment: 'right', decoration: 'underline', font: 'Arial Unicode MS' },
-                            { text: k2h2, alignment: 'right', lineHeight: 1 }]
-
+                            stack: [
+                                { text: 'سبب الزيارة', bold: true, fontSize: 14, alignment: 'right', decoration: 'underline', lineHeight: 2, font: 'Arial Unicode MS' },
+                                { text: k2h2, alignment: 'right', lineHeight: 2 }
+                            ]
                         },
-
                         // {
                         //     stack: [{text:'العلامات الحيوية',decoration: 'underline', bold:true,alignment:'right',fontSize:14,font:'Arial Unicode MS'},
                         //     {text:$('#vitals').text().slice(16)+"\n\n", lineHeight:1, alignment:'right',font: 'Arial Unicode MS'}
                         //     ]
 
                         // },
-
                         {
                             stack: [
-
                                 { text: 'التشخيص', bold: true, fontSize: 14, alignment: 'right', decoration: 'underline', lineHeight: 2, font: 'Arial Unicode MS' },
-                                { text: $('#diagnosis_heading').text().slice(7) + "\n", lineHeight: 1, alignment: 'right', font: 'Arial Unicode MS' }]
-
+                                { text: $('#diagnosis_heading').text().slice(7), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
+                            ]
                         },
-
                         {
                             stack: [
 
                                 { text: 'الخطة العلاجية', bold: true, fontSize: 14, alignment: 'right', decoration: 'underline', lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#rx_heading').text().slice(14), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }]
-
                         },
-
                         {
                             stack: [
 
-                                { text: 'التحاليل و الفحوصات المطلوبة', decoration: 'underline', bold: true, alignment: 'right', fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
-                                { text: $('#tests_heading').text().slice(28) + "\n", lineHeight: 1, alignment: 'right', font: 'Arial Unicode MS' }]
-
+                                { text: 'التحاليل و الفحوصات المطلوبة', decoration: 'underline', lineHeight: 2, bold: true, alignment: 'right', fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
+                                { text: $('#tests_heading').text().slice(28), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
+                            ]
                         },
-
                         {
                             stack: [
-
-                                { text: 'توجيهات عامة \n\n', bold: true, fontSize: 14, decoration: 'underline', alignment: 'right', lineHeight: 1, font: 'Arial Unicode MS' },
+                                { text: 'توجيهات عامة', bold: true, fontSize: 14, decoration: 'underline', alignment: 'right', lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#advice_heading').text().slice(12), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
                             ]
-
                         },
-
                         {
                             stack: [
 
-                                { text: 'امر صرف مساعدة: \n\n', bold: true, fontSize: 14, decoration: 'underline', alignment: 'right', lineHeight: 1, font: 'Arial Unicode MS' },
+                                { text: 'امر صرف مساعدة', bold: true, fontSize: 14, decoration: 'underline', alignment: 'right', lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#aid_order_heading').text().slice(10), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
                             ]
                         },
-
                         {
                             stack: [
-
                                 { text: ' تاريخ زيارة المتابعة', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#follow_up_heading').text().slice(21), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' },
                             ]
-
                         },
-
                         {
                             stack: [
-
-                                { text: 'تخريج الحالة: \n\n', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 1, font: 'Arial Unicode MS' },
+                                { text: 'تخريج الحالة', bold: true, decoration: 'underline', alignment: 'right', fontSize: 14, lineHeight: 2, font: 'Arial Unicode MS' },
                                 { text: $('#discharge_order_heading').text().slice(13), lineHeight: 2, alignment: 'right', font: 'Arial Unicode MS' }
                             ]
-
                         },
-
-
                         {
                             stack: [
-
-
                                 { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 50, alignment: 'left' },
-                                { text: docDe, alignment: 'left', lineHeight: 1 },
+                                { text: docDe, alignment: 'left', lineHeight: 2 },
                                 { text: $('#docReg').text(), alignment: 'left' }
                             ]
-
-                        },
-
-
-
-
-
+                        }
                     ],
                     styles: {
                         header: {
@@ -1199,14 +1176,10 @@
                     },
                     defaultStyle: {
                         font: 'Arial Unicode MS',
-                        fontSize: 10,
+                        fontSize: 10
                     },
-
-
                 }
                 fileName = getParameterByName("v").slice(-5) + "_prescription";
-
-
                 pdfMake.createPdf(dd, null, fonts).download(fileName)
                 alert('سيتم تحميل الوصفة الطبية قريبًا');
             }

@@ -300,15 +300,14 @@
 
                         if (data.followupNeeded) {
                             let followup = data.followupNeeded ? JSON.parse(data.followupNeeded?.trim().substring(1).toString()) : { en: "" };
-                            $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;"><li>' + followup['en'] + "</li><br></div>");
+                            $('#follow_up_heading').html('<b><u>Followup date:</u></b><br><div style="font-size:12pt;"><li>' + followup['en'] + "</li></div>");
                         }
 
-                        if (data.dischargeOrder) {
-                            let dischargeOrder = getData(data.enDischargeOrder)?.split("<br>");
+                        if (data.disChargeOrders?.length) {
+                            // let dischargeOrder = getData(data.enDischargeOrder)?.split("<br>");
                             finalDischargeOrder = "";
-                            for (counter = 0; counter < dischargeOrder.length; counter++) {
-                                if (!dischargeOrder[counter].includes("Audio"))
-                                    finalDischargeOrder += "<li>" + dischargeOrder[counter] + "</li>";
+                            for (counter = 0; counter < data.disChargeOrders.length; counter++) {
+                                finalDischargeOrder += "<li>" + data.disChargeOrders[counter].enDischargeOrder + "</li>";
                             }
                             $('#discharge_order_heading').html('<b><u>Discharge Order:</u></b><div style="font-size:12pt;">' + finalDischargeOrder + "</div>");
                         }
@@ -573,7 +572,7 @@
                     },
                     {
                         stack: [
-                            { text: $('#patient_info').text(), decoration: 'underline', bold: true, fontSize: 14, lineHeight: 1.25 },
+                            { text: $('#patient_info').text(), decoration: 'underline', bold: true, fontSize: 14, lineHeight: 2 },
                             { text: $('#patient_name').text(), lineHeight: 1.25 },
                             { text: $('#patient_details').text(), lineHeight: 1.25 },
                             { text: $('#address_and_contact').text(), lineHeight: 1.25 },
@@ -582,95 +581,64 @@
                         ]
                     },
                     {
-                        stack: [{ text: 'Reason of visit:\n\n', decoration: 'underline', bold: true, fontSize: 14 },
+                        stack: [{ text: 'Reason of visit:', decoration: 'underline', bold: true, fontSize: 14, lineHeight: 2 },
                             k2h2]
                         //            {text:$('#complaints_heading').text().slice(20), lineHeight:2}]
-
                     },
-
                     // {
                     //     stack: [{text:'Vitals', decoration: 'underline', bold:true,fontSize:14},
                     //     {text:$('#vitals').text().slice(6)+"\n\n",lineHeight:1}
                     //     ]
-
                     // },
-
                     {
                         stack: [
-
                             { text: 'Diagnosis:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                            { text: $('#diagnosis_heading').text().slice(10), lineHeight: 2 }]
-
+                            { text: $('#diagnosis_heading').text().slice(10), lineHeight: 2 }
+                        ]
                     },
-
                     {
                         stack: [
-
                             { text: 'Medication plan:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                            { text: $('#rx_heading').text().slice(16), lineHeight: 2 }]
-
+                            { text: $('#rx_heading').text().slice(16), lineHeight: 2 }
+                        ]
                     },
-
                     {
                         stack: [
-
                             { text: 'Recommended Investigation(s):', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
-                            { text: $('#tests_heading').text().slice(29), lineHeight: 2 }]
-
+                            { text: $('#tests_heading').text().slice(29), lineHeight: 2 }
+                        ]
                     },
-
                     {
                         stack: [
-
-                            { text: 'General Instructions: \n\n', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
+                            { text: 'General Instructions:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
                             { text: $('#advice_heading').text().slice(21), lineHeight: 2 }
                         ]
-
                     },
-
                     {
                         stack: [
-
-                            { text: 'Aid Order: \n\n', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
+                            { text: 'Aid Order:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
                             { text: $('#aid_order_heading').text().slice(10), lineHeight: 2 }
                         ]
-
                     },
-
                     {
                         stack: [
-
                             { text: 'Followup date:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
                             { text: $('#follow_up_heading').text().slice(14), lineHeight: 2 },
                         ]
-
                     },
-
                     {
                         stack: [
-
-                            { text: 'Discharge Order: \n\n', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 1 },
+                            { text: 'Discharge Order:', bold: true, decoration: 'underline', fontSize: 14, lineHeight: 2 },
                             { text: $('#discharge_order_heading').text().slice(16), lineHeight: 2 }
                         ]
-
                     },
-
-
                     {
                         stack: [
-
-
                             { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 50, alignment: 'right' },
                             { text: docDe, alignment: 'right', lineHeight: 1 },
                             { text: $('#docReg').text(), alignment: 'right' }
                         ]
-
-                    },
-
-
-
-
-
+                    }
                 ],
                 styles: {
                     header: {
