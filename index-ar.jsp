@@ -164,7 +164,7 @@
                 <p id="discharge_order_heading" style="font-size:15pt;margin-top:5px; margin-bottom:0px; padding: 0px;"></p>
 
                 <div style="text-align: right;margin-top: 0px;width: 100%;">
-                    <div style="float: left;">
+                    <div>
                         <span style="font-size:25px;padding: 0px;" id="docSign"></span>
                         <br>
                         <div class="pull-right" id="docDetail">
