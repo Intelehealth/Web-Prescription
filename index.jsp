@@ -193,11 +193,11 @@
                             bmi = wt / (ht * ht);
                         }
                         $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                        $('#vitals').html('<b>Vitals</b><br>Height: ' + toFeet(data.height||0) + ' | Weight(kg): ' + data.weight +
+                        $('#vitals').html('<b>Vitals</b><br>Height(ft): ' + toFeet(data.height||0) + ' | Weight(kg): ' + data.weight +
                             ' | BMI: ' + bmi.toFixed(2) + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
-                            ' | Pulse(bpm): ' + data.pulseRate + ' | Temperature(F): ' + (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2): 0) + ' | Respiratory Rate: ' + data.respRate +  ' | SpO2(%): ' + data.spo2 + 
+                            ' | Pulse(bpm): ' + data.pulseRate + ' | Temperature(F): ' + (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(1): 0) + ' | Respiratory Rate: ' + data.respRate +  ' | SpO2(%): ' + data.spo2 + 
                             ' | Hemoglobin: ' + (data.haemoGlobin ? data.haemoGlobin : "-") + ' | Blood Group: ' + (data.bloodGroup ? data.bloodGroup : "-") +
-                            ' | Sugar Level(Fasting/After Meal): ' + ((data.sugarFasting && data.sugarAfterMeal) ? (data.sugarFasting + "/" + data.sugarAfterMeal) : "NA") +
+                            ' | Sugar Level(Fasting/After Meal): ' + ((data.sugarFasting || "NA") + "/" + (data.sugarAfterMeal || "NA")) +
                             ' | Sugar Level - Random: ' + (data.sugarRandom ? data.sugarRandom : "-") + "<br>");
                         complaintString = data.complaint.trim().split("<br/>");
                         //  console.log(complaintString);
