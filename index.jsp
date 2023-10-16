@@ -139,6 +139,14 @@
     </div>
 
     <script type="text/javascript">
+        var fontOfSign;
+        function toFeet(n) {
+            if(!n) return '-';
+            const realFeet = ((n * 0.393700) / 12);
+            const feet = Math.floor(realFeet);
+            const inches = Math.round((realFeet - feet) * 12);
+            return `${feet} ft ${inches} inches`;
+        }
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");
@@ -152,7 +160,7 @@
             $('#errDesc').text('');
 
             jQuery.ajax({
-                url: "https://afi.ekalarogya.org/prescription/prescription/visitData",
+                url: "https://afitraining.ekalarogya.org/prescription/prescription/visitData",
                 type: "POST",
                 data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -185,11 +193,11 @@
                             bmi = wt / (ht * ht);
                         }
                         $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                        $('#vitals').html('<b>Vitals</b><br>Height(cm): ' + data.height + ' | Weight(kg): ' + data.weight +
+                        $('#vitals').html('<b>Vitals</b><br>Height: ' + toFeet(data.height||0) + ' | Weight(kg): ' + data.weight +
                             ' | BMI: ' + bmi.toFixed(2) + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
                             ' | Pulse(bpm): ' + data.pulseRate + ' | Temperature(F): ' + (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(2): 0) + ' | Respiratory Rate: ' + data.respRate +  ' | SpO2(%): ' + data.spo2 + 
                             ' | Hemoglobin: ' + (data.haemoGlobin ? data.haemoGlobin : "-") + ' | Blood Group: ' + (data.bloodGroup ? data.bloodGroup : "-") +
-                            ' | Sugar Level(Fasting/After Meal): ' + ((data.sugarFasting && data.sugarAfterMeal) ? (data.sugarFasting + "/" + data.sugarAfterMeal) : "-") +
+                            ' | Sugar Level(Fasting/After Meal): ' + ((data.sugarFasting && data.sugarAfterMeal) ? (data.sugarFasting + "/" + data.sugarAfterMeal) : "NA") +
                             ' | Sugar Level - Random: ' + (data.sugarRandom ? data.sugarRandom : "-") + "<br>");
                         complaintString = data.complaint.trim().split("<br/>");
                         //  console.log(complaintString);
@@ -315,7 +323,11 @@
                         var regNumber = "";
                         for (i = 0; i < docAttributes.length; i++) {
                             if (docAttributes[i].indexOf("fontOfSign") > -1) {
-                                $('#docSign').css('font-family', docAttributes[i].split(":")[1]);
+                                fontOfSign = docAttributes[i].split(":")[1];
+                                $('#docSign').css('font-family', fontOfSign);
+                                if(fontOfSign === 'youthness'){
+                                    $('#docSign').css('font-size','50px');              
+                                }
 
 
                             }
@@ -610,13 +622,10 @@
 
                     {
                         stack: [
-
-
-                            { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: 12, alignment: 'right' },
+                            { text: $('#docSign').text(), font: $('#docSign').css('font-family').replace(/\b[a-zA-Z]/g, (match) => match.toUpperCase()), fontSize: fontOfSign === 'youthness' ? 55 : 12, alignment: 'right' },
                             { text: docDe, alignment: 'right', lineHeight: 1 },
                             { text: $('#docReg').text(), bold: true, alignment: 'right' }
                         ]
-
                     },
 
 
