@@ -192,13 +192,11 @@
                         if (wt && ht) {
                             bmi = wt / (ht * ht);
                         }
+
                         $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                        $('#vitals').html('<b>Vitals</b><br>Height(ft): ' + toFeet(data.height||0) + ' | Weight(kg): ' + data.weight +
-                            ' | BMI: ' + bmi.toFixed(2) + ' | Blood Pressure: ' + parseInt(data.sbp).toFixed(0) + '/' + parseInt(data.dbp).toFixed(0) +
-                            ' | Pulse(bpm): ' + data.pulseRate + ' | Temperature(F): ' + (data.temperature > 0 ? ((data.temperature * 1.8) + 32).toFixed(1): 0) + ' | Respiratory Rate: ' + data.respRate +  ' | SpO2(%): ' + data.spo2 + 
-                            ' | Hemoglobin: ' + (data.haemoGlobin ? data.haemoGlobin : "-") + ' | Blood Group: ' + (data.bloodGroup ? data.bloodGroup : "-") +
-                            ' | Sugar Level(Fasting): ' + (data.sugarFasting || "NA") +
-                            ' | Sugar Level - Random: ' + (data.sugarRandom ? data.sugarRandom : "-") + "<br>");
+                        $('#vitals').html(`<b>Vitals</b><br>Height(ft): ${data.height?toFeet(data.height||0):'NA'} | Weight(kg): ${data.weight||'NA'} | BMI: ${bmi?bmi.toFixed(2):'NA'} | Blood Pressure: ${data.sbp && data.dbp?parseInt(data.sbp).toFixed(0)+'/'+parseInt(data.dbp).toFixed(0):'NA'}| Pulse(bpm): ${data.pulseRate||'NA'} 
+                        | Temperature(F): ${data.temperature ? ((data.temperature * 1.8) + 32).toFixed(1): 'NA'} | Respiratory Rate: ${data.respRate||'NA'} | SpO2(%): ${data.spo2||'NA'} | Hemoglobin: ${data.haemoGlobin || "NA"} 
+                        | Blood Group: ${data.bloodGroup || "NA"} | Sugar Level(Fasting): ${data.sugarFasting || "NA"} | Sugar Level - Random: ${data.sugarRandom || "NA"}<br>`);
                         complaintString = data.complaint.trim().split("<br/>");
                         //  console.log(complaintString);
                         //
