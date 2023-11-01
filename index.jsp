@@ -141,7 +141,7 @@
     <script type="text/javascript">
         var fontOfSign;
         function toFeet(n) {
-            if(!n) return '-';
+            if(!Number(n)) return n;
             const realFeet = ((n * 0.393700) / 12);
             const feet = Math.floor(realFeet);
             const inches = Math.round((realFeet - feet) * 12);
@@ -194,9 +194,7 @@
                         }
 
                         $('#visit_details').text('Patient Id: ' + data.openMRSID + " | Date of visit: " + data.visitDate);
-                        $('#vitals').html(`<b>Vitals</b><br>Height(ft): ${data.height?toFeet(data.height||0):'NA'} | Weight(kg): ${data.weight||'NA'} | BMI: ${bmi?bmi.toFixed(2):'NA'} | Blood Pressure: ${data.sbp && data.dbp?parseInt(data.sbp).toFixed(0)+'/'+parseInt(data.dbp).toFixed(0):'NA'}| Pulse(bpm): ${data.pulseRate||'NA'} 
-                        | Temperature(F): ${data.temperature ? ((data.temperature * 1.8) + 32).toFixed(1): 'NA'} | Respiratory Rate: ${data.respRate||'NA'} | SpO2(%): ${data.spo2||'NA'} | Hemoglobin: ${data.haemoGlobin || "NA"} 
-                        | Blood Group: ${data.bloodGroup || "NA"} | Sugar Level(Fasting): ${data.sugarFasting || "NA"} | Sugar Level - Random: ${data.sugarRandom || "NA"}<br>`);
+                        $('#vitals').html(`<b>Vitals</b><br>Height(ft): ${Number(data.height)?toFeet(data.height||0):'NA'} | Weight(kg): ${Number(data.weight)?data.weight:'NA'} | BMI: ${bmi?bmi.toFixed(2):'NA'} | Blood Pressure: ${Number(data.sbp) && Number(data.dbp)?parseInt(data.sbp).toFixed(0)+'/'+parseInt(data.dbp).toFixed(0):'NA'}| Pulse(bpm): ${data.pulseRate||'NA'} | Temperature(F): ${Number(data.temperature) ? ((data.temperature * 1.8) + 32).toFixed(1): 'NA'} | Respiratory Rate: ${Number(data.respRate)?data.respRate:'NA'} | SpO2(%): ${Number(data.spo2) ? data.spo2:'NA'} | Hemoglobin: ${data.haemoGlobin || "NA"} | Blood Group: ${data.bloodGroup || "NA"} | Sugar Level(Fasting): ${data.sugarFasting || "NA"} | Sugar Level - Random: ${data.sugarRandom || "NA"}<br>`);
                         complaintString = data.complaint.trim().split("<br/>");
                         //  console.log(complaintString);
                         //
