@@ -81,7 +81,7 @@
     <br>
     <div id="prescription" style="display: none" class="container">
         <div class="col-sm-12 col-md-12" style="text-align: center">
-            <h4>Ekal Telemedicine Project</h3>
+            <h4>Namma Arogya</h3>
         </div>
         <br>
         <div class="row" style="text-align:center">
@@ -160,7 +160,7 @@
             $('#errDesc').text('');
 
             jQuery.ajax({
-                url: "https://afitraining.ekalarogya.org/prescription/prescription/visitData",
+                url: "https://naktraining.intelehealth.org/prescription/prescription/visitData",
                 type: "POST",
                 data: JSON.stringify({
                     visitId: getParameterByName("v"),
@@ -542,7 +542,7 @@
                     {
 
                         stack: [
-                            'Ekal Telemedicine Project',
+                            'Namma Arogya',
                             { text: 'e-prescription', style: 'subheader' },
                             { canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1, color: 'green' }] }
                         ],
