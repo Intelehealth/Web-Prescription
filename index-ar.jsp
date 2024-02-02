@@ -1190,6 +1190,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/pdfmake.min.js"></script>
     <script src="js/vfs_fonts.js"></script>
-    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="js/moment.min.js"></script>
 
     </html>
